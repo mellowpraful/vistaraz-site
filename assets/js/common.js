@@ -91,8 +91,9 @@
         <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24x7</div></div><div class="num">14416</div></div>
         <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free counseling</div></div><div class="num">9152987821</div></div>
         <div class="helpline"><div><strong>Vandrevala</strong><div class="meta">24x7 helpline</div></div><div class="num">1860 266 2345</div></div>
-        <button class="btn btn-primary" style="margin-top:16px" onclick="MANNMITRA.common.closeCrisis()">I'm safe — close</button>
-        <a class="btn btn-ghost" href="crisis.html" style="margin-top:16px">All helplines</a>
+        <a class="btn btn-danger" style="margin-top:16px; width:100%; justify-content:center" href="tel:14416">📞 Call Tele-MANAS (14416) now</a>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="MANNMITRA.common.closeCrisis()">I'm safe — close</button>
+        <a class="btn btn-ghost" href="crisis.html" style="margin-top:12px">All helplines</a>
       </div>
     </div>`;
   }
@@ -140,10 +141,14 @@
       const tick = () => {
         const p = Math.min(1, (Date.now()-start)/1200);
         arc.style.strokeDashoffset = CIRC * (1 - p);
-        if(p >= 1){ clearInterval(hold); cancelAnimationFrame(raf); triggerCrisis(); fab.classList.remove("holding"); return; }
+        if(p >= 1){ clearInterval(hold); cancelAnimationFrame(raf); triggerCrisis(); callHelpline("14416"); fab.classList.remove("holding"); return; }
         raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
+    }
+    function callHelpline(num){
+      // Directly dial the Indian helpline on SOS. tel: works on mobile; desktop opens dialer/app.
+      try { window.location.href = "tel:" + num; } catch (e) {}
     }
     function up(){ clearInterval(hold); cancelAnimationFrame(raf); fab.classList.remove("holding"); arc.style.strokeDashoffset = CIRC; }
     fab.addEventListener("mousedown", down); fab.addEventListener("touchstart", down, {passive:false});
@@ -204,7 +209,7 @@
 
     global.MANNMITRA.common = {
       toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
-      applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour
+      callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour
     };
   }
 
