@@ -39,7 +39,7 @@ Browser (anonymous) → API/BFF → Triage · Peer Match · Booking · Crisis �
 - 🆘 **SOS hold-to-call** — press & hold the floating button → crisis overlay
 - 📝 **Journal** — private on-device reflection entries
 - 🫁 **Breathing** — animated 4-4-4-4 box-breathing exercise
-- 🌐 **i18n** — English / Hindi / Marathi language switcher
+- 🌐 **i18n** — English / Hindi / Marathi / Gujarati language switcher
 - 🌙 **Dark mode + high-contrast** — toggles persisted in localStorage
 - 📱 **Mobile bottom-nav** + onboarding tour + page transitions
 - 🛡 **Privacy page** + **My Data** view (delete-all) + 🆘 **Crisis page** with verified national helplines
@@ -69,7 +69,7 @@ python -m http.server 8000
 | `breathing.html` | Animated breathing exercise |
 | `cbt.html` | CBT self-help mini-modules |
 | `community.html` | Anonymous community feed |
-| `resources.html` | Hindi / English / Marathi content |
+| `resources.html` | Hindi / English / Marathi / Gujarati content |
 | `privacy.html` | Privacy + "My Data" (delete-all) |
 | `admin.html` | Admin panel — funnel + impact metrics |
 | `crisis.html` | One-tap verified helplines |

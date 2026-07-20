@@ -19,7 +19,8 @@
     "suicide", "kill myself", "end my life", "end it all", "want to die",
     "better off dead", "no reason to live", "self harm", "self-harm",
     "hurt myself", "take my life", "can't go on", "cant go on",
-    "marna", "खत्म", "आत्महत्या", "मरना"
+    "marna", "खत्म", "आत्महत्या", "मरना",
+    "મરી", "આત્મહત્યા", "ખતમ"
   ];
 
   // Medium-risk language — distress, isolation, overwhelm.
@@ -27,7 +28,7 @@
     "hopeless", "worthless", "alone", "lonely", "overwhelmed", "can't cope",
     "cant cope", "anxious", "panic", "depressed", "cry", "tired of everything",
     "no one cares", "failed", "failure", "breakdown", "अकेला", "तनाव", "डर",
-    "चिंता", "अकेलापन"
+    "चिंता", "अकेलापन", "એકલું", "તણાવ", "ડર"
   ];
 
   const RESOURCE_KEYWORDS = [

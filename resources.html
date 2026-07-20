@@ -15,6 +15,7 @@
       <button class="btn btn-primary" id="enBtn" onclick="setLang('en')">English</button>
       <button class="btn btn-ghost" id="hiBtn" onclick="setLang('hi')">हिन्दी</button>
       <button class="btn btn-ghost" id="mrBtn" onclick="setLang('mr')">मराठी</button>
+      <button class="btn btn-ghost" id="guBtn" onclick="setLang('gu')">ગુજરાતી</button>
     </div>
 
     <div class="cards" id="cards"></div>
@@ -49,6 +50,13 @@
         { t: "परीक्षा ताण टूलकिट", d: "परीक्षापूर्वी व दरम्यानचे व्यावहारिक उपाय.", tag: "शिक्षण" },
         { t: "झोपेची काळजी", d: "चांगल्या झोपीसाठी छोट्या सवयी.", tag: "स्वयं-देखभाल" },
         { t: "मित्र अडचणीत असताना", d: "न सोडवता ऐकणे — सोबतीची पहिली गोष्ट.", tag: "सोबती" }
+      ],
+      gu: [
+        { t: "3-મિનિટ શ્વાસ વ્યાયામ", d: "ગમે ત્યાં ચિંતા શાંત કરવાની સરળ રીત.", tag: "સ્વ-સંભાળ" },
+        { t: "માતા-પિતા સાથે તણાવ વિશે વાત", d: "ઝઘડ્યા વગર વાત કરવાની સરળ રીત.", tag: "પરિવાર" },
+        { t: "પરીક્ષા તણાવ ટૂલકિટ", d: "પરીક્ષા પહેલાં અને દરમિયાન મદદરૂપ પગલાં.", tag: "અભ્યાસ" },
+        { t: "ઊંઘની કાળજી", d: "સારી ઊંઘ માટે નાની આદતો.", tag: "સ્વ-સંભાળ" },
+        { t: "જ્યારે મિત્ર મુશ્કેલીમાં હોય", d: "ઉકેલ્યા વગર સાંભળવું — સાથીની પહેલી વાત.", tag: "સાથી" }
       ]
     };
 
@@ -60,6 +68,7 @@
       document.getElementById("enBtn").className = l==="en"?"btn btn-primary":"btn btn-ghost";
       document.getElementById("hiBtn").className = l==="hi"?"btn btn-primary":"btn btn-ghost";
       document.getElementById("mrBtn").className = l==="mr"?"btn btn-primary":"btn btn-ghost";
+      document.getElementById("guBtn").className = l==="gu"?"btn btn-primary":"btn btn-ghost";
     }
     setLang(MANNMITRA.i18n.getLang());
   </script>
