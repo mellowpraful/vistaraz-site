@@ -241,7 +241,11 @@
 
     try {
       const sev = global.MANNMITRA.state.get().lastSeverity;
-      if (sev === "high") setTimeout(triggerCrisis, 600);
+      // Auto-show crisis overlay at most ONCE per session (it blocks the nav).
+      if (sev === "high" && !sessionStorage.getItem("mm_crisis_shown")) {
+        sessionStorage.setItem("mm_crisis_shown", "1");
+        setTimeout(triggerCrisis, 600);
+      }
     } catch (e) {}
   }
 
