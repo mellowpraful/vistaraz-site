@@ -211,6 +211,14 @@
       installApp
     };
 
+    // Also attach direct listeners as fallback (more reliable on mobile).
+    setTimeout(() => {
+      const nextBtn = document.getElementById("tourNext");
+      const skipBtn = document.querySelector("#tour-overlay .btn-ghost");
+      if (nextBtn) nextBtn.onclick = tourNext;
+      if (skipBtn) skipBtn.onclick = endTour;
+    }, 0);
+
     maybeTour();
     pwaInit();
 
