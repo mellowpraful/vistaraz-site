@@ -11,6 +11,12 @@
     <h2 data-i18n="dashboard.title">Your Progress</h2>
     <div class="sub">A private view of your check-in history. Stored only on this device.</div>
 
+    <div style="text-align:center; margin-bottom:8px">
+      <span class="streak-flame">🔥</span>
+      <span id="streakBig" style="font-size:22px;font-weight:800;color:var(--teal-700)">0-day streak</span>
+    </div>
+    <div class="badge-row" id="badges" style="justify-content:center"></div>
+
     <div class="dash-grid" style="margin-bottom:24px">
       <div class="kpi"><div class="k-num" id="kChecks">0</div><div class="k-label">Check-ins logged</div></div>
       <div class="kpi"><div class="k-num" id="kAvg">–</div><div class="k-label">Avg mood</div></div>
@@ -18,10 +24,19 @@
       <div class="kpi"><div class="k-num" id="kStreak">0</div><div class="k-label">Day streak</div></div>
     </div>
 
-    <div class="chart-wrap">
+    <div id="insightBox" class="panel" style="margin-bottom:24px; display:none"></div>
+
+    <div class="chart-wrap" style="margin-bottom:24px">
       <h3 style="margin-top:0">Mood over time</h3>
       <div id="chart"></div>
       <p id="noData" style="color:var(--text-muted)">No check-ins yet — <a href="checkin.html">do one now</a>.</p>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card" onclick="location.href='cbt.html'"><div class="icon">🧠</div><h3>CBT Mini-Modules</h3><p>Thought record, gratitude & grounding exercises.</p></div>
+      <div class="module-card" onclick="location.href='community.html'"><div class="icon">💬</div><h3>Community Feed</h3><p>Anonymous, supportive posts from others like you.</p></div>
+      <div class="module-card" onclick="location.href='breathing.html'"><div class="icon">🫁</div><h3>Breathing</h3><p>Guided 4-4-4-4 box breathing.</p></div>
+      <div class="module-card" onclick="location.href='journal.html'"><div class="icon">📝</div><h3>Journal</h3><p>Private reflections, on device.</p></div>
     </div>
   </main>
 
@@ -31,8 +46,10 @@
 
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
+  <script src="assets/js/features.js"></script>
   <script src="assets/js/common.js"></script>
   <script>
+    const D = MANNMITRA.data;
     function render(){
       const s = MANNMITRA.state.get();
       const checks = s.checkins;
@@ -42,9 +59,22 @@
       const moods = checks.map(c => c.mood).filter(Boolean);
       document.getElementById("kAvg").textContent = moods.length ? (moods.reduce((a,b)=>a+b,0)/moods.length).toFixed(1) : "–";
 
-      // simple streak: count distinct days with a check-in
-      const days = new Set(checks.map(c => new Date(c.ts).toDateString()));
-      document.getElementById("kStreak").textContent = days.size;
+      const streak = D.computeStreak(s);
+      document.getElementById("kStreak").textContent = streak;
+      document.getElementById("streakBig").textContent = streak + "-day streak";
+      if(streak>=3){ try{ navigator.vibrate && navigator.vibrate(30); }catch(e){} }
+
+      // badges
+      document.getElementById("badges").innerHTML = D.BADGES.map(b => {
+        const got = b.test(s);
+        return `<span class="ach-badge ${got?'':'locked'}"><span class="emo">${b.emoji}</span>${b.label}</span>`;
+      }).join("");
+
+      // insight
+      const ins = D.moodInsight(s);
+      const ib = document.getElementById("insightBox");
+      if(ins){ ib.style.display="block"; ib.innerHTML = `💡 <strong>Insight:</strong> You tend to feel lowest on <strong>${ins.day}</strong> (avg mood ${ins.avg}/10). Consider a check-in or peer chat then.`; }
+      else ib.style.display="none";
 
       const chart = document.getElementById("chart");
       if(!checks.length){ document.getElementById("noData").style.display="block"; return; }

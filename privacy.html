@@ -51,6 +51,13 @@
       Help scales only as far as trust allows, so we put trust first.</p>
       <a class="btn btn-primary" href="checkin.html">Start a private check-in</a>
     </div>
+
+    <div class="panel" style="margin-top:24px">
+      <h3 style="margin-top:0">Your data, your control</h3>
+      <p style="color:var(--muted)">Everything below lives only on this device. Nothing is sent to a server in this demo.</p>
+      <div class="data-box" id="dataView">Loading…</div>
+      <button class="btn btn-danger-outline" style="margin-top:12px" onclick="wipeData()">Delete all my data</button>
+    </div>
   </main>
 
   <footer>
@@ -58,7 +65,27 @@
   </footer>
 
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
   <script src="assets/js/common.js"></script>
+  <script>
+    function renderData(){
+      const s = MANNMITRA.state.get();
+      document.getElementById("dataView").innerHTML =
+        `Anonymous ID: <strong>${s.anonId}</strong><br>` +
+        `Check-ins stored: <strong>${s.checkins.length}</strong><br>` +
+        `Journal entries: <strong>${s.journal.length}</strong><br>` +
+        `Bookings: <strong>${s.bookings.length}</strong><br>` +
+        `Last severity: <strong>${s.lastSeverity || "none"}</strong>`;
+    }
+    function wipeData(){
+      if(confirm("Delete all your local data? This cannot be undone.")){
+        MANNMITRA.state.reset();
+        MANNMITRA.common.toast("All local data deleted");
+        renderData();
+      }
+    }
+    renderData();
+  </script>
 </body>
 </html>

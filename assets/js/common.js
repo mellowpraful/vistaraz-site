@@ -1,18 +1,17 @@
 /*
- * MANNMITRA — Common UI (nav + dark mode + i18n + crisis overlay)
+ * MANNMITRA — Common UI (nav + dark mode + i18n + crisis + SOS + tour + a11y)
  */
 (function (global) {
   "use strict";
 
   const NAV = [
-    ["index.html", "nav.home"],
-    ["checkin.html", "nav.checkin"],
-    ["peer.html", "nav.peer"],
-    ["counselor.html", "nav.counselor"],
-    ["dashboard.html", "nav.dashboard"],
-    ["journal.html", "nav.journal"],
-    ["resources.html", "nav.resources"],
-    ["privacy.html", "nav.privacy"]
+    ["index.html", "nav.home", "🏠"],
+    ["checkin.html", "nav.checkin", "📝"],
+    ["peer.html", "nav.peer", "🤝"],
+    ["dashboard.html", "nav.dashboard", "📊"],
+    ["journal.html", "nav.journal", "📓"],
+    ["resources.html", "nav.resources", "📚"],
+    ["privacy.html", "nav.privacy", "🛡"]
   ];
 
   function currentPage() {
@@ -34,6 +33,12 @@
     try { localStorage.setItem("mannmitra_theme", next); } catch (e) {}
     const btn = document.getElementById("themeBtn");
     if (btn) btn.textContent = next === "dark" ? "☀️" : "🌙";
+  }
+  function toggleContrast() {
+    const cur = document.documentElement.getAttribute("data-theme");
+    const next = cur === "contrast" ? "light" : "contrast";
+    document.documentElement.setAttribute("data-theme", next);
+    MANNMITRA.common.toast(next === "contrast" ? "High contrast on" : "High contrast off");
   }
 
   function applyLang() {
@@ -65,9 +70,15 @@
       <div class="nav-links">${links}</div>
       <div class="nav-actions">
         <select class="lang" id="langSel" title="Language">${opts}</select>
+        <button class="icon-btn" id="contrastBtn" title="High contrast" onclick="MANNMITRA.common.toggleContrast()">◐</button>
         <button class="icon-btn" id="themeBtn" title="Toggle theme" onclick="MANNMITRA.common.toggleTheme()">🌙</button>
         <span class="anon-id" title="Anonymous ID — no personal data" id="navAnonId">${id}</span>
       </div>
+    </nav>
+    <nav class="bottom-nav" aria-label="Primary">
+      ${NAV.map(([href, key, ico]) =>
+        `<a href="${href}" class="${href === currentPage() ? "active" : ""}"><span class="bi">${ico}</span>${global.MANNMITRA.i18n.t(key)}</a>`
+      ).join("")}
     </nav>`;
   }
 
@@ -86,6 +97,26 @@
     </div>`;
   }
 
+  function sosHtml() {
+    return `
+    <button id="sos-fab" aria-label="Emergency SOS">SOS</button>
+    <svg id="sos-ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="none" stroke="var(--danger)" stroke-width="4" stroke-dasharray="188" stroke-dashoffset="188" id="sosArc"/></svg>`;
+  }
+
+  function tourHtml() {
+    return `
+    <div id="tour-overlay">
+      <div class="tour-card">
+        <div style="font-size:40px;margin-bottom:8px" id="tourEmo">👋</div>
+        <h2 id="tourTitle" style="margin:0 0 8px">Welcome to MANNMITRA</h2>
+        <p id="tourBody" style="color:var(--text-muted)">A safe, anonymous space for your mind. Let's take a 30-second tour.</p>
+        <div style="margin:16px 0"><span class="step-dot on"></span><span class="step-dot"></span><span class="step-dot"></span></div>
+        <button class="btn btn-primary" id="tourNext" onclick="MANNMITRA.common.tourNext()">Next</button>
+        <button class="btn btn-ghost" onclick="MANNMITRA.common.endTour()">Skip</button>
+      </div>
+    </div>`;
+  }
+
   function toast(msg) {
     let t = document.querySelector(".toast");
     if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
@@ -95,10 +126,70 @@
   function triggerCrisis() { const ov = document.getElementById("crisis-overlay"); if (ov) ov.classList.add("show"); }
   function closeCrisis() { const ov = document.getElementById("crisis-overlay"); if (ov) ov.classList.remove("show"); }
 
+  // --- SOS hold-to-call ---
+  function setupSOS() {
+    const fab = document.getElementById("sos-fab");
+    const arc = document.getElementById("sosArc");
+    if (!fab || !arc) return;
+    let hold = null, start = 0, raf = null;
+    const CIRC = 188;
+    function down(e){
+      e.preventDefault();
+      fab.classList.add("holding");
+      start = Date.now();
+      const tick = () => {
+        const p = Math.min(1, (Date.now()-start)/1200);
+        arc.style.strokeDashoffset = CIRC * (1 - p);
+        if(p >= 1){ clearInterval(hold); cancelAnimationFrame(raf); triggerCrisis(); fab.classList.remove("holding"); return; }
+        raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }
+    function up(){ clearInterval(hold); cancelAnimationFrame(raf); fab.classList.remove("holding"); arc.style.strokeDashoffset = CIRC; }
+    fab.addEventListener("mousedown", down); fab.addEventListener("touchstart", down, {passive:false});
+    fab.addEventListener("mouseup", up); fab.addEventListener("mouseleave", up); fab.addEventListener("touchend", up);
+  }
+
+  // --- Onboarding tour ---
+  const TOUR = [
+    { emo:"👋", t:"Welcome to MANNMITRA", b:"A safe, anonymous space for your mind. No signup, no judgment." },
+    { emo:"📝", t:"Start with a check-in", b:"A 2-minute mood check-in routes you to the right support — no heavy first step." },
+    { emo:"🤝", t:"You're never alone", b:"Peer listeners, counselors, and 24x7 helplines are one tap away. Hold the SOS button in crisis." }
+  ];
+  let tourStep = 0;
+  function tourNext(){
+    tourStep++;
+    if(tourStep >= TOUR.length){ endTour(); return; }
+    showTourStep();
+  }
+  function showTourStep(){
+    const s = TOUR[tourStep];
+    document.getElementById("tourEmo").textContent = s.emo;
+    document.getElementById("tourTitle").textContent = s.t;
+    document.getElementById("tourBody").textContent = s.b;
+    const dots = document.querySelectorAll("#tour-overlay .step-dot");
+    dots.forEach((d,i)=> d.classList.toggle("on", i===tourStep));
+    document.getElementById("tourNext").textContent = tourStep===TOUR.length-1 ? "Get started" : "Next";
+  }
+  function endTour(){
+    const o = document.getElementById("tour-overlay");
+    if(o) o.classList.remove("show");
+    try { localStorage.setItem("mannmitra_toured","1"); } catch(e){}
+  }
+  function maybeTour(){
+    let seen = "0";
+    try { seen = localStorage.getItem("mannmitra_toured") || "0"; } catch(e){}
+    if(seen !== "1"){
+      const o = document.getElementById("tour-overlay");
+      if(o){ o.classList.add("show"); showTourStep(); }
+    }
+  }
+
   function mount() {
     document.body.insertAdjacentHTML("afterbegin", navHtml());
-    document.body.insertAdjacentHTML("beforeend", overlayHtml());
+    document.body.insertAdjacentHTML("beforeend", overlayHtml() + sosHtml() + tourHtml());
     applyTheme(); applyLang();
+    setupSOS(); maybeTour();
 
     const sel = document.getElementById("langSel");
     if (sel) sel.addEventListener("change", e => {
@@ -112,12 +203,8 @@
     } catch (e) {}
 
     global.MANNMITRA.common = {
-      toggleTheme, triggerCrisis, closeCrisis, toast, applyLang, applyTheme,
-      helplines: [
-        { name: "Tele-MANAS", meta: "24x7", num: "14416" },
-        { name: "iCall (TISS)", meta: "Free", num: "9152987821" },
-        { name: "Vandrevala", meta: "24x7", num: "1860 266 2345" }
-      ]
+      toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
+      applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour
     };
   }
 

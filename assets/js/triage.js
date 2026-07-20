@@ -106,6 +106,26 @@
     }[route] || "Support";
   }
 
+  /*
+   * Pluggable LLM hook (optional, production).
+   * If a backend endpoint is configured, send the same `input` and expect
+   * { severity, route, reasons }. Falls back to the local rule engine offline.
+   * Example (commented): fetch('/api/triage', { method:'POST', body: JSON.stringify(input) })
+   */
+  async function scoreRemote(input) {
+    const ENDPOINT = global.MANNMITRA && global.MANNMITRA.config && global.MANNMITRA.config.triageEndpoint;
+    if (!ENDPOINT) return null; // no backend -> use local
+    try {
+      const r = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(input)
+      });
+      if (!r.ok) return null;
+      return await r.json();
+    } catch (e) { return null; }
+  }
+
   global.MANNMITRA = global.MANNMITRA || {};
-  global.MANNMITRA.triage = { score, routeLabel };
+  global.MANNMITRA.triage = { score, routeLabel, scoreRemote };
 })(window);

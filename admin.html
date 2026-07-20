@@ -16,6 +16,8 @@
       <div class="kpi"><div class="k-num" id="mPeer">0</div><div class="k-label">Routed to peer</div></div>
       <div class="kpi"><div class="k-num" id="mCouns">0</div><div class="k-label">Routed to counselor</div></div>
       <div class="kpi"><div class="k-num" id="mCrisis">0</div><div class="k-label">Crisis escalations</div></div>
+      <div class="kpi"><div class="k-num" id="mColleges">0</div><div class="k-label">Colleges onboarded</div></div>
+      <div class="kpi"><div class="k-num" id="mLives">0</div><div class="k-label">Lives reached</div></div>
     </div>
 
     <div class="chart-wrap" style="margin-bottom:24px">
@@ -52,6 +54,8 @@
     document.getElementById("mPeer").textContent = M.routedPeer;
     document.getElementById("mCouns").textContent = M.routedCounselor;
     document.getElementById("mCrisis").textContent = M.crisisEscalations;
+    document.getElementById("mColleges").textContent = M.colleges;
+    document.getElementById("mLives").textContent = M.livesReached.toLocaleString();
 
     const max = M.checkins;
     const rows = [["AI check-ins", M.checkins],["Routed to peer", M.routedPeer],["Routed to counselor", M.routedCounselor],["Crisis escalations", M.crisisEscalations]];

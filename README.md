@@ -28,16 +28,22 @@ Browser (anonymous) → API/BFF → Triage · Peer Match · Booking · Crisis �
 - **Product layer (mock, no backend):** `assets/js/features.js` simulates the shared counselor pool, peer network, and anonymized admin ledger that a real backend would serve.
 
 ## Features
-- 🤖 **AI triage** — mood slider + 3 questions → severity scoring & routing
+- 🤖 **AI triage** — mood slider + 3 questions → severity scoring & routing (rule engine + pluggable LLM hook)
 - 🤝 **Peer support** — anonymous username, topic rooms, 1:1 listener, simulated chat
-- 🩺 **Counselor booking** — calendar + slots, anonymous-ID system (admin-blind)
-- 📊 **Dashboard** — mood-history chart, avg mood, journal count, day streak (from your local data)
+- 🩺 **Counselor dashboard** — shared counselor pool across colleges + anonymized booking ledger
+- 📊 **Dashboard** — mood-history chart, avg mood, journal count, **day streak**, **badges**, **mood insights**
+- 🏆 **Gamification** — achievement badges + streak flame (localStorage)
+- 💡 **Mood insight** — "you tend to feel lowest on Mondays" pattern detection
+- 🧠 **CBT mini-modules** — thought record, gratitude, 5-4-3-2-1 grounding
+- 💬 **Community feed** — anonymous, supportive posts + reactions
+- 🆘 **SOS hold-to-call** — press & hold the floating button → crisis overlay
 - 📝 **Journal** — private on-device reflection entries
 - 🫁 **Breathing** — animated 4-4-4-4 box-breathing exercise
 - 🌐 **i18n** — English / Hindi / Marathi language switcher
-- 🌙 **Dark mode** — toggle persisted in localStorage
-- 🛡 **Privacy page** + 🆘 **Crisis page** with verified national helplines
-- 🧑‍💼 **Counselor dashboard** & 👩‍💻 **Admin panel** — shared pool + anonymized ledger (mock)
+- 🌙 **Dark mode + high-contrast** — toggles persisted in localStorage
+- 📱 **Mobile bottom-nav** + onboarding tour + page transitions
+- 🛡 **Privacy page** + **My Data** view (delete-all) + 🆘 **Crisis page** with verified national helplines
+- 🧑‍💼 **Counselor dashboard** & 👩‍💻 **Admin panel** — shared pool, funnel metrics, impact numbers (colleges, lives reached)
 
 ## How to run
 No install, no server. Just open the file:
@@ -54,28 +60,30 @@ python -m http.server 8000
 ## Pages
 | File | Purpose |
 |---|---|
-| `index.html` | Landing — stigma stats + "Start anonymously" CTA |
-| `checkin.html` | Mood slider + 3 questions → rule-based triage & routing |
+| `index.html` | Landing — mascot, blobs, stigma stats + "Start anonymously" CTA |
+| `checkin.html` | Mood slider + 3 questions → triage & routing (LLM-ready) |
 | `peer.html` | Anonymous username + topic rooms |
 | `counselor.html` | Counselor dashboard (shared pool + anon ledger) |
-| `dashboard.html` | Personal progress (mood chart, streak) |
+| `dashboard.html` | Personal progress (chart, streak, badges, insight) |
 | `journal.html` | Private journaling |
 | `breathing.html` | Animated breathing exercise |
+| `cbt.html` | CBT self-help mini-modules |
+| `community.html` | Anonymous community feed |
 | `resources.html` | Hindi / English / Marathi content |
-| `privacy.html` | "How we protect your privacy" |
-| `admin.html` | Admin panel — funnel + anonymized ledger |
+| `privacy.html` | Privacy + "My Data" (delete-all) |
+| `admin.html` | Admin panel — funnel + impact metrics |
 | `crisis.html` | One-tap verified helplines |
 
-Core JS: `triage.js` (severity), `state.js` (anonymous session), `i18n.js` (languages), `features.js` (mock product data), `common.js` (nav + dark mode + crisis overlay).
+Core JS: `triage.js` (severity + LLM hook), `state.js` (anonymous session), `i18n.js` (languages), `features.js` (mock data + gamification/insights), `common.js` (nav, dark/contrast, SOS, tour, crisis).
 
 ## 60-second live demo script (for the round)
-1. Open **index.html** → point at "Anonymous · No signup" + dark-mode toggle + language switch.
-2. **Check-in** → low mood → severity pill + recommended route (peer).
-3. **Peer** → join a room, type a risk phrase → crisis overlay auto-triggers.
-4. **Dashboard** → show mood chart populated from your check-in.
-5. **Journal / Breathing** → show self-care depth.
+1. Open **index.html** → mascot + blobs, "Anonymous · No signup", onboarding tour, dark-mode + contrast + language switches.
+2. **Check-in** → low mood → severity pill + recommended route (peer). Mention LLM hook for production.
+3. **Peer** → join a room, type a risk phrase → crisis overlay auto-triggers. Then show **SOS hold-to-call** button.
+4. **Dashboard** → mood chart, streak flame, badges, and the "lowest on Monday" insight.
+5. **CBT** → thought record; **Community** → anonymous post + react; **Journal / Breathing** → self-care depth.
 6. **Counselor dashboard** → shared pool + anonymized ledger (only anon IDs).
-7. **Admin panel** → funnel metrics, peer network. Close with **privacy.html**.
+7. **Admin panel** → funnel metrics + impact (colleges, lives reached). Close on **privacy.html** → "My Data" delete-all.
 
 ## Business / scalability (B2B2C)
 - Sell to colleges as a subscription — cheaper than hiring 5 in-house counselors each.

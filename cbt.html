@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CBT Modules · MANNMITRA</title>
+  <script>try{var t=localStorage.getItem("mannmitra_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>🧠 Self-Help Modules</h2>
+    <div class="sub">Evidence-informed, anonymous. Not a replacement for professional care.</div>
+
+    <div class="module-grid" style="margin-bottom:24px">
+      <div class="module-card" onclick="show('thought')"><h3>Thought Record</h3><p>Catch, name and reframe unhelpful thoughts.</p></div>
+      <div class="module-card" onclick="show('gratitude')"><h3>Gratitude</h3><p>Note 3 small good things today.</p></div>
+      <div class="module-card" onclick="show('ground')"><h3>5-4-3-2-1 Grounding</h3><p>Anchor to the present when overwhelmed.</p></div>
+    </div>
+
+    <div class="panel" id="panel" style="display:none"></div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    function show(mod){
+      const p = document.getElementById("panel"); p.style.display="block"; p.scrollIntoView({behavior:"smooth"});
+      if(mod==="thought"){
+        p.innerHTML = `<h3>Thought Record</h3>
+          <p style="color:var(--text-muted)">Write a thought that's bothering you, then a kinder reframe.</p>
+          <label>Situation / trigger</label><input class="field" id="t1" placeholder="e.g. failed a quiz">
+          <label>Automatic thought</label><input class="field" id="t2" placeholder="e.g. I'm useless at everything">
+          <label>Emotion (0-10)</label><input class="field" id="t3" type="number" min="0" max="10" value="7">
+          <label>Balanced reframe</label><textarea class="field" id="t4" rows="2" placeholder="e.g. one quiz doesn't define me; I can prepare differently"></textarea>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="MANNMITRA.common.toast('Saved to your private record')">Save reflection</button>`;
+      } else if(mod==="gratitude"){
+        p.innerHTML = `<h3>Gratitude</h3><p style="color:var(--text-muted)">Three small good things today:</p>
+          <input class="field" id="g1" placeholder="1."><input class="field" id="g2" placeholder="2."><input class="field" id="g3" placeholder="3.">
+          <button class="btn btn-primary" style="margin-top:12px" onclick="MANNMITRA.common.toast('Gratitude logged 💚')">Save</button>`;
+      } else {
+        p.innerHTML = `<h3>5-4-3-2-1 Grounding</h3><p style="color:var(--text-muted)">Notice around you, slowly:</p>
+          <div class="ground-grid">
+            <div class="ground-item"><strong>5</strong> things you see</div>
+            <div class="ground-item"><strong>4</strong> things you can touch</div>
+            <div class="ground-item"><strong>3</strong> things you hear</div>
+            <div class="ground-item"><strong>2</strong> things you smell</div>
+            <div class="ground-item"><strong>1</strong> thing you taste</div>
+            <div class="ground-item">Breathe. You are here. 💚</div>
+          </div>`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -58,14 +58,16 @@
     const w = v => v<=3?"Struggling":v<=6?"Okay":v<=8?"Good":"Great";
     moodEl.addEventListener("input", () => moodVal.textContent = moodEl.value + " — " + w(+moodEl.value));
 
-    document.getElementById("submit").addEventListener("click", () => {
+    document.getElementById("submit").addEventListener("click", async () => {
       const input = {
         mood: +moodEl.value,
         text: document.getElementById("text").value,
         answers: [document.getElementById("q1").value === "no",
                   document.getElementById("q2").value === "no"]
       };
-      const r = MANNMITRA.triage.score(input);
+      // Use pluggable LLM if configured, else local rule engine (offline-safe).
+      const remote = await MANNMITRA.triage.scoreRemote(input);
+      const r = remote || MANNMITRA.triage.score(input);
       MANNMITRA.state.pushCheckin({ ts: Date.now(), mood: input.mood, severity: r.severity, text: input.text });
       MANNMITRA.state.setSeverity(r.severity);
 

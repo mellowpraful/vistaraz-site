@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community · MANNMITRA</title>
+  <script>try{var t=localStorage.getItem("mannmitra_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>💬 Community Feed</h2>
+    <div class="sub">Anonymous, supportive. React with kindness. No names, no judgment.</div>
+
+    <div class="panel">
+      <div class="feed-compose">
+        <input class="field" id="postText" placeholder="Share something — a win, a worry, a hope…" />
+        <button class="btn btn-primary" onclick="post()">Post</button>
+      </div>
+      <div id="feed"></div>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const SEED = [
+      { id:"s1", handle:"QuietStar_42", text:"First exam done. I was terrified but I showed up. Small win.", reacts:{ "💚":12,"🤝":4 }, ts: Date.now()-3600000 },
+      { id:"s2", handle:"CalmWave", text:"Lonely tonight. Writing here helps me feel less alone. Thanks for reading.", reacts:{ "💚":28,"🫂":9 }, ts: Date.now()-7200000 },
+      { id:"s3", handle:"Hopeful_07", text:"Tried the breathing exercise before my presentation. Actually worked!", reacts:{ "💚":15,"🔥":3 }, ts: Date.now()-1800000 }
+    ];
+    function load(){ try{ return JSON.parse(localStorage.getItem("mannmitra_feed")) || SEED; }catch(e){ return SEED; } }
+    function save(f){ try{ localStorage.setItem("mannmitra_feed", JSON.stringify(f)); }catch(e){} }
+    function post(){
+      const v = document.getElementById("postText").value.trim();
+      if(!v){ MANNMITRA.common.toast("Write something first"); return; }
+      const f = load();
+      f.unshift({ id:"u"+Date.now(), handle:"You_"+Math.floor(Math.random()*900+100), text:v, reacts:{}, ts:Date.now() });
+      save(f); document.getElementById("postText").value=""; render();
+    }
+    function react(id, emo){
+      const f = load(); const p = f.find(x=>x.id===id); if(!p) return;
+      p.reacts[emo] = (p.reacts[emo]||0)+1; save(f); render();
+    }
+    function render(){
+      const f = load();
+      document.getElementById("feed").innerHTML = f.map(p => {
+        const rs = Object.keys(p.reacts).map(e=>`<button class="react-btn" onclick="react('${p.id}','${e}')">${e} ${p.reacts[e]}</button>`).join("") || `<span style="color:var(--text-muted);font-size:13px">Be the first to react</span>`;
+        const d = new Date(p.ts); const t = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
+        return `<div class="feed-post"><div class="fh"><span>${p.handle}</span><span>${t}</span></div><div class="fb">${p.text.replace(/</g,"&lt;")}</div><div class="react-row">${rs} <button class="react-btn" onclick="react('${p.id}','💚')">💚</button></div></div>`;
+      }).join("");
+    }
+    render();
+  </script>
+</body>
+</html>
