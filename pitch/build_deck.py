@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate MANNMITRA.pptx pitch deck — full feature set."""
+import os
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -129,6 +130,16 @@ for i, (t_, d) in enumerate(feats):
     x = x0 + col*(col_w + Inches(0.3)); y = y0 + row*rh
     rect(s, x, y, col_w, Inches(0.66), SAND)
     txt(s, x+Inches(0.12), y+Inches(0.04), col_w-Inches(0.2), Inches(0.6), f"{t_}  \u2014  {d}", size=13, color=INK, anchor=MSO_ANCHOR.MIDDLE)
+
+# 5b PRODUCT PREVIEW
+s = slide(); title_bar(s, "Product Preview", "WHAT YOU'LL SEE IN THE DEMO")
+prev = os.path.join(os.path.dirname(__file__), "shots", "preview.png")
+from PIL import Image
+pw, ph = Image.open(prev).size
+disp_w = Inches(12.0); disp_h = Inches(12.0 * ph / pw)
+s.shapes.add_picture(prev, Inches(0.66), Inches(1.5), width=disp_w, height=disp_h)
+txt(s, Inches(0.66), Inches(6.7), Inches(12.0), Inches(0.5),
+    "Six core surfaces — all anonymous, all offline-capable, all installable as a PWA.", size=14, color=MUTED, align=PP_ALIGN.CENTER)
 
 # 6 DEMO FLOW
 s = slide(); title_bar(s, "Live Demo Flow", "60-SECOND CLICKABLE STORY")

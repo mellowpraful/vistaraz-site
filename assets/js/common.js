@@ -71,6 +71,7 @@
       <div class="nav-actions">
         <select class="lang" id="langSel" title="Language">${opts}</select>
         <button class="icon-btn" id="contrastBtn" title="High contrast" onclick="MANNMITRA.common.toggleContrast()">◐</button>
+        <button class="icon-btn" id="installBtn" title="Install app" onclick="MANNMITRA.common.installApp()" style="display:none">📲</button>
         <button class="icon-btn" id="themeBtn" title="Toggle theme" onclick="MANNMITRA.common.toggleTheme()">🌙</button>
         <span class="anon-id" title="Anonymous ID — no personal data" id="navAnonId">${id}</span>
       </div>
@@ -217,7 +218,8 @@
 
     global.MANNMITRA.common = {
       toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
-      callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour
+      callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour,
+      installApp
     };
   }
 
@@ -240,7 +242,40 @@
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("sw.js").catch(() => {});
       });
+      // New version available -> offer reload.
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (sessionStorage.getItem("mm_sw_update")) return;
+        sessionStorage.setItem("mm_sw_update", "1");
+        toast("New version available — reloading…");
+        setTimeout(() => location.reload(), 1200);
+      });
     }
+
+    // Offline / online indicator.
+    window.addEventListener("offline", () => toast("📴 You're offline — MANNMITRA still works"));
+    window.addEventListener("online", () => toast("🟢 Back online"));
+    if (navigator.onLine === false) setTimeout(() => toast("📴 Offline mode — app works offline"), 800);
+
+    // Install prompt (PWA).
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const b = document.getElementById("installBtn");
+      if (b) b.style.display = "grid";
+    });
+    window.addEventListener("appinstalled", () => {
+      const b = document.getElementById("installBtn");
+      if (b) b.style.display = "none";
+      toast("✅ MANNMITRA installed — thanks!");
+    });
+  }
+
+  let deferredPrompt = null;
+  function installApp() {
+    const b = document.getElementById("installBtn");
+    if (!deferredPrompt) { toast("Use your browser's 'Add to Home screen' / Install"); return; }
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; if (b) b.style.display = "none"; });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);

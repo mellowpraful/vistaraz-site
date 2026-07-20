@@ -1,0 +1,50 @@
+MANNMITRA — JUDGE DEMO SCRIPT (60 seconds, clickable)
+=====================================================
+
+GOAL: Show a *light first step* that scales trust -> peer -> counselor -> crisis.
+
+0:00  OPEN index.html (run `python -m http.server 8080`, open localhost:8080)
+     - Point at clean single-column hero: "मन मित्र — your mind's friend".
+     - Tap "Start anonymously" -> onboarding tour pops (no signup).
+
+0:10  CHECK-IN (checkin.html)
+     - Move mood slider to "😟", type "stress about exams".
+     - Tap triage -> rule-based result: "Mild stress -> Peer".
+     - Mention triage.js is a pure function; an LLM slots in later unchanged.
+
+0:22  PEER (peer.html)
+     - Show anonymous "Peer Listeners" with ratings, no real name.
+     - "Anonymous nicknames, no phone/email — stigma drops."
+
+0:30  CRISIS / SOS (crisis.html)
+     - Type a risk phrase in check-in OR tap SOS -> crisis overlay auto-triggers.
+     - Hold-to-call -> dials Tele-MANAS 14416 on mobile; copies number on laptop.
+     - "High-risk language never routes around crisis — safety by design."
+
+0:40  DASHBOARD (dashboard.html)
+     - Streak 🔥, badges 🌱🤝🧘, mood chart, "lowest on Monday" insight.
+     - Gamification keeps students coming back without forcing signup.
+
+0:48  EXTRAS (one screen each, fast)
+     - CBT + Journal + Breathing (4-4-4-4 box) — self-help, offline.
+     - Community feed (kind reactions) — peer belonging.
+     - Counselor + Admin: shared pool fixes counselor shortage; anon ledger.
+     - Privacy "My Data": one-click delete-all, admin-blind.
+
+0:56  PWA + i18n
+     - Tap 📲 install button (or browser "Add to Home screen") -> installs offline.
+     - Switch language EN -> हि -> मर -> ગુ in the nav.
+
+CLOSE (deck slide 14 — The Ask):
+     "Light first step. Real trust. No dead ends. Pilot with 3 colleges."
+
+TALKING POINTS IF ASKED
+- Privacy: zero PII, opaque anon_id, local-first demo, auto-purge in prod.
+- Scalability: shared counselor pool across colleges; peer layer ~0 marginal cost.
+- Credibility: NIMHANS/iCall-aligned peer training; verified national helplines.
+- Offline/Install: Service Worker app-shell cache; works without network.
+
+DEMO RISK CHECK
+- Run from localhost (not file://) so Service Worker + install work.
+- On laptop, SOS copies the number + toast (tel: only auto-dials on mobile).
+- Keep triage text in EN/HI/MR/GU keywords so severity triggers correctly.
