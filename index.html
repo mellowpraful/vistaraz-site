@@ -4,34 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MANNMITRA — A friend for your mind</title>
-  <script>try{var t=localStorage.getItem("mannmitra_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
+  <script>try{var t=localStorage.getItem("mannmitra_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* Home-only layout: tight, centered, no empty bands */
+    .home-hero { padding: 26px 0 30px; text-align: center; position: relative; overflow: hidden; }
+    .home-hero .blob { position:absolute; border-radius:50%; filter:blur(60px); opacity:.45; z-index:0; animation: float 14s ease-in-out infinite; }
+    .home-hero .b1 { width:300px; height:300px; background:var(--teal-300); top:-70px; left:-50px; }
+    .home-hero .b2 { width:260px; height:260px; background:var(--sand-300); bottom:-70px; right:-30px; animation-delay:-6s; }
+    .home-hero > * { position: relative; z-index: 1; }
+    .home-mascot { width:104px; height:104px; margin:0 auto 10px; display:block; animation:bob 3.5s ease-in-out infinite; }
+    .home-hero h1 { font-size:clamp(30px,5.5vw,48px); line-height:1.12; margin:10px 0 12px; }
+    .home-hero h1 .accent { color:var(--teal-600); }
+    .home-hero p.sub { font-size:17px; color:var(--text-muted); max-width:620px; margin:0 auto 22px; }
+    .home-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:820px; margin:30px auto 0; }
+    .home-step { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; text-align:left; box-shadow:var(--shadow); }
+    .home-step .n { width:30px; height:30px; border-radius:50%; background:var(--teal-100); color:var(--teal-700); display:grid; place-items:center; font-weight:800; margin-bottom:8px; }
+    .home-step .t { font-weight:700; color:var(--text); font-size:15px; }
+    .home-step .d { font-size:13px; color:var(--text-muted); margin-top:3px; }
+    @media (max-width:680px){ .home-steps{ grid-template-columns:1fr; } }
+    @keyframes float { 0%,100%{transform:translateY(0) translateX(0);} 50%{transform:translateY(-22px) translateX(16px);} }
+    @keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-9px);} }
+  </style>
 </head>
 <body>
   <main>
-    <section class="hero container">
+    <section class="home-hero container">
       <div class="blob b1"></div><div class="blob b2"></div>
-      <svg class="mascot" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <svg class="home-mascot" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <circle cx="60" cy="60" r="54" fill="var(--teal-100)"/>
         <path d="M60 30c-18 0-32 14-32 32 0 18 32 40 32 40s32-22 32-40c0-18-14-32-32-32z" fill="var(--teal-400)"/>
         <circle cx="50" cy="58" r="5" fill="#fff"/><circle cx="70" cy="58" r="5" fill="#fff"/>
         <path d="M50 74c4 5 16 5 20 0" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
       </svg>
-      <span class="badge reveal">Anonymous · No signup · 24×7</span>
-      <h1 class="reveal d1"><span data-i18n="hero.title1">The first step to feeling better</span><br><span class="accent" data-i18n="hero.title2">shouldn't feel heavy.</span></h1>
-      <p class="reveal d2" data-i18n="hero.sub">MANNMITRA is a trust-first mental health companion for students.</p>
-      <div class="reveal d3">
+
+      <span class="badge">Anonymous · No signup · 24×7</span>
+      <h1><span data-i18n="hero.title1">The first step to feeling better</span><br><span class="accent" data-i18n="hero.title2">shouldn't feel heavy.</span></h1>
+      <p class="sub" data-i18n="hero.sub">MANNMITRA is a trust-first mental health companion for students. Start with a 2-minute anonymous check-in — no login, no confession to a stranger on day one.</p>
+      <div>
         <a class="btn btn-primary" href="checkin.html" data-i18n="start">Start anonymously →</a>
         &nbsp; <a class="btn btn-ghost" href="privacy.html" data-i18n="howProtect">How we protect you</a>
       </div>
 
-      <div class="hero-steps reveal d4" style="margin-top:34px; text-align:left; max-width:760px; margin-left:auto; margin-right:auto">
-        <div class="hs-row"><span class="hs-num">1</span><div><div class="hs-t">Check in anonymously</div><div class="hs-d">2-minute mood check-in — no login, no shame.</div></div></div>
-        <div class="hs-row"><span class="hs-num">2</span><div><div class="hs-t">Get routed by need</div><div class="hs-d">AI triages to peer, counselor, or crisis help.</div></div></div>
-        <div class="hs-row"><span class="hs-num">3</span><div><div class="hs-t">Heal in a safe space</div><div class="hs-d">Journal, breathe, and connect — all private.</div></div></div>
+      <div class="home-steps">
+        <div class="home-step"><div class="n">1</div><div class="t">Check in anonymously</div><div class="d">2-minute mood check-in — no login, no shame.</div></div>
+        <div class="home-step"><div class="n">2</div><div class="t">Get routed by need</div><div class="d">AI triages to peer, counselor, or crisis help.</div></div>
+        <div class="home-step"><div class="n">3</div><div class="t">Heal in a safe space</div><div class="d">Journal, breathe, and connect — all private.</div></div>
       </div>
     </section>
 
-    <section class="container reveal d2">
+    <section class="container">
       <div class="stats">
         <div class="stat"><div class="num">~15%</div><div class="label">of Indian students show depression symptoms (NIMHANS)</div></div>
         <div class="stat"><div class="num">1 in 4</div><div class="label">young people delay help due to stigma</div></div>
@@ -41,20 +64,20 @@
     </section>
 
     <section class="section container">
-      <h2 class="reveal" data-i18n="trustFunnel">The trust funnel</h2>
-      <div class="sub reveal" data-i18n="trustSub">We lower the first step, then route you to the right kind of help.</div>
+      <h2 data-i18n="trustFunnel">The trust funnel</h2>
+      <div class="sub" data-i18n="trustSub">We lower the first step, then route you to the right kind of help.</div>
       <div class="cards">
-        <div class="card reveal d1"><div class="icon">🤖</div><div class="step">LAYER 1</div><h3>AI Companion</h3><p>Anonymous mood check-ins, journaling & breathing — 24/7. Detects severity and routes you.</p></div>
-        <div class="card reveal d2"><div class="icon">🤝</div><div class="step">LAYER 2</div><h3>Peer Support</h3><p>Trained senior students ("Peer Listeners") in anonymous 1:1 or topic rooms. Someone like you.</p></div>
-        <div class="card reveal d3"><div class="icon">🩺</div><div class="step">LAYER 3</div><h3>Licensed Counselor</h3><p>Book with only an anonymous ID shown to admin. Shared pool across colleges fixes the shortage.</p></div>
-        <div class="card reveal d4"><div class="icon">🆘</div><div class="step">LAYER 4</div><h3>Crisis Escalation</h3><p>One-tap verified helplines (iCall, Vandrevala, Tele-MANAS 14416). Auto-triggered if risk is detected.</p></div>
+        <div class="card"><div class="icon">🤖</div><div class="step">LAYER 1</div><h3>AI Companion</h3><p>Anonymous mood check-ins, journaling & breathing — 24/7. Detects severity and routes you.</p></div>
+        <div class="card"><div class="icon">🤝</div><div class="step">LAYER 2</div><h3>Peer Support</h3><p>Trained senior students ("Peer Listeners") in anonymous 1:1 or topic rooms. Someone like you.</p></div>
+        <div class="card"><div class="icon">🩺</div><div class="step">LAYER 3</div><h3>Licensed Counselor</h3><p>Book with only an anonymous ID shown to admin. Shared pool across colleges fixes the shortage.</p></div>
+        <div class="card"><div class="icon">🆘</div><div class="step">LAYER 4</div><h3>Crisis Escalation</h3><p>One-tap verified helplines (iCall, Vandrevala, Tele-MANAS 14416). Auto-triggered if risk is detected.</p></div>
       </div>
     </section>
 
     <section class="section container" style="text-align:center">
-      <div class="panel reveal">
+      <div class="panel">
         <h2 style="margin-top:0" data-i18n="whyWins">Why this wins</h2>
-        <p style="color:var(--text-muted)">Stigma isn't solved by hiring more counselors — it's solved by making the <strong>first step weightless</strong>. MANNMITRA meets students where they are: anonymous, on their phone, at 2am, with no appointment and no shame.</p>
+        <p style="color:var(--text-muted)">Stigma isn't solved by hiring more counselors — it's solved by making the <strong>first step weightless</strong>. MANNMITRA meets students where they are: anonymous, on their phone, at 2am, with no appointment and no shame. Everything else builds from there.</p>
         <a class="btn btn-primary" href="checkin.html" data-i18n="tryCheckin">Try the 2-minute check-in</a>
       </div>
     </section>
