@@ -202,6 +202,7 @@
     document.body.insertAdjacentHTML("beforeend", overlayHtml() + sosHtml() + tourHtml());
     applyTheme(); applyLang();
     setupSOS(); maybeTour();
+    pwaInit();
 
     const sel = document.getElementById("langSel");
     if (sel) sel.addEventListener("change", e => {
@@ -218,6 +219,28 @@
       toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
       callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour
     };
+  }
+
+  // --- PWA: manifest, theme-color, apple-touch-icon, service worker ---
+  function pwaInit() {
+    const head = document.head;
+    if (head && !document.querySelector('link[rel="manifest"]')) {
+      const m = document.createElement("link");
+      m.rel = "manifest"; m.href = "manifest.json"; head.appendChild(m);
+    }
+    if (head && !document.querySelector('meta[name="theme-color"]')) {
+      const t = document.createElement("meta");
+      t.name = "theme-color"; t.content = "#0f9b86"; head.appendChild(t);
+    }
+    if (head && !document.querySelector('link[rel="apple-touch-icon"]')) {
+      const a = document.createElement("link");
+      a.rel = "apple-touch-icon"; a.href = "assets/img/apple-touch-icon.png"; head.appendChild(a);
+    }
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);

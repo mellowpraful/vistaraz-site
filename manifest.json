@@ -1,0 +1,24 @@
+{
+  "name": "MANNMITRA — A friend for your mind",
+  "short_name": "MANNMITRA",
+  "description": "Trust-first, tiered mental-health companion for students. Anonymous check-in, peer support, counselor access and crisis helplines.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdf8f1",
+  "theme_color": "#0f9b86",
+  "lang": "en-IN",
+  "categories": ["health", "lifestyle", "education"],
+  "icons": [
+    { "src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Check-in", "url": "checkin.html" },
+    { "name": "Peer Support", "url": "peer.html" },
+    { "name": "Crisis helplines", "url": "crisis.html" }
+  ]
+}
