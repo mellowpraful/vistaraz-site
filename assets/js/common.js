@@ -70,9 +70,9 @@
       <div class="nav-links">${links}</div>
       <div class="nav-actions">
         <select class="lang" id="langSel" title="Language">${opts}</select>
-        <button class="icon-btn" id="contrastBtn" title="High contrast" onclick="MANNMITRA.common.toggleContrast()">◐</button>
-        <button class="icon-btn" id="installBtn" title="Install app" onclick="MANNMITRA.common.installApp()" style="display:none">📲</button>
-        <button class="icon-btn" id="themeBtn" title="Toggle theme" onclick="MANNMITRA.common.toggleTheme()">🌙</button>
+        <button class="icon-btn" id="contrastBtn" title="High contrast">◐</button>
+        <button class="icon-btn" id="installBtn" title="Install app" style="display:none">📲</button>
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
         <span class="anon-id" title="Anonymous ID — no personal data" id="navAnonId">${id}</span>
       </div>
     </nav>
@@ -92,8 +92,8 @@
         <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24x7</div></div><div class="num">14416</div></div>
         <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free counseling</div></div><div class="num">9152987821</div></div>
         <div class="helpline"><div><strong>Vandrevala</strong><div class="meta">24x7 helpline</div></div><div class="num">1860 266 2345</div></div>
-        <a class="btn btn-danger" style="margin-top:16px; width:100%; justify-content:center" href="tel:14416" onclick="MANNMITRA.common.callHelpline('14416'); return true;">📞 Call Tele-MANAS (14416) now</a>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="MANNMITRA.common.closeCrisis()">I'm safe — close</button>
+        <a class="btn btn-danger" id="crisisCallBtn" style="margin-top:16px; width:100%; justify-content:center" href="tel:14416">📞 Call Tele-MANAS (14416) now</a>
+        <button class="btn btn-primary" id="crisisCloseBtn" style="margin-top:12px">I'm safe — close</button>
         <a class="btn btn-ghost" href="crisis.html" style="margin-top:12px">All helplines</a>
       </div>
     </div>`;
@@ -211,11 +211,24 @@
       installApp
     };
 
-    // Wire tour buttons via event listeners (no reliance on inline onclick / globals).
+    // Wire all interactive controls via addEventListener (no inline onclick / globals —
+    // inline handlers referencing MANNMITRA.common.* fail on some mobile browsers).
     const nextBtn = document.getElementById("tourNext");
     const skipBtn = document.getElementById("tourSkip");
     if (nextBtn) nextBtn.addEventListener("click", tourNext);
     if (skipBtn) skipBtn.addEventListener("click", endTour);
+
+    const themeBtn = document.getElementById("themeBtn");
+    const contrastBtn = document.getElementById("contrastBtn");
+    const installB = document.getElementById("installBtn");
+    if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+    if (contrastBtn) contrastBtn.addEventListener("click", toggleContrast);
+    if (installB) installB.addEventListener("click", installApp);
+
+    const crisisCall = document.getElementById("crisisCallBtn");
+    const crisisClose = document.getElementById("crisisCloseBtn");
+    if (crisisCall) crisisCall.addEventListener("click", () => callHelpline("14416"));
+    if (crisisClose) crisisClose.addEventListener("click", closeCrisis);
 
     maybeTour();
     pwaInit();
