@@ -13,10 +13,10 @@
     These free, confidential helplines are available 24×7.</div>
 
     <div class="panel">
-      <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24×7 · multilingual</div></div><a class="btn btn-primary" href="tel:14416">14416</a></div>
-      <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free psychological support</div></div><a class="btn btn-primary" href="tel:9152987821">9152987821</a></div>
-      <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24×7 mental health helpline</div></div><a class="btn btn-primary" href="tel:18602662345">1860 266 2345</a></div>
-      <div class="helpline"><div><strong>AASRA</strong><div class="meta">24×7 suicide prevention</div></div><a class="btn btn-primary" href="tel:9820466726">9820466726</a></div>
+      <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24×7 · multilingual</div></div><a class="btn btn-primary" href="tel:14416" onclick="copyNum('14416')">14416</a></div>
+      <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free psychological support</div></div><a class="btn btn-primary" href="tel:9152987821" onclick="copyNum('9152987821')">9152987821</a></div>
+      <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24×7 mental health helpline</div></div><a class="btn btn-primary" href="tel:18602662345" onclick="copyNum('18602662345')">1860 266 2345</a></div>
+      <div class="helpline"><div><strong>AASRA</strong><div class="meta">24×7 suicide prevention</div></div><a class="btn btn-primary" href="tel:9820466726" onclick="copyNum('9820466726')">9820466726</a></div>
 
       <div style="margin-top:24px; background:var(--sand-50); border-radius:14px; padding:18px">
         <h3 style="margin-top:0">What happens in MANNMITRA</h3>
@@ -39,5 +39,11 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
   <script src="assets/js/common.js"></script>
+  <script>
+    function copyNum(n){
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
+      if(!isMobile){ try{ navigator.clipboard && navigator.clipboard.writeText(n); }catch(e){} if(MANNMITRA&&MANNMITRA.common) MANNMITRA.common.toast("📞 Number copied: "+n); }
+    }
+  </script>
 </body>
 </html>

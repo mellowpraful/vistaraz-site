@@ -91,7 +91,7 @@
         <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24x7</div></div><div class="num">14416</div></div>
         <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free counseling</div></div><div class="num">9152987821</div></div>
         <div class="helpline"><div><strong>Vandrevala</strong><div class="meta">24x7 helpline</div></div><div class="num">1860 266 2345</div></div>
-        <a class="btn btn-danger" style="margin-top:16px; width:100%; justify-content:center" href="tel:14416">📞 Call Tele-MANAS (14416) now</a>
+        <a class="btn btn-danger" style="margin-top:16px; width:100%; justify-content:center" href="tel:14416" onclick="MANNMITRA.common.callHelpline('14416'); return true;">📞 Call Tele-MANAS (14416) now</a>
         <button class="btn btn-primary" style="margin-top:12px" onclick="MANNMITRA.common.closeCrisis()">I'm safe — close</button>
         <a class="btn btn-ghost" href="crisis.html" style="margin-top:12px">All helplines</a>
       </div>
@@ -147,8 +147,15 @@
       raf = requestAnimationFrame(tick);
     }
     function callHelpline(num){
-      // Directly dial the Indian helpline on SOS. tel: works on mobile; desktop opens dialer/app.
-      try { window.location.href = "tel:" + num; } catch (e) {}
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
+      if (isMobile) {
+        // Real dialer on phones.
+        try { window.location.href = "tel:" + num; } catch (e) {}
+      } else {
+        // Laptop/desktop: no dialer — copy number and show it so it visibly works.
+        try { navigator.clipboard && navigator.clipboard.writeText(num); } catch (e) {}
+        toast("📞 Helpline copied: " + num + " — dial from your phone");
+      }
     }
     function up(){ clearInterval(hold); cancelAnimationFrame(raf); fab.classList.remove("holding"); arc.style.strokeDashoffset = CIRC; }
     fab.addEventListener("mousedown", down); fab.addEventListener("touchstart", down, {passive:false});
