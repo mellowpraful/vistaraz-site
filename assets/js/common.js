@@ -129,6 +129,17 @@
   function closeCrisis() { const ov = document.getElementById("crisis-overlay"); if (ov) ov.classList.remove("show"); }
 
   // --- SOS hold-to-call ---
+  function callHelpline(num){
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
+    if (isMobile) {
+      // Real dialer on phones.
+      try { window.location.href = "tel:" + num; } catch (e) {}
+    } else {
+      // Laptop/desktop: no dialer — copy number and show it so it visibly works.
+      try { navigator.clipboard && navigator.clipboard.writeText(num); } catch (e) {}
+      toast("📞 Helpline copied: " + num + " — dial from your phone");
+    }
+  }
   function setupSOS() {
     const fab = document.getElementById("sos-fab");
     const arc = document.getElementById("sosArc");
@@ -146,17 +157,6 @@
         raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
-    }
-    function callHelpline(num){
-      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
-      if (isMobile) {
-        // Real dialer on phones.
-        try { window.location.href = "tel:" + num; } catch (e) {}
-      } else {
-        // Laptop/desktop: no dialer — copy number and show it so it visibly works.
-        try { navigator.clipboard && navigator.clipboard.writeText(num); } catch (e) {}
-        toast("📞 Helpline copied: " + num + " — dial from your phone");
-      }
     }
     function up(){ clearInterval(hold); cancelAnimationFrame(raf); fab.classList.remove("holding"); arc.style.strokeDashoffset = CIRC; }
     fab.addEventListener("mousedown", down); fab.addEventListener("touchstart", down, {passive:false});
