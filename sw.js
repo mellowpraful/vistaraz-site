@@ -3,7 +3,7 @@
  * Caches the app shell so the PWA works offline and installs on
  * mobile / tablet / laptop. Bump CACHE and re-run to invalidate.
  */
-const CACHE = "mannmitra-v1";
+const CACHE = "mannmitra-v2";
 const SHELL = [
   "./",
   "index.html",
@@ -35,8 +35,6 @@ const SHELL = [
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
-
-self.addEventListener("install", () => self.skipWaiting());
 
 self.addEventListener("activate", (e) => {
   e.waitUntil(
