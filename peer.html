@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peer Support · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>Peer Support</h2>
+    <div class="sub">Trained senior students ("Peer Listeners") — certified via a short NIMHANS/iCall-aligned module.
+    Anonymous. Someone like you, not an authority figure.</div>
+
+    <div class="panel">
+      <label for="uname">Pick an anonymous username</label>
+      <input type="text" id="uname" placeholder="e.g. QuietStar_42" value="Anonymous_User" />
+      <button class="btn btn-ghost" style="margin-top:10px" onclick="enterChat()">Enter as this name</button>
+
+      <h3 style="margin-top:26px">Topic rooms</h3>
+      <div class="room"><div><strong>📚 Exam Stress</strong><div class="meta">12 listeners · moderated</div></div><button class="btn btn-primary" onclick="join('Exam Stress')">Join</button></div>
+      <div class="room"><div><strong>💔 Relationships</strong><div class="meta">8 listeners · moderated</div></div><button class="btn btn-primary" onclick="join('Relationships')">Join</button></div>
+      <div class="room"><div><strong>🌧 Loneliness</strong><div class="meta">15 listeners · moderated</div></div><button class="btn btn-primary" onclick="join('Loneliness')">Join</button></div>
+      <div class="room"><div><strong>🏠 Family Pressure</strong><div class="meta">6 listeners · moderated</div></div><button class="btn btn-primary" onclick="join('Family Pressure')">Join</button></div>
+
+      <h3 style="margin-top:26px">1:1 with a Peer Listener</h3>
+      <div class="room"><div><strong>Request a listener</strong><div class="meta">Avg wait &lt; 3 min · anonymous</div></div><button class="btn btn-primary" onclick="requestListener()">Request</button></div>
+
+      <div id="chatWrap" style="display:none; margin-top:20px">
+        <div class="chat-box" id="chat"></div>
+        <div style="display:flex; gap:8px">
+          <input type="text" id="msg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')send()" />
+          <button class="btn btn-primary" onclick="send()">Send</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. Peer listeners are trained students, not clinicians.
+    In crisis? <a href="crisis.html">24×7 helplines</a>.
+  </footer>
+
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const peerReplies = [
+      "Thanks for sharing that — I hear you. Want to tell me more?",
+      "That sounds really heavy. You're not alone in feeling this way.",
+      "I've been there too. What helps you even a little on days like this?",
+      "It's okay to not be okay. I'm here, no judgment.",
+      "You took a brave step just by saying this out loud. 💚"
+    ];
+    let entered = false;
+
+    function enterChat(){ entered = true; MANNMITRA.common.toast("Entered as " + document.getElementById("uname").value); }
+    function join(room){ entered = true; document.getElementById("chatWrap").style.display = "block";
+      addMsg("system", "You joined room: " + room); addMsg("peer", "Welcome in. This is a safe, anonymous space 💚"); }
+    function requestListener(){ entered = true; document.getElementById("chatWrap").style.display = "block";
+      addMsg("system", "Connecting you to a trained Peer Listener..."); setTimeout(()=>addMsg("peer", peerReplies[0]), 900); }
+
+    function addMsg(who, text){
+      const c = document.getElementById("chat");
+      const d = document.createElement("div");
+      if(who==="system"){ d.className="msg"; d.innerHTML = `<span style="background:var(--sand-100);color:var(--muted)">${text}</span>`; }
+      else { d.className = "msg " + (who==="me"?"me":""); d.innerHTML = `<span>${text}</span>`; }
+      c.appendChild(d); c.scrollTop = c.scrollHeight;
+    }
+    function send(){
+      const v = document.getElementById("msg").value.trim(); if(!v) return;
+      addMsg("me", v);
+      document.getElementById("msg").value = "";
+      if(MANNMITRA.triage){
+        const r = MANNMITRA.triage.score({mood:5, text:v, answers:[]});
+        if(r.severity==="high"){ setTimeout(()=>MANNMITRA.common.triggerCrisis(), 500); return; }
+      }
+      setTimeout(()=>addMsg("peer", peerReplies[Math.floor(Math.random()*peerReplies.length)]), 800);
+    }
+  </script>
+</body>
+</html>

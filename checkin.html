@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check-in · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>2-minute check-in</h2>
+    <div class="sub">No login. Your answer stays on this device. Be honest — this helps us route you right.</div>
+
+    <div class="panel">
+      <label for="mood">How are you feeling right now?</label>
+      <input type="range" id="mood" min="1" max="10" value="6" />
+      <div class="mood-row"><span>😣 Worst</span><span id="moodVal">6 — Okay</span><span>😄 Great</span></div>
+
+      <label>Have you been sleeping well lately?</label>
+      <select id="q1">
+        <option value="yes">Yes, fine</option>
+        <option value="no">No, struggling</option>
+      </select>
+
+      <label>Do you feel supported by people around you?</label>
+      <select id="q2">
+        <option value="yes">Yes</option>
+        <option value="no">No, I feel alone</option>
+      </select>
+
+      <label>Anything on your mind? (optional — type freely)</label>
+      <textarea id="text" rows="3" placeholder="e.g. exams are crushing me, I feel I have no one to talk to..."></textarea>
+
+      <div style="margin-top:22px">
+        <button class="btn btn-primary" id="submit">See my path →</button>
+      </div>
+
+      <div id="result" style="margin-top:24px; display:none">
+        <div id="sevPill"></div>
+        <h3 id="routeTitle" style="margin:12px 0 6px"></h3>
+        <p id="reasons" style="color:var(--muted)"></p>
+        <div id="actions"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र — a friend for your mind.
+    In crisis? <a href="crisis.html">24×7 helplines</a>.
+  </footer>
+
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/triage.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const moodEl = document.getElementById("mood");
+    const moodVal = document.getElementById("moodVal");
+    function moodWord(v){ return v<=3?"Struggling":v<=6?"Okay":v<=8?"Good":"Great"; }
+    moodEl.addEventListener("input", () => moodVal.textContent = moodEl.value + " — " + moodWord(+moodEl.value));
+
+    document.getElementById("submit").addEventListener("click", () => {
+      const input = {
+        mood: +moodEl.value,
+        text: document.getElementById("text").value,
+        answers: [document.getElementById("q1").value === "no",
+                  document.getElementById("q2").value === "no"]
+      };
+      const r = MANNMITRA.triage.score(input);
+      MANNMITRA.state.pushCheckin({ ts: Date.now(), ...input, severity: r.severity });
+      MANNMITRA.state.setSeverity(r.severity);
+
+      const pillClass = r.severity === "high" ? "pill-high" : r.severity === "medium" ? "pill-med" : "pill-low";
+      document.getElementById("sevPill").innerHTML =
+        `<span class="pill ${pillClass}">Severity: ${r.severity.toUpperCase()} · score ${r.score}/100</span>`;
+      document.getElementById("routeTitle").textContent =
+        "Recommended: " + MANNMITRA.triage.routeLabel(r.route);
+
+      const why = r.reasons.length ? r.reasons.join(". ") + "." :
+        "No acute signals detected — light support is enough.";
+      document.getElementById("reasons").textContent = why;
+
+      let acts = "";
+      if (r.route === "crisis") {
+        acts = `<button class="btn btn-danger" onclick="MANNMITRA.common.triggerCrisis()">Get crisis support now</button>
+                <a class="btn btn-ghost" href="peer.html">Or talk to a peer</a>`;
+      } else if (r.route === "peer") {
+        acts = `<a class="btn btn-primary" href="peer.html">Talk to a peer listener</a>
+                <a class="btn btn-ghost" href="resources.html">Browse resources</a>`;
+      } else {
+        acts = `<a class="btn btn-primary" href="resources.html">Self-care & resources</a>
+                <a class="btn btn-ghost" href="peer.html">Or talk to someone</a>`;
+      }
+      document.getElementById("actions").innerHTML = acts;
+      document.getElementById("result").style.display = "block";
+
+      if (r.severity === "high") {
+        setTimeout(() => MANNMITRA.common.triggerCrisis(), 400);
+      }
+    });
+  </script>
+</body>
+</html>

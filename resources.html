@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>Resource Library</h2>
+    <div class="sub">Stigma is worse in vernacular, non-metro contexts — so we publish in Hindi and English.</div>
+
+    <div style="text-align:center; margin-bottom:20px">
+      <button class="btn btn-primary" id="enBtn" onclick="setLang('en')">English</button>
+      <button class="btn btn-ghost" id="hiBtn" onclick="setLang('hi')">हिन्दी</button>
+    </div>
+
+    <div class="cards" id="cards"></div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. In crisis? <a href="crisis.html">24×7 helplines</a>.
+  </footer>
+
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const DATA = {
+      en: [
+        { t: "3-minute breathing", d: "A simple box-breathing exercise to calm anxiety anywhere.", tag: "Self-care" },
+        { t: "Talking to parents about stress", d: "Gentle scripts to open up without conflict.", tag: "Family" },
+        { t: "Exam anxiety toolkit", d: "Practical steps the night before and during papers.", tag: "Academics" },
+        { t: "Sleep hygiene basics", d: "Small habits that rebuild restful sleep.", tag: "Self-care" },
+        { t: "When a friend is struggling", d: "How to listen without fixing — peer support 101.", tag: "Peer" }
+      ],
+      hi: [
+        { t: "3-मिनट की साँस लेने की क्रिया", d: "चिंता को शांत करने का सरल तरीका, कहीं भी।", tag: "स्वयं-देखभाल" },
+        { t: "माता-पिता से तनाव पर बात करना", d: "बिना झगड़े अपनी बात रखने के आसान तरीके।", tag: "परिवार" },
+        { t: "परीक्षा तनाव टूलकिट", d: "परीक्षा की पूर्व संध्या और दौरान व्यावहारिक उपाय।", tag: "पढ़ाई" },
+        { t: "नींद की देखभाल", d: "अच्छी नींद के लिए छोटी आदतें।", tag: "स्वयं-देखभाल" },
+        { t: "जब दोस्त परेशान हो", d: "बिना सुधारने के सुनना — सहयोग की पहली बात।", tag: "साथी" }
+      ]
+    };
+
+    function setLang(l){
+      const cards = document.getElementById("cards");
+      cards.innerHTML = DATA[l].map(r => `
+        <div class="card">
+          <div class="step">${r.tag}</div>
+          <h3>${r.t}</h3>
+          <p>${r.d}</p>
+        </div>`).join("");
+      document.getElementById("enBtn").className = l==="en"?"btn btn-primary":"btn btn-ghost";
+      document.getElementById("hiBtn").className = l==="hi"?"btn btn-primary":"btn btn-ghost";
+      try { localStorage.setItem("mannmitra_lang", l); } catch(e){}
+    }
+    let lang = "en";
+    try { lang = localStorage.getItem("mannmitra_lang") || "en"; } catch(e){}
+    setLang(lang);
+  </script>
+</body>
+</html>
