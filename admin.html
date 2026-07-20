@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2 data-i18n="admin.title">Admin Panel</h2>
+    <div class="sub">College wellness administrators see only aggregate funnels and anonymized booking IDs. No student identity is ever exposed.</div>
+
+    <div class="dash-grid" style="margin-bottom:24px">
+      <div class="kpi"><div class="k-num" id="mCheck">0</div><div class="k-label">Total check-ins</div></div>
+      <div class="kpi"><div class="k-num" id="mPeer">0</div><div class="k-label">Routed to peer</div></div>
+      <div class="kpi"><div class="k-num" id="mCouns">0</div><div class="k-label">Routed to counselor</div></div>
+      <div class="kpi"><div class="k-num" id="mCrisis">0</div><div class="k-label">Crisis escalations</div></div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:24px">
+      <h3 style="margin-top:0">Routing funnel</h3>
+      <div id="funnel"></div>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin-top:0">Peer listener network</h3>
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>Handle</th><th>Room</th><th>Certification</th><th>Status</th></tr></thead>
+        <tbody id="peers"></tbody>
+      </table>
+
+      <h3 style="margin-top:26px">Anonymized booking ledger (admin view)</h3>
+      <table class="tbl">
+        <thead><tr><th>Anon ID</th><th>Slot</th><th>Counselor</th><th>Severity</th></tr></thead>
+        <tbody id="ledger"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/features.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const M = MANNMITRA.data.METRICS;
+    document.getElementById("mCheck").textContent = M.checkins;
+    document.getElementById("mPeer").textContent = M.routedPeer;
+    document.getElementById("mCouns").textContent = M.routedCounselor;
+    document.getElementById("mCrisis").textContent = M.crisisEscalations;
+
+    const max = M.checkins;
+    const rows = [["AI check-ins", M.checkins],["Routed to peer", M.routedPeer],["Routed to counselor", M.routedCounselor],["Crisis escalations", M.crisisEscalations]];
+    document.getElementById("funnel").innerHTML = rows.map(([lab,val]) => {
+      const pct = (val/max*100).toFixed(0);
+      return `<div class="bar-row"><div class="bar-label">${lab}</div><div class="bar-track"><div class="bar-fill" style="width:0%" data-w="${pct}"></div></div><div style="width:48px;font-size:13px;color:var(--text-muted)">${val}</div></div>`;
+    }).join("");
+    requestAnimationFrame(() => document.querySelectorAll("#funnel .bar-fill").forEach(b => b.style.width = b.getAttribute("data-w")+"%"));
+
+    document.getElementById("peers").innerHTML = MANNMITRA.data.PEERS.map(p =>
+      `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.room}</td><td>${p.cert}</td><td>${p.online?'🟢 online':'⚪ offline'}</td></tr>`).join("");
+    document.getElementById("ledger").innerHTML = MANNMITRA.data.LEDGER.map(l =>
+      `<tr><td class="anon-id" style="font-size:13px">${l.anonId}</td><td>${l.slot}</td><td>${l.counselor}</td><td><span class="pill ${l.severity==='high'?'pill-high':l.severity==='medium'?'pill-med':'pill-low'}">${l.severity}</span></td></tr>`).join("");
+  </script>
+</body>
+</html>

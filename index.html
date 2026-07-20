@@ -9,15 +9,16 @@
 <body>
   <main>
     <section class="hero container">
-      <span class="badge">Anonymous · No signup · 24×7</span>
-      <h1>The first step to feeling better<br><span class="accent">shouldn't feel heavy.</span></h1>
-      <p>MANNMITRA is a trust-first mental health companion for students. Start with a
-      2-minute anonymous check-in — no login, no confession to a stranger on day one.</p>
-      <a class="btn btn-primary" href="checkin.html">Start anonymously →</a>
-      &nbsp; <a class="btn btn-ghost" href="privacy.html">How we protect you</a>
+      <span class="badge reveal">Anonymous · No signup · 24×7</span>
+      <h1 class="reveal d1"><span data-i18n="hero.title1">The first step to feeling better</span><br><span class="accent" data-i18n="hero.title2">shouldn't feel heavy.</span></h1>
+      <p class="reveal d2" data-i18n="hero.sub">MANNMITRA is a trust-first mental health companion for students.</p>
+      <div class="reveal d3">
+        <a class="btn btn-primary" href="checkin.html" data-i18n="start">Start anonymously →</a>
+        &nbsp; <a class="btn btn-ghost" href="privacy.html" data-i18n="howProtect">How we protect you</a>
+      </div>
     </section>
 
-    <section class="container">
+    <section class="container reveal d2">
       <div class="stats">
         <div class="stat"><div class="num">~15%</div><div class="label">of Indian students show depression symptoms (NIMHANS)</div></div>
         <div class="stat"><div class="num">1 in 4</div><div class="label">young people delay help due to stigma</div></div>
@@ -27,48 +28,30 @@
     </section>
 
     <section class="section container">
-      <h2>The trust funnel</h2>
-      <div class="sub">We lower the first step, then route you to the right kind of help.</div>
+      <h2 class="reveal" data-i18n="trustFunnel">The trust funnel</h2>
+      <div class="sub reveal" data-i18n="trustSub">We lower the first step, then route you to the right kind of help.</div>
       <div class="cards">
-        <div class="card">
-          <div class="step">LAYER 1</div>
-          <h3>AI Companion</h3>
-          <p>Anonymous mood check-ins, journaling & breathing — 24/7. Detects severity and routes you.</p>
-        </div>
-        <div class="card">
-          <div class="step">LAYER 2</div>
-          <h3>Peer Support</h3>
-          <p>Trained senior students ("Peer Listeners") in anonymous 1:1 or topic rooms. Someone like you.</p>
-        </div>
-        <div class="card">
-          <div class="step">LAYER 3</div>
-          <h3>Licensed Counselor</h3>
-          <p>Book with only an anonymous ID shown to admin. Shared pool across colleges fixes the shortage.</p>
-        </div>
-        <div class="card">
-          <div class="step">LAYER 4</div>
-          <h3>Crisis Escalation</h3>
-          <p>One-tap verified helplines (iCall, Vandrevala, Tele-MANAS 14416). Auto-triggered if risk is detected.</p>
-        </div>
+        <div class="card reveal d1"><div class="icon">🤖</div><div class="step">LAYER 1</div><h3>AI Companion</h3><p>Anonymous mood check-ins, journaling & breathing — 24/7. Detects severity and routes you.</p></div>
+        <div class="card reveal d2"><div class="icon">🤝</div><div class="step">LAYER 2</div><h3>Peer Support</h3><p>Trained senior students ("Peer Listeners") in anonymous 1:1 or topic rooms. Someone like you.</p></div>
+        <div class="card reveal d3"><div class="icon">🩺</div><div class="step">LAYER 3</div><h3>Licensed Counselor</h3><p>Book with only an anonymous ID shown to admin. Shared pool across colleges fixes the shortage.</p></div>
+        <div class="card reveal d4"><div class="icon">🆘</div><div class="step">LAYER 4</div><h3>Crisis Escalation</h3><p>One-tap verified helplines (iCall, Vandrevala, Tele-MANAS 14416). Auto-triggered if risk is detected.</p></div>
       </div>
     </section>
 
     <section class="section container" style="text-align:center">
-      <div class="panel">
-        <h2 style="margin-top:0">Why this wins</h2>
-        <p style="color:var(--muted)">Stigma isn't solved by hiring more counselors — it's solved by making the
-        <strong>first step weightless</strong>. MANNMITRA meets students where they are: anonymous, on their phone,
-        at 2am, with no appointment and no shame. Everything else builds from there.</p>
-        <a class="btn btn-primary" href="checkin.html">Try the 2-minute check-in</a>
+      <div class="panel reveal">
+        <h2 style="margin-top:0" data-i18n="whyWins">Why this wins</h2>
+        <p style="color:var(--text-muted)">Stigma isn't solved by hiring more counselors — it's solved by making the <strong>first step weightless</strong>. MANNMITRA meets students where they are: anonymous, on their phone, at 2am, with no appointment and no shame.</p>
+        <a class="btn btn-primary" href="checkin.html" data-i18n="tryCheckin">Try the 2-minute check-in</a>
       </div>
     </section>
   </main>
 
   <footer>
-    MANNMITRA · मन मित्र — a friend for your mind. Demo build for college hackathon round.
-    In crisis? <a href="crisis.html">24×7 helplines</a>.
+    MANNMITRA · मन मित्र — a friend for your mind. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
   </footer>
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
   <script src="assets/js/common.js"></script>
 </body>

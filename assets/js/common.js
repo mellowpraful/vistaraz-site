@@ -1,18 +1,18 @@
 /*
- * MANNMITRA — Common UI (nav + crisis overlay)
- * Injects the shared top nav and the global crisis modal into every page,
- * and listens for high-severity events to auto-trigger the overlay.
+ * MANNMITRA — Common UI (nav + dark mode + i18n + crisis overlay)
  */
 (function (global) {
   "use strict";
 
-  const NAV_ITEMS = [
-    ["index.html", "Home"],
-    ["checkin.html", "Check-in"],
-    ["peer.html", "Peer Support"],
-    ["counselor.html", "Counselor"],
-    ["resources.html", "Resources"],
-    ["privacy.html", "Privacy"]
+  const NAV = [
+    ["index.html", "nav.home"],
+    ["checkin.html", "nav.checkin"],
+    ["peer.html", "nav.peer"],
+    ["counselor.html", "nav.counselor"],
+    ["dashboard.html", "nav.dashboard"],
+    ["journal.html", "nav.journal"],
+    ["resources.html", "nav.resources"],
+    ["privacy.html", "nav.privacy"]
   ];
 
   function currentPage() {
@@ -20,11 +20,38 @@
     return p === "" ? "index.html" : p;
   }
 
+  function applyTheme() {
+    let t = "light";
+    try { t = localStorage.getItem("mannmitra_theme") || "light"; } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t);
+    const btn = document.getElementById("themeBtn");
+    if (btn) btn.textContent = t === "dark" ? "☀️" : "🌙";
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute("data-theme");
+    const next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("mannmitra_theme", next); } catch (e) {}
+    const btn = document.getElementById("themeBtn");
+    if (btn) btn.textContent = next === "dark" ? "☀️" : "🌙";
+  }
+
+  function applyLang() {
+    const l = global.MANNMITRA.i18n.getLang();
+    const sel = document.getElementById("langSel");
+    if (sel) sel.value = l;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      el.textContent = global.MANNMITRA.i18n.t(el.getAttribute("data-i18n"));
+    });
+  }
+
   function navHtml() {
     const id = (global.MANNMITRA && global.MANNMITRA.state) ? global.MANNMITRA.state.id() : "MM-DEMO";
-    const links = NAV_ITEMS.map(([href, label]) =>
-      `<a href="${href}" ${href === currentPage() ? 'style="color:var(--teal-700)"' : ""}>${label}</a>`
+    const links = NAV.map(([href, key]) =>
+      `<a href="${href}" ${href === currentPage() ? 'style="color:var(--teal-700)"' : ""}>${global.MANNMITRA.i18n.t(key)}</a>`
     ).join("");
+    const opts = global.MANNMITRA.i18n.langs.map(l =>
+      `<option value="${l}">${l.toUpperCase()}</option>`).join("");
     return `
     <nav class="nav">
       <a class="brand" href="index.html">
@@ -35,9 +62,11 @@
         </svg>
         MANNMITRA
       </a>
-      <div class="nav-links">
-        ${links}
-        <span class="anon-id" title="Your anonymous ID — no personal data stored">${id}</span>
+      <div class="nav-links">${links}</div>
+      <div class="nav-actions">
+        <select class="lang" id="langSel" title="Language">${opts}</select>
+        <button class="icon-btn" id="themeBtn" title="Toggle theme" onclick="MANNMITRA.common.toggleTheme()">🌙</button>
+        <span class="anon-id" title="Anonymous ID — no personal data" id="navAnonId">${id}</span>
       </div>
     </nav>`;
   }
@@ -46,14 +75,13 @@
     return `
     <div id="crisis-overlay" role="dialog" aria-modal="true">
       <div class="crisis-modal">
-        <h2>We're here for you</h2>
-        <p style="color:var(--muted)">You matter. If you're in distress, please reach out now — these
-        services are free, confidential, and available 24/7.</p>
-        <div class="helpline"><div><strong>Tele-MANAS (Govt. of India)</strong><div class="meta">24x7 multilingual</div></div><div class="num">14416</div></div>
+        <h2 data-i18n="crisis.line">In crisis?</h2>
+        <p style="color:var(--text-muted)">You matter. These services are free, confidential, 24/7.</p>
+        <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24x7</div></div><div class="num">14416</div></div>
         <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free counseling</div></div><div class="num">9152987821</div></div>
-        <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24x7 helpline</div></div><div class="num">1860 266 2345</div></div>
+        <div class="helpline"><div><strong>Vandrevala</strong><div class="meta">24x7 helpline</div></div><div class="num">1860 266 2345</div></div>
         <button class="btn btn-primary" style="margin-top:16px" onclick="MANNMITRA.common.closeCrisis()">I'm safe — close</button>
-        <a class="btn btn-ghost" href="crisis.html" style="margin-top:16px">View all helplines</a>
+        <a class="btn btn-ghost" href="crisis.html" style="margin-top:16px">All helplines</a>
       </div>
     </div>`;
   }
@@ -61,46 +89,38 @@
   function toast(msg) {
     let t = document.querySelector(".toast");
     if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
-    t.textContent = msg;
-    t.classList.add("show");
+    t.textContent = msg; t.classList.add("show");
     setTimeout(() => t.classList.remove("show"), 2600);
   }
-
-  function triggerCrisis() {
-    const ov = document.getElementById("crisis-overlay");
-    if (ov) ov.classList.add("show");
-  }
-  function closeCrisis() {
-    const ov = document.getElementById("crisis-overlay");
-    if (ov) ov.classList.remove("show");
-  }
+  function triggerCrisis() { const ov = document.getElementById("crisis-overlay"); if (ov) ov.classList.add("show"); }
+  function closeCrisis() { const ov = document.getElementById("crisis-overlay"); if (ov) ov.classList.remove("show"); }
 
   function mount() {
     document.body.insertAdjacentHTML("afterbegin", navHtml());
     document.body.insertAdjacentHTML("beforeend", overlayHtml());
+    applyTheme(); applyLang();
 
-    // Auto-trigger if last severity was high (survives navigation).
+    const sel = document.getElementById("langSel");
+    if (sel) sel.addEventListener("change", e => {
+      global.MANNMITRA.i18n.setLang(e.target.value); applyLang();
+      global.MANNMITRA.common.toast("Language: " + e.target.value.toUpperCase());
+    });
+
     try {
       const sev = global.MANNMITRA.state.get().lastSeverity;
-      if (sev === "high") {
-        setTimeout(triggerCrisis, 600);
-      }
+      if (sev === "high") setTimeout(triggerCrisis, 600);
     } catch (e) {}
 
-    // Allow pages to broadcast a high-severity event.
     global.MANNMITRA.common = {
-      triggerCrisis, closeCrisis, toast,
+      toggleTheme, triggerCrisis, closeCrisis, toast, applyLang, applyTheme,
       helplines: [
-        { name: "Tele-MANAS (Govt. of India)", meta: "24x7 multilingual", num: "14416" },
-        { name: "iCall (TISS)", meta: "Free counseling", num: "9152987821" },
-        { name: "Vandrevala Foundation", meta: "24x7 helpline", num: "1860 266 2345" }
+        { name: "Tele-MANAS", meta: "24x7", num: "14416" },
+        { name: "iCall (TISS)", meta: "Free", num: "9152987821" },
+        { name: "Vandrevala", meta: "24x7", num: "1860 266 2345" }
       ]
     };
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mount);
-  } else {
-    mount();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
+  else mount();
 })(window);

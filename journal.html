@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2 data-i18n="journal.title">Journal</h2>
+    <div class="sub">Private, on-device. Write freely — no one sees this but you.</div>
+
+    <div class="panel">
+      <label>Today's note</label>
+      <textarea class="field" id="entry" rows="5" placeholder="What's on your mind?"></textarea>
+      <div style="margin-top:14px; display:flex; gap:10px; align-items:center">
+        <button class="btn btn-primary" onclick="saveEntry()">Save entry</button>
+        <span id="moodTag" style="color:var(--text-muted); font-size:14px"></span>
+      </div>
+
+      <h3 style="margin-top:28px">Past entries</h3>
+      <div class="journal-list" id="list"></div>
+      <p id="empty" style="color:var(--text-muted)">No entries yet. Your reflections will appear here.</p>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    function saveEntry(){
+      const v = document.getElementById("entry").value.trim();
+      if(!v){ MANNMITRA.common.toast("Write something first"); return; }
+      MANNMITRA.state.addJournal({ ts: Date.now(), text: v, mood: MANNMITRA.state.get().lastSeverity || "n/a" });
+      document.getElementById("entry").value = "";
+      MANNMITRA.common.toast("Saved privately");
+      render();
+    }
+    function render(){
+      const list = document.getElementById("list");
+      const items = MANNMITRA.state.get().journal.slice().reverse();
+      document.getElementById("empty").style.display = items.length ? "none" : "block";
+      list.innerHTML = items.map(it => {
+        const d = new Date(it.ts);
+        return `<div class="journal-item"><div class="jt">${d.toLocaleString()} · mood: ${it.mood}</div><div class="jb">${it.text.replace(/</g,'&lt;')}</div></div>`;
+      }).join("");
+    }
+    render();
+  </script>
+</body>
+</html>

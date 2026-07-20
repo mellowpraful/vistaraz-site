@@ -8,21 +8,23 @@
 </head>
 <body>
   <main class="container section">
-    <h2>Resource Library</h2>
-    <div class="sub">Stigma is worse in vernacular, non-metro contexts — so we publish in Hindi and English.</div>
+    <h2 data-i18n="resources.title">Resource Library</h2>
+    <div class="sub" data-i18n="resources.sub">Published in Hindi, English and Marathi.</div>
 
     <div style="text-align:center; margin-bottom:20px">
       <button class="btn btn-primary" id="enBtn" onclick="setLang('en')">English</button>
       <button class="btn btn-ghost" id="hiBtn" onclick="setLang('hi')">हिन्दी</button>
+      <button class="btn btn-ghost" id="mrBtn" onclick="setLang('mr')">मराठी</button>
     </div>
 
     <div class="cards" id="cards"></div>
   </main>
 
   <footer>
-    MANNMITRA · मन मित्र. In crisis? <a href="crisis.html">24×7 helplines</a>.
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
   </footer>
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
   <script src="assets/js/common.js"></script>
   <script>
@@ -40,24 +42,26 @@
         { t: "परीक्षा तनाव टूलकिट", d: "परीक्षा की पूर्व संध्या और दौरान व्यावहारिक उपाय।", tag: "पढ़ाई" },
         { t: "नींद की देखभाल", d: "अच्छी नींद के लिए छोटी आदतें।", tag: "स्वयं-देखभाल" },
         { t: "जब दोस्त परेशान हो", d: "बिना सुधारने के सुनना — सहयोग की पहली बात।", tag: "साथी" }
+      ],
+      mr: [
+        { t: "3-मिनिट श्वास व्यायाम", d: "कोठेही चिंता शांत करण्याचा सोपा मार्ग.", tag: "स्वयं-देखभाल" },
+        { t: "आईवडिलांशी ताणावर बोलणे", d: "भांडण न करता मन मोकळे करण्याचे मार्ग.", tag: "कुटुंब" },
+        { t: "परीक्षा ताण टूलकिट", d: "परीक्षापूर्वी व दरम्यानचे व्यावहारिक उपाय.", tag: "शिक्षण" },
+        { t: "झोपेची काळजी", d: "चांगल्या झोपीसाठी छोट्या सवयी.", tag: "स्वयं-देखभाल" },
+        { t: "मित्र अडचणीत असताना", d: "न सोडवता ऐकणे — सोबतीची पहिली गोष्ट.", tag: "सोबती" }
       ]
     };
 
     function setLang(l){
+      MANNMITRA.i18n.setLang(l);
       const cards = document.getElementById("cards");
       cards.innerHTML = DATA[l].map(r => `
-        <div class="card">
-          <div class="step">${r.tag}</div>
-          <h3>${r.t}</h3>
-          <p>${r.d}</p>
-        </div>`).join("");
+        <div class="card"><div class="step">${r.tag}</div><h3>${r.t}</h3><p>${r.d}</p></div>`).join("");
       document.getElementById("enBtn").className = l==="en"?"btn btn-primary":"btn btn-ghost";
       document.getElementById("hiBtn").className = l==="hi"?"btn btn-primary":"btn btn-ghost";
-      try { localStorage.setItem("mannmitra_lang", l); } catch(e){}
+      document.getElementById("mrBtn").className = l==="mr"?"btn btn-primary":"btn btn-ghost";
     }
-    let lang = "en";
-    try { lang = localStorage.getItem("mannmitra_lang") || "en"; } catch(e){}
-    setLang(lang);
+    setLang(MANNMITRA.i18n.getLang());
   </script>
 </body>
 </html>

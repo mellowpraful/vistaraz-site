@@ -8,76 +8,49 @@
 </head>
 <body>
   <main class="container section">
-    <h2>Licensed Counselor Access</h2>
-    <div class="sub">Affordable, private, and pooled across colleges. Your college admin sees only your
-    <strong>anonymous ID + time slot</strong> — never your name, faculty, or parents.</div>
+    <h2 data-i18n="counselor.title">Counselor Dashboard</h2>
+    <div class="sub">Shared counselor pool across colleges. You only ever see anonymous IDs — never a student's name, faculty, or family.</div>
+
+    <div class="dash-grid" style="margin-bottom:24px">
+      <div class="kpi"><div class="k-num" id="kPool">0</div><div class="k-label">Counselors in shared pool</div></div>
+      <div class="kpi"><div class="k-num" id="kPeers">0</div><div class="k-label">Trained peer listeners</div></div>
+      <div class="kpi"><div class="k-num" id="kRouted">0</div><div class="k-label">Students routed (30d)</div></div>
+      <div class="kpi"><div class="k-num" id="kCrisis">0</div><div class="k-label">Crisis escalations (30d)</div></div>
+    </div>
 
     <div class="panel">
-      <h3>Your anonymous ID</h3>
-      <p style="color:var(--muted)">This is all the admin ever sees. Share it when you book.</p>
-      <div class="anon-id" id="aid">MM-XXXX-XX</div>
-      <button class="btn btn-ghost" style="margin-left:10px" onclick="copyId()">Copy</button>
+      <h3 style="margin-top:0">Shared counselor pool</h3>
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>Name</th><th>Languages</th><th>Current load</th></tr></thead>
+        <tbody id="pool"></tbody>
+      </table>
 
-      <h3 style="margin-top:24px">Pick a day</h3>
-      <div class="calendar" id="cal"></div>
-
-      <h3 style="margin-top:20px">Available slots</h3>
-      <div class="slots" id="slots"></div>
-
-      <h3 style="margin-top:20px">Confirm booking</h3>
-      <div id="confirm" style="color:var(--muted)">Select a day and slot above.</div>
-      <button class="btn btn-primary" id="bookBtn" style="margin-top:12px" disabled onclick="book()">Confirm anonymous booking</button>
+      <h3 style="margin-top:26px">Your anonymized booking ledger</h3>
+      <table class="tbl">
+        <thead><tr><th>Anon ID</th><th>Slot</th><th>Counselor</th><th>Severity</th></tr></thead>
+        <tbody id="ledger"></tbody>
+      </table>
     </div>
   </main>
 
   <footer>
-    MANNMITRA · मन मित्र. Counselors are licensed professionals via our shared pool.
-    In crisis? <a href="crisis.html">24×7 helplines</a>.
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
   </footer>
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/state.js"></script>
+  <script src="assets/js/features.js"></script>
   <script src="assets/js/common.js"></script>
   <script>
-    document.getElementById("aid").textContent = MANNMITRA.state.id();
-
-    function copyId(){
-      navigator.clipboard && navigator.clipboard.writeText(MANNMITRA.state.id());
-      MANNMITRA.common.toast("Anonymous ID copied");
-    }
-
-    const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    const cal = document.getElementById("cal");
-    let selDay = null, selSlot = null;
-    days.forEach((d,i)=>{
-      const el = document.createElement("div");
-      el.className = "cal-day";
-      const date = new Date(); date.setDate(date.getDate()+i+1);
-      el.innerHTML = `${d}<br><small>${date.getDate()}/${date.getMonth()+1}</small>`;
-      el.onclick = () => { document.querySelectorAll(".cal-day").forEach(x=>x.classList.remove("sel"));
-        el.classList.add("sel"); selDay = d; renderSlots(); };
-      cal.appendChild(el);
-    });
-
-    const allSlots = ["10:00","11:30","13:00","14:30","16:00","17:30"];
-    function renderSlots(){
-      const s = document.getElementById("slots"); s.innerHTML = "";
-      allSlots.forEach(t=>{
-        const el = document.createElement("div"); el.className="slot"; el.textContent=t;
-        el.onclick = () => { document.querySelectorAll(".slot").forEach(x=>x.classList.remove("sel"));
-          el.classList.add("sel"); selSlot=t; updateConfirm(); };
-        s.appendChild(el);
-      });
-    }
-    function updateConfirm(){
-      if(selDay && selSlot){
-        document.getElementById("confirm").innerHTML =
-          `Booking as <strong>${MANNMITRA.state.id()}</strong> on <strong>${selDay}</strong> at <strong>${selSlot}</strong>. Admin sees only this.`;
-        document.getElementById("bookBtn").disabled = false;
-      }
-    }
-    function book(){
-      MANNMITRA.common.toast("Booked! Reference " + MANNMITRA.state.id());
-    }
+    const M = MANNMITRA.data.METRICS;
+    document.getElementById("kPool").textContent = M.counselors;
+    document.getElementById("kPeers").textContent = M.peerListeners;
+    document.getElementById("kRouted").textContent = M.routedCounselor;
+    document.getElementById("kCrisis").textContent = M.crisisEscalations;
+    document.getElementById("pool").innerHTML = MANNMITRA.data.COUNSELORS.map(c =>
+      `<tr><td>${c.id}</td><td>${c.name}</td><td>${c.lang.map(l=>l.toUpperCase()).join(", ")}</td><td>${c.load} sessions</td></tr>`).join("");
+    document.getElementById("ledger").innerHTML = MANNMITRA.data.LEDGER.map(l =>
+      `<tr><td class="anon-id" style="font-size:13px">${l.anonId}</td><td>${l.slot}</td><td>${l.counselor}</td><td><span class="pill ${l.severity==='high'?'pill-high':l.severity==='medium'?'pill-med':'pill-low'}">${l.severity}</span></td></tr>`).join("");
   </script>
 </body>
 </html>

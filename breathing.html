@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breathe · MANNMITRA</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2 data-i18n="breathing.title">Breathing Exercise</h2>
+    <div class="sub">Follow the circle. Inhale as it grows, exhale as it shrinks. 4-4-4-4 box breathing.</div>
+
+    <div class="panel" style="text-align:center">
+      <div class="breath-stage">
+        <div class="breath-circle" id="circle">Ready</div>
+      </div>
+      <div id="phase" style="font-size:20px; font-weight:700; color:var(--teal-700)">Press start</div>
+      <div style="margin-top:18px">
+        <button class="btn btn-primary" id="startBtn" onclick="startBreath()">Start</button>
+        <button class="btn btn-ghost" id="stopBtn" onclick="stopBreath()" disabled>Stop</button>
+      </div>
+      <p style="color:var(--text-muted); margin-top:18px">Cycles completed: <strong id="count">0</strong></p>
+    </div>
+  </main>
+
+  <footer>
+    MANNMITRA · मन मित्र. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    let timer = null, cycles = 0;
+    const circle = document.getElementById("circle");
+    const phase = document.getElementById("phase");
+    function step(label, cls, ms){
+      phase.textContent = label;
+      circle.className = "breath-circle " + cls;
+      return new Promise(res => setTimeout(res, ms));
+    }
+    async function loop(){
+      await step("Breathe in…", "in", 4000);
+      await step("Hold…", "in", 4000);
+      await step("Breathe out…", "out", 4000);
+      await step("Hold…", "out", 4000);
+      cycles++; document.getElementById("count").textContent = cycles;
+      if(timer) loop();
+    }
+    function startBreath(){
+      timer = true; document.getElementById("startBtn").disabled = true;
+      document.getElementById("stopBtn").disabled = false; loop();
+    }
+    function stopBreath(){
+      timer = null; document.getElementById("startBtn").disabled = false;
+      document.getElementById("stopBtn").disabled = true;
+      phase.textContent = "Paused"; circle.className = "breath-circle";
+    }
+  </script>
+</body>
+</html>
