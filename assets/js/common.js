@@ -202,7 +202,16 @@
     document.body.insertAdjacentHTML("afterbegin", navHtml());
     document.body.insertAdjacentHTML("beforeend", overlayHtml() + sosHtml() + tourHtml());
     applyTheme(); applyLang();
-    setupSOS(); maybeTour();
+    setupSOS();
+
+    // Expose common API BEFORE maybeTour() so tour buttons work immediately.
+    global.MANNMITRA.common = {
+      toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
+      callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour,
+      installApp
+    };
+
+    maybeTour();
     pwaInit();
 
     const sel = document.getElementById("langSel");
@@ -215,12 +224,6 @@
       const sev = global.MANNMITRA.state.get().lastSeverity;
       if (sev === "high") setTimeout(triggerCrisis, 600);
     } catch (e) {}
-
-    global.MANNMITRA.common = {
-      toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
-      callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour,
-      installApp
-    };
   }
 
   // --- PWA: manifest, theme-color, apple-touch-icon, service worker ---
