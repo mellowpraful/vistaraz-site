@@ -113,8 +113,8 @@
         <h2 id="tourTitle" style="margin:0 0 8px">Welcome to MANNMITRA</h2>
         <p id="tourBody" style="color:var(--text-muted)">A safe, anonymous space for your mind. Let's take a 30-second tour.</p>
         <div style="margin:16px 0"><span class="step-dot on"></span><span class="step-dot"></span><span class="step-dot"></span></div>
-        <button class="btn btn-primary" id="tourNext" onclick="MANNMITRA.common.tourNext()">Next</button>
-        <button class="btn btn-ghost" onclick="MANNMITRA.common.endTour()">Skip</button>
+        <button class="btn btn-primary" id="tourNext">Next</button>
+        <button class="btn btn-ghost" id="tourSkip">Skip</button>
       </div>
     </div>`;
   }
@@ -204,20 +204,18 @@
     applyTheme(); applyLang();
     setupSOS();
 
-    // Expose common API BEFORE maybeTour() so tour buttons work immediately.
+    // Expose common API.
     global.MANNMITRA.common = {
       toggleTheme, toggleContrast, triggerCrisis, closeCrisis, toast,
       callHelpline, applyLang, applyTheme, tourNext, endTour, setupSOS, maybeTour,
       installApp
     };
 
-    // Also attach direct listeners as fallback (more reliable on mobile).
-    setTimeout(() => {
-      const nextBtn = document.getElementById("tourNext");
-      const skipBtn = document.querySelector("#tour-overlay .btn-ghost");
-      if (nextBtn) nextBtn.onclick = tourNext;
-      if (skipBtn) skipBtn.onclick = endTour;
-    }, 0);
+    // Wire tour buttons via event listeners (no reliance on inline onclick / globals).
+    const nextBtn = document.getElementById("tourNext");
+    const skipBtn = document.getElementById("tourSkip");
+    if (nextBtn) nextBtn.addEventListener("click", tourNext);
+    if (skipBtn) skipBtn.addEventListener("click", endTour);
 
     maybeTour();
     pwaInit();
