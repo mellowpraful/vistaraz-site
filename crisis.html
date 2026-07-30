@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crisis Support · Vistaraz</title>
+  <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2>Crisis Support — you are not alone</h2>
+    <div class="sub">If you are in immediate danger, call emergency services (112) now.
+    These free, confidential helplines are available 24×7.</div>
+
+    <div class="panel">
+      <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24×7 · multilingual</div></div><a class="btn btn-primary" href="tel:14416" onclick="copyNum('14416')">14416</a></div>
+      <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free psychological support</div></div><a class="btn btn-primary" href="tel:9152987821" onclick="copyNum('9152987821')">9152987821</a></div>
+      <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24×7 mental health helpline</div></div><a class="btn btn-primary" href="tel:18602662345" onclick="copyNum('18602662345')">1860 266 2345</a></div>
+      <div class="helpline"><div><strong>AASRA</strong><div class="meta">24×7 suicide prevention</div></div><a class="btn btn-primary" href="tel:9820466726" onclick="copyNum('9820466726')">9820466726</a></div>
+
+      <div style="margin-top:24px; background:var(--sand-50); border-radius:14px; padding:18px">
+        <h3 style="margin-top:0">What happens in Vistaraz</h3>
+        <p style="color:var(--muted); margin:0">If the AI companion or a peer chat detects high-risk language,
+        a crisis overlay appears automatically with these numbers — no extra step, no dead end.
+        Your safety is the one thing we never route around.</p>
+      </div>
+
+      <div style="margin-top:18px">
+        <a class="btn btn-ghost" href="checkin.html">Back to check-in</a>
+        <a class="btn btn-ghost" href="peer.html">Talk to a peer instead</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Vistaraz · विस्ताराज़. This page is for informational support, not a substitute for emergency care.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    function copyNum(n){
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
+      if(!isMobile){ try{ navigator.clipboard && navigator.clipboard.writeText(n); }catch(e){} if(Vistaraz&&Vistaraz.common) Vistaraz.common.toast("📞 Number copied: "+n); }
+    }
+  </script>
+</body>
+</html>

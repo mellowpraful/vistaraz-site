@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · Vistaraz</title>
+  <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="container section">
+    <h2 data-i18n="dashboard.title">Your Progress</h2>
+    <div class="sub">A private view of your check-in history. Stored only on this device.</div>
+
+    <div style="text-align:center; margin-bottom:8px">
+      <span class="streak-flame">🔥</span>
+      <span id="streakBig" style="font-size:22px;font-weight:800;color:var(--teal-700)">0-day streak</span>
+    </div>
+    <div class="badge-row" id="badges" style="justify-content:center"></div>
+
+    <div class="dash-grid" style="margin-bottom:24px">
+      <div class="kpi"><div class="k-num" id="kChecks">0</div><div class="k-label">Check-ins logged</div></div>
+      <div class="kpi"><div class="k-num" id="kAvg">–</div><div class="k-label">Avg mood</div></div>
+      <div class="kpi"><div class="k-num" id="kJournals">0</div><div class="k-label">Journal entries</div></div>
+      <div class="kpi"><div class="k-num" id="kStreak">0</div><div class="k-label">Day streak</div></div>
+    </div>
+
+    <div id="insightBox" class="panel" style="margin-bottom:24px; display:none"></div>
+
+    <div class="chart-wrap" style="margin-bottom:24px">
+      <h3 style="margin-top:0">Mood over time</h3>
+      <div id="chart"></div>
+      <p id="noData" style="color:var(--text-muted)">No check-ins yet — <a href="checkin.html">do one now</a>.</p>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card" onclick="location.href='cbt.html'"><div class="icon">🧠</div><h3>CBT Mini-Modules</h3><p>Thought record, gratitude & grounding exercises.</p></div>
+      <div class="module-card" onclick="location.href='community.html'"><div class="icon">💬</div><h3>Community Feed</h3><p>Anonymous, supportive posts from others like you.</p></div>
+      <div class="module-card" onclick="location.href='breathing.html'"><div class="icon">🫁</div><h3>Breathing</h3><p>Guided 4-4-4-4 box breathing.</p></div>
+      <div class="module-card" onclick="location.href='journal.html'"><div class="icon">📝</div><h3>Journal</h3><p>Private reflections, on device.</p></div>
+    </div>
+  </main>
+
+  <footer>
+    Vistaraz · विस्ताराज़. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
+  </footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/features.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    const D = Vistaraz.data;
+    function render(){
+      const s = Vistaraz.state.get();
+      const checks = s.checkins;
+      document.getElementById("kChecks").textContent = checks.length;
+      document.getElementById("kJournals").textContent = s.journal.length;
+
+      const moods = checks.map(c => c.mood).filter(Boolean);
+      document.getElementById("kAvg").textContent = moods.length ? (moods.reduce((a,b)=>a+b,0)/moods.length).toFixed(1) : "–";
+
+      const streak = D.computeStreak(s);
+      document.getElementById("kStreak").textContent = streak;
+      document.getElementById("streakBig").textContent = streak + "-day streak";
+      if(streak>=3){ try{ navigator.vibrate && navigator.vibrate(30); }catch(e){} }
+
+      // badges
+      document.getElementById("badges").innerHTML = D.BADGES.map(b => {
+        const got = b.test(s);
+        return `<span class="ach-badge ${got?'':'locked'}"><span class="emo">${b.emoji}</span>${b.label}</span>`;
+      }).join("");
+
+      // insight
+      const ins = D.moodInsight(s);
+      const ib = document.getElementById("insightBox");
+      if(ins){ ib.style.display="block"; ib.innerHTML = `💡 <strong>Insight:</strong> You tend to feel lowest on <strong>${ins.day}</strong> (avg mood ${ins.avg}/10). Consider a check-in or peer chat then.`; }
+      else ib.style.display="none";
+
+      const chart = document.getElementById("chart");
+      if(!checks.length){ document.getElementById("noData").style.display="block"; return; }
+      document.getElementById("noData").style.display="none";
+      const recent = checks.slice(-8);
+      chart.innerHTML = recent.map(c => {
+        const pct = (c.mood/10*100).toFixed(0);
+        const d = new Date(c.ts); const lab = (d.getMonth()+1)+"/"+d.getDate();
+        return `<div class="bar-row"><div class="bar-label">${lab}</div><div class="bar-track"><div class="bar-fill" style="width:0%" data-w="${pct}"></div></div><div style="width:34px;font-size:13px;color:var(--text-muted)">${c.mood}</div></div>`;
+      }).join("");
+      requestAnimationFrame(() => {
+        chart.querySelectorAll(".bar-fill").forEach(b => b.style.width = b.getAttribute("data-w") + "%");
+      });
+    }
+    render();
+  </script>
+</body>
+</html>
