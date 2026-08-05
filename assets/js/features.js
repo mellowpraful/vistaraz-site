@@ -23,11 +23,11 @@
 
   // Anonymized admin ledger — only anon_id + slot, never student identity.
   const LEDGER = [
-    { anonId: "MM-7F2A-9C", slot: "Mon 10:00", counselor: "C-101", severity: "medium" },
-    { anonId: "MM-3B8E-21", slot: "Tue 14:30", counselor: "C-103", severity: "low" },
-    { anonId: "MM-9D4C-55", slot: "Wed 11:30", counselor: "C-102", severity: "high" },
-    { anonId: "MM-1A6F-88", slot: "Thu 16:00", counselor: "C-104", severity: "medium" },
-    { anonId: "MM-5E2B-13", slot: "Fri 13:00", counselor: "C-101", severity: "low" }
+    { anonId: "VZ-7F2A-9C", slot: "Mon 10:00", counselor: "C-101", severity: "medium" },
+    { anonId: "VZ-3B8E-21", slot: "Tue 14:30", counselor: "C-103", severity: "low" },
+    { anonId: "VZ-9D4C-55", slot: "Wed 11:30", counselor: "C-102", severity: "high" },
+    { anonId: "VZ-1A6F-88", slot: "Thu 16:00", counselor: "C-104", severity: "medium" },
+    { anonId: "VZ-5E2B-13", slot: "Fri 13:00", counselor: "C-101", severity: "low" }
   ];
 
   // Aggregate funnel metrics (would come from analytics in prod).

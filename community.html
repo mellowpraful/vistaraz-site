@@ -3,20 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Community · Vistaraz</title>
+  <title>Campus Circles · Vistaraz</title>
   <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <main class="container section">
-    <h2>💬 Community Feed</h2>
-    <div class="sub">Anonymous, supportive. React with kindness. No names, no judgment.</div>
-
-    <div class="panel">
-      <div class="feed-compose">
-        <input class="field" id="postText" placeholder="Share something — a win, a worry, a hope…" />
-        <button class="btn btn-primary" onclick="post()">Post</button>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Anonymous support</span>
+        <h2>Campus circles</h2>
+        <p>Anonymous, supportive posts from other students. Good for small wins, worries, and gentle encouragement.</p>
       </div>
-      <div id="feed"></div>
+
+      <div class="two-up">
+        <div class="timeline-card">
+          <div class="step">How it works</div>
+          <h3>Share one sentence if that’s all you have.</h3>
+          <p>Posts are anonymous and the tone is moderated toward kindness. It is a place to feel less alone, not to perform wellness.</p>
+          <div class="chip-row" style="margin-top:14px">
+            <span class="chip">Anonymous</span>
+            <span class="chip">Supportive</span>
+            <span class="chip">Moderated</span>
+            <span class="chip">Campus-friendly</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="feed-compose">
+            <input class="field" id="postText" placeholder="Share a win, a worry, or a hope…" />
+            <button class="btn btn-primary" id="postBtn" type="button">Post</button>
+          </div>
+          <div id="feed"></div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -49,12 +68,14 @@
     function render(){
       const f = load();
       document.getElementById("feed").innerHTML = f.map(p => {
-        const rs = Object.keys(p.reacts).map(e=>`<button class="react-btn" onclick="react('${p.id}','${e}')">${e} ${p.reacts[e]}</button>`).join("") || `<span style="color:var(--text-muted);font-size:13px">Be the first to react</span>`;
+        const rs = Object.keys(p.reacts).map(e=>`<button class="react-btn" type="button" data-react-id="${p.id}" data-react-emo="${e}">${e} ${p.reacts[e]}</button>`).join("") || `<span style="color:var(--text-muted);font-size:13px">Be the first to react</span>`;
         const d = new Date(p.ts); const t = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
-        return `<div class="feed-post"><div class="fh"><span>${p.handle}</span><span>${t}</span></div><div class="fb">${p.text.replace(/</g,"&lt;")}</div><div class="react-row">${rs} <button class="react-btn" onclick="react('${p.id}','💚')">💚</button></div></div>`;
+        return `<div class="feed-post"><div class="fh"><span>${p.handle}</span><span>${t}</span></div><div class="fb">${p.text.replace(/</g,"&lt;")}</div><div class="react-row">${rs} <button class="react-btn" type="button" data-react-id="${p.id}" data-react-emo="💚">💚</button></div></div>`;
       }).join("");
+      document.querySelectorAll("[data-react-id]").forEach(btn => btn.addEventListener("click", () => react(btn.getAttribute("data-react-id"), btn.getAttribute("data-react-emo"))));
     }
     render();
+    document.getElementById("postBtn").addEventListener("click", post);
   </script>
 </body>
 </html>

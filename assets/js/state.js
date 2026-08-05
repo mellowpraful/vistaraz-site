@@ -10,13 +10,20 @@
   function genId() {
     const rnd = Math.random().toString(36).slice(2, 8).toUpperCase();
     const rnd2 = Math.random().toString(36).slice(2, 6).toUpperCase();
-    return "MM-" + rnd + "-" + rnd2;
+    return "VZ-" + rnd + "-" + rnd2;
   }
 
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.anonId === "string" && parsed.anonId.startsWith("MM-")) {
+          parsed.anonId = parsed.anonId.replace(/^MM-/, "VZ-");
+          save(parsed);
+        }
+        return parsed;
+      }
     } catch (e) {}
     const fresh = {
       anonId: genId(), checkins: [], journal: [], bookings: [],

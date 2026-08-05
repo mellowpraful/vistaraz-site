@@ -3,40 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard · Vistaraz</title>
+  <title>Progress Dashboard · Vistaraz</title>
   <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <main class="container section">
-    <h2 data-i18n="dashboard.title">Your Progress</h2>
-    <div class="sub">A private view of your check-in history. Stored only on this device.</div>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Your private overview</span>
+        <h2 data-i18n="dashboard.title">Progress dashboard</h2>
+        <p>See patterns, streaks, and next best actions without exposing personal identity.</p>
+      </div>
 
-    <div style="text-align:center; margin-bottom:8px">
-      <span class="streak-flame">🔥</span>
-      <span id="streakBig" style="font-size:22px;font-weight:800;color:var(--teal-700)">0-day streak</span>
-    </div>
-    <div class="badge-row" id="badges" style="justify-content:center"></div>
+      <div class="two-up" style="align-items:start">
+        <div class="timeline-card">
+          <div class="step">Quick read</div>
+          <h3 id="streakBig" style="margin-top:0">0-day streak</h3>
+          <p>Your latest activity is summarized on-device so you can notice trends early.</p>
+          <div class="badge-row" id="badges"></div>
+        </div>
 
-    <div class="dash-grid" style="margin-bottom:24px">
-      <div class="kpi"><div class="k-num" id="kChecks">0</div><div class="k-label">Check-ins logged</div></div>
-      <div class="kpi"><div class="k-num" id="kAvg">–</div><div class="k-label">Avg mood</div></div>
-      <div class="kpi"><div class="k-num" id="kJournals">0</div><div class="k-label">Journal entries</div></div>
-      <div class="kpi"><div class="k-num" id="kStreak">0</div><div class="k-label">Day streak</div></div>
-    </div>
+        <div class="quote-card">
+          <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">Next best step</span>
+          <h3 id="nextStepTitle" style="text-align:left;margin:10px 0 8px">Start a quick pulse</h3>
+          <p id="nextStepBody">Check in today to keep the trend line useful. If stress is rising, we’ll surface a peer circle or counselor route.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="checkin.html">Run the daily pulse</a>
+            <a class="btn btn-ghost" href="peer.html" style="border-color:rgba(255,255,255,.45);color:#fff">Open peer circle</a>
+          </div>
+        </div>
+      </div>
 
-    <div id="insightBox" class="panel" style="margin-bottom:24px; display:none"></div>
+      <div class="metric-grid" style="margin-top:18px">
+        <div class="metric-card"><div class="num" id="kChecks">0</div><div class="label">Check-ins logged</div></div>
+        <div class="metric-card"><div class="num" id="kAvg">–</div><div class="label">Average mood</div></div>
+        <div class="metric-card"><div class="num" id="kJournals">0</div><div class="label">Reflection entries</div></div>
+        <div class="metric-card"><div class="num" id="kStreak">0</div><div class="label">Day streak</div></div>
+      </div>
 
-    <div class="chart-wrap" style="margin-bottom:24px">
-      <h3 style="margin-top:0">Mood over time</h3>
-      <div id="chart"></div>
-      <p id="noData" style="color:var(--text-muted)">No check-ins yet — <a href="checkin.html">do one now</a>.</p>
-    </div>
+      <div id="insightBox" class="timeline-card" style="margin:24px 0; display:none"></div>
 
-    <div class="module-grid">
-      <div class="module-card" onclick="location.href='cbt.html'"><div class="icon">🧠</div><h3>CBT Mini-Modules</h3><p>Thought record, gratitude & grounding exercises.</p></div>
-      <div class="module-card" onclick="location.href='community.html'"><div class="icon">💬</div><h3>Community Feed</h3><p>Anonymous, supportive posts from others like you.</p></div>
-      <div class="module-card" onclick="location.href='breathing.html'"><div class="icon">🫁</div><h3>Breathing</h3><p>Guided 4-4-4-4 box breathing.</p></div>
-      <div class="module-card" onclick="location.href='journal.html'"><div class="icon">📝</div><h3>Journal</h3><p>Private reflections, on device.</p></div>
+      <div class="chart-wrap" style="margin-bottom:24px">
+        <h3 style="margin-top:0">Mood over time</h3>
+        <div id="chart"></div>
+        <p id="noData" style="color:var(--text-muted)">No check-ins yet — <a href="checkin.html">do one now</a>.</p>
+      </div>
+
+      <div class="section-head center">
+        <span class="eyebrow">What you can do now</span>
+        <h2>Built-in support lanes</h2>
+        <p>Move from noticing to action with a few small, familiar tools.</p>
+      </div>
+
+      <div class="story-grid">
+        <button class="module-card" type="button" data-href="checkin.html"><div class="icon">◌</div><h3>Daily pulse</h3><p>Keep your trend line current with a quick anonymous check-in.</p></button>
+        <button class="module-card" type="button" data-href="peer.html"><div class="icon">◠</div><h3>Peer circle</h3><p>Talk to trained senior students who know how to listen well.</p></button>
+        <button class="module-card" type="button" data-href="breathing.html"><div class="icon">🫁</div><h3>Grounding breath</h3><p>Slow the body down before an exam, meeting, or late-night spiral.</p></button>
+        <button class="module-card" type="button" data-href="journal.html"><div class="icon">✎</div><h3>Reflection journal</h3><p>Capture thoughts privately and notice recurring patterns.</p></button>
+        <button class="module-card" type="button" data-href="resources.html"><div class="icon">⌘</div><h3>Support library</h3><p>Find language-specific tools for sleep, exams, relationships, and stress.</p></button>
+        <button class="module-card" type="button" data-href="counselor.html"><div class="icon">◕</div><h3>Counselor hub</h3><p>View the shared counselor pool and anonymous booking flow.</p></button>
+      </div>
     </div>
   </main>
 
@@ -64,6 +90,22 @@
       document.getElementById("streakBig").textContent = streak + "-day streak";
       if(streak>=3){ try{ navigator.vibrate && navigator.vibrate(30); }catch(e){} }
 
+      const last = checks[checks.length - 1];
+      const nextTitle = document.getElementById("nextStepTitle");
+      const nextBody = document.getElementById("nextStepBody");
+      if(last){
+        if(last.severity === "high"){
+          nextTitle.textContent = "Move to counselor support";
+          nextBody.textContent = "Your last pulse showed high strain. The safest next move is professional help, with crisis support only if you need it right away.";
+        } else if(last.severity === "medium"){
+          nextTitle.textContent = "Open a peer circle";
+          nextBody.textContent = "A supportive peer can help you unpack the week, then route you onward if you still need more support.";
+        } else {
+          nextTitle.textContent = "Keep your pulse current";
+          nextBody.textContent = "You seem steady right now. A short check-in every day or two keeps the trends useful and catches changes early.";
+        }
+      }
+
       // badges
       document.getElementById("badges").innerHTML = D.BADGES.map(b => {
         const got = b.test(s);
@@ -73,7 +115,7 @@
       // insight
       const ins = D.moodInsight(s);
       const ib = document.getElementById("insightBox");
-      if(ins){ ib.style.display="block"; ib.innerHTML = `💡 <strong>Insight:</strong> You tend to feel lowest on <strong>${ins.day}</strong> (avg mood ${ins.avg}/10). Consider a check-in or peer chat then.`; }
+      if(ins){ ib.style.display="block"; ib.innerHTML = `<div class="step">Pattern insight</div><strong>Lowest day:</strong> ${ins.day} · average mood ${ins.avg}/10<br><span style="color:var(--text-muted)">Consider scheduling your pulse or peer chat around that day.</span>`; }
       else ib.style.display="none";
 
       const chart = document.getElementById("chart");
@@ -90,6 +132,9 @@
       });
     }
     render();
+    document.querySelectorAll("[data-href]").forEach(card => {
+      card.addEventListener("click", () => location.href = card.getAttribute("data-href"));
+    });
   </script>
 </body>
 </html>

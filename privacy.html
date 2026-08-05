@@ -8,55 +8,61 @@
 </head>
 <body>
   <main class="container section">
-    <h2>How we protect your privacy</h2>
-    <div class="sub">Privacy isn't a feature here — it's the foundation. Judges ask, we show.</div>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Privacy first</span>
+        <h2>How we protect your privacy</h2>
+        <p>Trust is not an add-on in Vistaraz. It is the product.</p>
+      </div>
 
-    <div class="cards">
-      <div class="card">
-        <div class="step">ANONYMOUS BY DESIGN</div>
-        <h3>No name, email, or phone</h3>
-        <p>You're identified only by an opaque <code>anon_id</code>. Layers 1–2 need zero personal data to work.</p>
-      </div>
-      <div class="card">
-        <div class="step">ZERO FACULTY / PARENT VIEW</div>
-        <h3>Counselor booking is blind</h3>
-        <p>College admin sees only your anonymous ID + time slot. No link to your student record, faculty, or family.</p>
-      </div>
-      <div class="card">
-        <div class="step">LOCAL-FIRST (DEMO)</div>
-        <h3>Your data stays on device</h3>
-        <p>In this demo, all check-in state lives in your browser's localStorage. Nothing leaves the device.</p>
-      </div>
-      <div class="card">
-        <div class="step">AUTO-PURGE</div>
-        <h3>Logs expire</h3>
-        <p>Production conversation logs are hashed and auto-deleted after a short TTL — we keep what helps, not what hunts.</p>
-      </div>
-      <div class="card">
-        <div class="step">CONSENT-GATED</div>
-        <h3>Identities revealed by you</h3>
-        <p>Peer/counselor identities are shown only with mutual consent. You control when to step into the light.</p>
-      </div>
-      <div class="card">
-        <div class="step">ENCRYPTED</div>
-        <h3>Transit + rest</h3>
-        <p>TLS in transit, column-level encryption at rest for any linkage data in the production build.</p>
-      </div>
-    </div>
+      <div class="two-up">
+        <div class="quote-card">
+          <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">The trust promise</span>
+          <h3 style="text-align:left;margin:10px 0 8px">The safest thing to do is also the easiest.</h3>
+          <p>Open the app, check in anonymously, get routed, and only reveal more when you choose. No faculty access, no family link, and no forced signup.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="checkin.html">Start a private pulse</a><a class="btn btn-ghost" href="crisis.html" style="border-color:rgba(255,255,255,.45);color:#fff">View crisis support</a></div>
+        </div>
 
-    <div class="panel" style="margin-top:24px">
-      <h3 style="margin-top:0">The trust promise</h3>
-      <p style="color:var(--muted)">We designed Vistaraz so the <strong>safest thing to do is also the easiest</strong>:
-      open the app, check in, get routed — all without ever "outing" yourself to an institution.
-      Help scales only as far as trust allows, so we put trust first.</p>
-      <a class="btn btn-primary" href="checkin.html">Start a private check-in</a>
-    </div>
+        <div class="timeline-card">
+          <div class="step">What is stored where</div>
+          <ul class="soft-list">
+            <li><strong>Anonymous ID only</strong><br>No name, email, or phone is required for the core flow.</li>
+            <li><strong>Device-first demo</strong><br>Check-ins, journals, and bookings live in browser storage in this prototype.</li>
+            <li><strong>Blind routing</strong><br>Campuses see trends and booking slots, not student identity.</li>
+            <li><strong>Consent-gated reveal</strong><br>Peer and counselor identities appear only when you step into that route.</li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="panel" style="margin-top:24px">
-      <h3 style="margin-top:0">Your data, your control</h3>
-      <p style="color:var(--muted)">Everything below lives only on this device. Nothing is sent to a server in this demo.</p>
-      <div class="data-box" id="dataView">Loading…</div>
-      <button class="btn btn-danger-outline" style="margin-top:12px" onclick="wipeData()">Delete all my data</button>
+      <div class="cards" style="margin-top:24px">
+        <div class="card">
+          <div class="step">ANONYMOUS BY DESIGN</div>
+          <h3>No name, email, or phone</h3>
+          <p>Your session is identified only by an opaque anonymous ID. The first two support layers need zero personal data to work.</p>
+        </div>
+        <div class="card">
+          <div class="step">BLIND BOOKINGS</div>
+          <h3>Counselor scheduling stays private</h3>
+          <p>Admin only sees an anonymous ID and slot. Nothing links back to a student record, faculty profile, or family account.</p>
+        </div>
+        <div class="card">
+          <div class="step">LOCAL-FIRST DEMO</div>
+          <h3>Your data stays on device</h3>
+          <p>In this demo, check-ins and journals live in localStorage. Nothing leaves the device unless a future backend is added.</p>
+        </div>
+        <div class="card">
+          <div class="step">AUTO-PURGE READY</div>
+          <h3>Logs should expire, not linger</h3>
+          <p>Production logs can be hashed and deleted after a short TTL so the system keeps what helps, not what hunts.</p>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:24px">
+        <h3 style="margin-top:0">Your data, your control</h3>
+        <p style="color:var(--muted)">Everything below lives only on this device in the demo.</p>
+        <div class="data-box" id="dataView">Loading…</div>
+        <button class="btn btn-danger-outline" style="margin-top:12px" id="wipeBtn">Delete all my data</button>
+      </div>
     </div>
   </main>
 
@@ -85,6 +91,7 @@
       }
     }
     renderData();
+    document.getElementById("wipeBtn").addEventListener("click", wipeData);
   </script>
 </body>
 </html>

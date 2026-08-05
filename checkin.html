@@ -3,43 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Check-in · Vistaraz</title>
+  <title>Daily Pulse · Vistaraz</title>
   <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <main class="container section">
-    <h2 data-i18n="checkin.title">2-minute check-in</h2>
-    <div class="sub" data-i18n="checkin.sub">No login. Your answer stays on this device.</div>
-
-    <div class="panel">
-      <label data-i18n="mood.q">How are you feeling right now?</label>
-      <input type="range" id="mood" min="1" max="10" value="6" />
-      <div class="mood-row"><span>😣 Worst</span><span id="moodVal">6 — Okay</span><span>😄 Great</span></div>
-
-      <label data-i18n="sleep.q">Have you been sleeping well lately?</label>
-      <select class="field" id="q1">
-        <option value="yes">Yes, fine</option>
-        <option value="no">No, struggling</option>
-      </select>
-
-      <label data-i18n="support.q">Do you feel supported by people around you?</label>
-      <select class="field" id="q2">
-        <option value="yes">Yes</option>
-        <option value="no">No, I feel alone</option>
-      </select>
-
-      <label data-i18n="mind.q">Anything on your mind? (optional)</label>
-      <textarea class="field" id="text" rows="3" placeholder="e.g. exams are crushing me..."></textarea>
-
-      <div style="margin-top:22px">
-        <button class="btn btn-primary" id="submit" data-i18n="seePath">See my path →</button>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Anonymous first</span>
+        <h2 data-i18n="checkin.title">Daily pulse</h2>
+        <p data-i18n="checkin.sub">Anonymous, quick, and private to this device.</p>
       </div>
+      <div class="two-up">
+        <div class="timeline-card">
+          <div class="step">What this is for</div>
+          <h3>Notice early, respond gently, and avoid overload.</h3>
+          <p>This pulse is designed for students who do not want to explain everything yet. It helps Vistaraz decide whether the best next step is self-guided support, a peer circle, or a counselor.</p>
+          <ul class="soft-list">
+            <li>No account required</li>
+            <li>Nothing here reads like a diagnosis</li>
+            <li>Your answers stay on this device unless you choose otherwise</li>
+          </ul>
+        </div>
 
-      <div id="result" style="margin-top:24px; display:none">
-        <div id="sevPill"></div>
-        <h3 id="routeTitle" style="margin:12px 0 6px"></h3>
-        <p id="reasons" style="color:var(--text-muted)"></p>
-        <div id="actions"></div>
+        <div class="panel">
+          <label data-i18n="mood.q">How is your balance today?</label>
+          <input type="range" id="mood" min="1" max="10" value="6" />
+          <div class="mood-row"><span>Drained</span><span id="moodVal">6 — Steady</span><span>Balanced</span></div>
+
+          <label data-i18n="sleep.q">How has your sleep been lately?</label>
+          <select class="field" id="q1">
+            <option value="yes">Sleeping okay</option>
+            <option value="no">Sleep has been rough</option>
+          </select>
+
+          <label data-i18n="support.q">Do you feel supported by people around you?</label>
+          <select class="field" id="q2">
+            <option value="yes">Yes, I do</option>
+            <option value="no">Not really</option>
+          </select>
+
+          <label data-i18n="mind.q">What is weighing on you? (optional)</label>
+          <textarea class="field" id="text" rows="3" placeholder="For example: exams, family pressure, loneliness..."></textarea>
+
+          <div style="margin-top:22px">
+            <button class="btn btn-primary" id="submit" data-i18n="seePath">See my path</button>
+          </div>
+
+          <div id="result" class="timeline-card" style="margin-top:24px; display:none">
+            <div id="sevPill"></div>
+            <h3 id="routeTitle" style="margin:12px 0 6px"></h3>
+            <p id="reasons" style="color:var(--text-muted)"></p>
+            <div id="actions" class="hero-actions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-head center">
+        <span class="eyebrow">Next steps</span>
+        <h2>What happens after the pulse</h2>
+        <p>The result is always a recommendation, never a label.</p>
+      </div>
+      <div class="flow-grid">
+        <div class="flow-card"><div class="num">1</div><h3>AI reflection</h3><p>You get a friendly summary and a small plan you can act on in the next 10 minutes.</p></div>
+        <div class="flow-card"><div class="num">2</div><h3>Peer circle</h3><p>If social support is the best fit, the system routes you toward a trained peer listener.</p></div>
+        <div class="flow-card"><div class="num">3</div><h3>Counselor or crisis</h3><p>When the risk is higher, Vistaraz escalates to a professional or a crisis helpline immediately.</p></div>
       </div>
     </div>
   </main>
@@ -55,7 +85,7 @@
   <script>
     const moodEl = document.getElementById("mood");
     const moodVal = document.getElementById("moodVal");
-    const w = v => v<=3?"Struggling":v<=6?"Okay":v<=8?"Good":"Great";
+    const w = v => v<=3?"Low":v<=6?"Steady":v<=8?"Good":"Great";
     moodEl.addEventListener("input", () => moodVal.textContent = moodEl.value + " — " + w(+moodEl.value));
 
     document.getElementById("submit").addEventListener("click", async () => {
@@ -81,7 +111,7 @@
 
       let acts = "";
       if (r.route === "crisis") {
-        acts = `<button class="btn btn-danger" onclick="Vistaraz.common.triggerCrisis()">Get crisis support now</button>
+        acts = `<button class="btn btn-danger" id="showCrisis">Get crisis support now</button>
                 <a class="btn btn-ghost" href="peer.html">Or talk to a peer</a>`;
       } else if (r.route === "peer") {
         acts = `<a class="btn btn-primary" href="peer.html">Talk to a peer listener</a>
@@ -91,6 +121,8 @@
                 <a class="btn btn-ghost" href="peer.html">Or talk to someone</a>`;
       }
       document.getElementById("actions").innerHTML = acts;
+      const crisisBtn = document.getElementById("showCrisis");
+      if (crisisBtn) crisisBtn.addEventListener("click", () => Vistaraz.common.triggerCrisis());
       document.getElementById("result").style.display = "block";
 
       if (r.severity === "high") setTimeout(() => Vistaraz.common.triggerCrisis(), 400);

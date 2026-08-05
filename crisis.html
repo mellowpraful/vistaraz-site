@@ -8,26 +8,38 @@
 </head>
 <body>
   <main class="container section">
-    <h2>Crisis Support — you are not alone</h2>
-    <div class="sub">If you are in immediate danger, call emergency services (112) now.
-    These free, confidential helplines are available 24×7.</div>
-
-    <div class="panel">
-      <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24×7 · multilingual</div></div><a class="btn btn-primary" href="tel:14416" onclick="copyNum('14416')">14416</a></div>
-      <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free psychological support</div></div><a class="btn btn-primary" href="tel:9152987821" onclick="copyNum('9152987821')">9152987821</a></div>
-      <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24×7 mental health helpline</div></div><a class="btn btn-primary" href="tel:18602662345" onclick="copyNum('18602662345')">1860 266 2345</a></div>
-      <div class="helpline"><div><strong>AASRA</strong><div class="meta">24×7 suicide prevention</div></div><a class="btn btn-primary" href="tel:9820466726" onclick="copyNum('9820466726')">9820466726</a></div>
-
-      <div style="margin-top:24px; background:var(--sand-50); border-radius:14px; padding:18px">
-        <h3 style="margin-top:0">What happens in Vistaraz</h3>
-        <p style="color:var(--muted); margin:0">If the AI companion or a peer chat detects high-risk language,
-        a crisis overlay appears automatically with these numbers — no extra step, no dead end.
-        Your safety is the one thing we never route around.</p>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Immediate support</span>
+        <h2>Crisis support — you are not alone</h2>
+        <p>If you are in immediate danger, call emergency services (112) now. These free, confidential helplines are available 24×7.</p>
       </div>
 
-      <div style="margin-top:18px">
-        <a class="btn btn-ghost" href="checkin.html">Back to check-in</a>
-        <a class="btn btn-ghost" href="peer.html">Talk to a peer instead</a>
+      <div class="two-up">
+        <div class="quote-card">
+          <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">If this feels urgent</span>
+          <h3 style="text-align:left;margin:10px 0 8px">The fastest path is the safest path.</h3>
+          <p>If the AI companion or a peer chat detects high-risk language, Vistaraz surfaces this page immediately so there is no dead end.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="tel:14416" id="teleBtn">Call Tele-MANAS now</a>
+            <a class="btn btn-ghost" href="checkin.html" style="border-color:rgba(255,255,255,.45);color:#fff">Back to check-in</a>
+          </div>
+        </div>
+
+        <div class="timeline-card">
+          <div class="step">Helpline options</div>
+          <div class="support-rail">
+            <div class="helpline"><div><strong>Tele-MANAS</strong><div class="meta">Govt. of India · 24×7 · multilingual</div></div><a class="btn btn-primary" href="tel:14416" data-num="14416">14416</a></div>
+            <div class="helpline"><div><strong>iCall (TISS)</strong><div class="meta">Free psychological support</div></div><a class="btn btn-primary" href="tel:9152987821" data-num="9152987821">9152987821</a></div>
+            <div class="helpline"><div><strong>Vandrevala Foundation</strong><div class="meta">24×7 support line</div></div><a class="btn btn-primary" href="tel:18602662345" data-num="18602662345">1860 266 2345</a></div>
+            <div class="helpline"><div><strong>AASRA</strong><div class="meta">24×7 suicide prevention</div></div><a class="btn btn-primary" href="tel:9820466726" data-num="9820466726">9820466726</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:24px">
+        <h3 style="margin-top:0">What happens in Vistaraz</h3>
+        <p style="color:var(--muted); margin:0">If risk is detected, the system opens this page and points you to a real person. Your safety is the one thing we never route around.</p>
       </div>
     </div>
   </main>
@@ -44,6 +56,8 @@
       const isMobile = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
       if(!isMobile){ try{ navigator.clipboard && navigator.clipboard.writeText(n); }catch(e){} if(Vistaraz&&Vistaraz.common) Vistaraz.common.toast("📞 Number copied: "+n); }
     }
+    document.querySelectorAll("a[data-num]").forEach(a => a.addEventListener("click", () => copyNum(a.getAttribute("data-num"))));
+    document.getElementById("teleBtn").addEventListener("click", () => copyNum("14416"));
   </script>
 </body>
 </html>

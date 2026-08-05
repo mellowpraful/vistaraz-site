@@ -3,33 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Counselor · Vistaraz</title>
+  <title>Counselor Hub · Vistaraz</title>
   <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <main class="container section">
-    <h2 data-i18n="counselor.title">Counselor Dashboard</h2>
-    <div class="sub">Shared counselor pool across colleges. You only ever see anonymous IDs — never a student's name, faculty, or family.</div>
+    <div class="page-hero">
+      <div class="section-head">
+        <span class="eyebrow">Professional support</span>
+        <h2 data-i18n="counselor.title">Counselor dashboard</h2>
+        <p>Shared counselor pool across colleges. You only ever see anonymous IDs, not names or student records.</p>
+      </div>
 
-    <div class="dash-grid" style="margin-bottom:24px">
-      <div class="kpi"><div class="k-num" id="kPool">0</div><div class="k-label">Counselors in shared pool</div></div>
-      <div class="kpi"><div class="k-num" id="kPeers">0</div><div class="k-label">Trained peer listeners</div></div>
-      <div class="kpi"><div class="k-num" id="kRouted">0</div><div class="k-label">Students routed (30d)</div></div>
-      <div class="kpi"><div class="k-num" id="kCrisis">0</div><div class="k-label">Crisis escalations (30d)</div></div>
-    </div>
+      <div class="metric-grid" style="margin-bottom:24px">
+        <div class="metric-card"><div class="num" id="kPool">0</div><div class="label">Counselors in shared pool</div></div>
+        <div class="metric-card"><div class="num" id="kPeers">0</div><div class="label">Trained peer listeners</div></div>
+        <div class="metric-card"><div class="num" id="kRouted">0</div><div class="label">Students routed (30d)</div></div>
+        <div class="metric-card"><div class="num" id="kCrisis">0</div><div class="label">Crisis escalations (30d)</div></div>
+      </div>
 
-    <div class="panel">
-      <h3 style="margin-top:0">Shared counselor pool</h3>
-      <table class="tbl">
-        <thead><tr><th>ID</th><th>Name</th><th>Languages</th><th>Current load</th></tr></thead>
-        <tbody id="pool"></tbody>
-      </table>
+      <div class="two-up">
+        <div class="timeline-card">
+          <div class="step">Shared capacity</div>
+          <h3>One pool, many campuses.</h3>
+          <p>Vistaraz helps colleges share professional support across a common triage layer so students are not left waiting for a single institution’s backlog.</p>
+          <table class="tbl">
+            <thead><tr><th>ID</th><th>Name</th><th>Languages</th><th>Current load</th></tr></thead>
+            <tbody id="pool"></tbody>
+          </table>
+        </div>
 
-      <h3 style="margin-top:26px">Your anonymized booking ledger</h3>
-      <table class="tbl">
-        <thead><tr><th>Anon ID</th><th>Slot</th><th>Counselor</th><th>Severity</th></tr></thead>
-        <tbody id="ledger"></tbody>
-      </table>
+        <div class="panel">
+          <div class="step">Anonymous booking ledger</div>
+          <h3 style="margin-top:0">Only slot and severity are visible.</h3>
+          <table class="tbl">
+            <thead><tr><th>Anon ID</th><th>Slot</th><th>Counselor</th><th>Severity</th></tr></thead>
+            <tbody id="ledger"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </main>
 

@@ -6,11 +6,12 @@
 
   const NAV = [
     ["index.html", "nav.home", "🏠"],
-    ["checkin.html", "nav.checkin", "📝"],
-    ["peer.html", "nav.peer", "🤝"],
-    ["dashboard.html", "nav.dashboard", "📊"],
-    ["journal.html", "nav.journal", "📓"],
-    ["resources.html", "nav.resources", "📚"],
+    ["checkin.html", "nav.checkin", "◌"],
+    ["peer.html", "nav.peer", "◠"],
+    ["counselor.html", "nav.counselor", "◕"],
+    ["dashboard.html", "nav.dashboard", "▣"],
+    ["journal.html", "nav.journal", "✎"],
+    ["resources.html", "nav.resources", "⌘"],
     ["privacy.html", "nav.privacy", "🛡"]
   ];
 
@@ -53,7 +54,7 @@
   function navHtml() {
     const id = (global.Vistaraz && global.Vistaraz.state) ? global.Vistaraz.state.id() : "VZ-DEMO";
     const links = NAV.map(([href, key]) =>
-      `<a href="${href}" ${href === currentPage() ? 'style="color:var(--teal-700)"' : ""}>${global.Vistaraz.i18n.t(key)}</a>`
+      `<a href="${href}" class="${href === currentPage() ? "active" : ""}">${global.Vistaraz.i18n.t(key)}</a>`
     ).join("");
     const opts = global.Vistaraz.i18n.langs.map(l =>
       `<option value="${l}">${l.toUpperCase()}</option>`).join("");
@@ -165,9 +166,9 @@
 
   // --- Onboarding tour ---
   const TOUR = [
-    { emo:"👋", t:"Welcome to Vistaraz", b:"A safe, anonymous space for your mind. No signup, no judgment." },
-    { emo:"📝", t:"Start with a check-in", b:"A 2-minute mood check-in routes you to the right support — no heavy first step." },
-    { emo:"🤝", t:"You're never alone", b:"Peer listeners, counselors, and 24x7 helplines are one tap away. Hold the SOS button in crisis." }
+    { emo:"👋", t:"Welcome to Vistaraz", b:"A private wellbeing system for college students. No signup, no pressure." },
+    { emo:"◌", t:"Start with a pulse", b:"A short anonymous check-in helps you reflect, not diagnose." },
+    { emo:"◕", t:"Human support stays close", b:"Peer support, counselors, and 24x7 helplines are one tap away when you need them." }
   ];
   let tourStep = 0;
   function tourNext(){
