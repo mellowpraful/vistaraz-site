@@ -1,94 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vistaraz — Student wellbeing system</title>
-  <meta name="description" content="Vistaraz helps college students check in anonymously, get supportive AI reflection, and move toward the right human help without stigma." />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0f9b86" />
-  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
-  <script>try{var t=localStorage.getItem("vistaraz_theme")||"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <main>
-    <section class="page-hero container">
-      <div class="hero-grid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Vistaraz is a private, human-first wellbeing support space for young people." />
+    <title>Vistaraz — Support that meets you where you are</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/app.css" />
+  </head>
+  <body>
+    <div class="announcement"><span>New</span> A kinder way to begin. Your first support conversation is on us. <a href="#support">Explore support <b>→</b></a></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Vistaraz home"><i></i>Vistaraz</a>
+      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <nav><a href="#how">How it works</a><a href="#support">Support</a><a href="#tools">Tools</a><a href="#community">Community</a></nav>
+      <a class="button button-small header-cta" href="#checkin">Begin gently <span>↗</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
         <div class="hero-copy">
-          <span class="eyebrow">Anonymous first · Human before AI · Privacy-first</span>
-          <h1>Google Maps for emotional wellbeing in college.</h1>
-          <p>Vistaraz helps students notice strain early, get gentle AI reflection, and move toward the right support lane without stigma, login friction, or clinical language.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="checkin.html">Start the daily pulse</a>
-            <a class="btn btn-ghost" href="privacy.html">See how privacy works</a>
-          </div>
-          <div class="pill-row">
-            <span class="pill-soft">30-second check-in</span>
-            <span class="pill-soft">AI + peers + counselors</span>
-            <span class="pill-soft">Anonymous analytics for campuses</span>
-          </div>
+          <p class="eyebrow">MENTAL WELLBEING, MADE HUMAN</p>
+          <h1>A little more <em>room</em><br>to feel like you.</h1>
+          <p class="hero-text">A private, judgement-free space for young people to pause, talk things through and find the kind of support that fits.</p>
+          <div class="hero-actions"><a class="button" href="#checkin">Start a gentle check-in <span>→</span></a><a class="text-link" href="#how">See how Vistaraz works <span>↓</span></a></div>
+          <div class="trust-line"><div class="avatars"><b>R</b><b>J</b><b>A</b><b>+</b></div><span>Built around the realities of student life.</span></div>
         </div>
-
-        <div class="hero-panel glass">
-          <div class="badge">What Vistaraz does next</div>
-          <div class="mini-rail">
-            <div class="mini-card"><div class="mini-ico">◌</div><div class="mini-body"><strong>Pulse first</strong><span>A 30-second check-in reveals how you’re doing right now.</span></div></div>
-            <div class="mini-card"><div class="mini-ico">✦</div><div class="mini-body"><strong>Reflect gently</strong><span>The AI companion behaves like a supportive senior friend, not a therapist.</span></div></div>
-            <div class="mini-card"><div class="mini-ico">◕</div><div class="mini-body"><strong>Route to humans</strong><span>Peer circle, counselor, or crisis support only when the moment calls for it.</span></div></div>
-            <div class="mini-card"><div class="mini-ico">▣</div><div class="mini-body"><strong>Track progress</strong><span>Students and campuses see patterns, not diagnoses.</span></div></div>
-          </div>
+        <div class="hero-art" aria-label="Illustration of a young person feeling supported">
+          <div class="sun"></div><div class="arch"></div><div class="plant p1"></div><div class="plant p2"></div>
+          <div class="person"><div class="head"></div><div class="hair"></div><div class="body"></div><div class="arm"></div><div class="book">take<br>a breath</div></div>
+          <div class="floating-note note-one">You don't have to<br>have it all figured out.</div><div class="floating-note note-two">♡</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="container">
-      <div class="metric-grid">
-        <div class="metric-card"><div class="num">30 sec</div><div class="label">to start the anonymous wellbeing pulse</div></div>
-        <div class="metric-card"><div class="num">3 lanes</div><div class="label">self-reflection, peer support, professional help</div></div>
-        <div class="metric-card"><div class="num">24x7</div><div class="label">crisis support without dead ends</div></div>
-        <div class="metric-card"><div class="num">Campus</div><div class="label">dashboards with anonymous trend data</div></div>
-      </div>
-    </section>
+      <section class="intro-strip"><p>There is no “right” reason to ask for support.</p><span>stress · loneliness · relationships · study pressure · feeling stuck · or just a lot</span></section>
 
-    <section class="section container">
-      <div class="section-head center">
-        <span class="eyebrow">How the ecosystem works</span>
-        <h2 data-i18n="trustFunnel">How the ecosystem works</h2>
-        <p data-i18n="trustSub">Anonymous first, human before AI, and support that scales across peer circles and counselors.</p>
-      </div>
-      <div class="flow-grid">
-        <div class="flow-card"><div class="num">1</div><h3>Anonymous pulse</h3><p>A student starts with a quick, stigma-free check-in that needs no login.</p></div>
-        <div class="flow-card"><div class="num">2</div><h3>Gentle AI reflection</h3><p>The companion helps name what’s going on and suggests a next step in plain language.</p></div>
-        <div class="flow-card"><div class="num">3</div><h3>Peer support</h3><p>Trained senior students step in for listening and practical support when social help fits best.</p></div>
-        <div class="flow-card"><div class="num">4</div><h3>Professional help</h3><p>Counselors receive escalations only when needed, with anonymous routing and shared capacity.</p></div>
-      </div>
-    </section>
-
-    <section class="section container">
-      <div class="two-up">
-        <div class="quote-card">
-          <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">Why this feels different</span>
-          <h2 style="text-align:left;margin:10px 0 12px">It is not a therapy app. It is a route to the right support.</h2>
-          <p>Students don’t need another place that asks them to disclose everything. They need a system that notices strain early, protects privacy, and makes the next step obvious.</p>
-          <div class="hero-actions"><a class="btn btn-primary" href="checkin.html" data-i18n="tryCheckin">Try the 30-second pulse</a><a class="btn btn-ghost" href="dashboard.html" style="border-color:rgba(255,255,255,.45);color:#fff">See the progress dashboard</a></div>
+      <section class="section how" id="how"><div class="section-heading"><p class="eyebrow">A PATH THAT ADAPTS TO YOU</p><h2>Start small.<br><em>Go at your pace.</em></h2><p>You decide what you need, and how visible you want to be. We make the next step feel lighter.</p></div>
+        <div class="steps">
+          <article><span>01</span><div class="step-icon mood">●</div><h3>Tell us what's up</h3><p>A few simple, click-based questions help you notice what is taking up space right now.</p><small>Never a diagnosis</small></article>
+          <article><span>02</span><div class="step-icon profile">◐</div><h3>Choose your way in</h3><p>Use a nickname with others, or share details when you need care or payments. You stay in control.</p><small>Private by design</small></article>
+          <article><span>03</span><div class="step-icon chat">⌁</div><h3>Find your next step</h3><p>Talk to a trained listener, meet a qualified psychologist, or simply take a moment with a guided tool.</p><small>Real people, clear roles</small></article>
         </div>
-        <div class="timeline">
-          <div class="timeline-card"><div class="step">Campus-ready</div><h3>Anonymous analytics</h3><p>Colleges can see trend lines and support demand without exposing identities.</p></div>
-          <div class="timeline-card"><div class="step">Trust-driven</div><h3>Privacy by default</h3><p>No forced signup, no unnecessary personal fields, and no noisy clinical labels.</p></div>
-          <div class="timeline-card"><div class="step">Accessible</div><h3>Built for low-friction mobile use</h3><p>Large targets, simple language, and a navigation flow that keeps users oriented.</p></div>
-        </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <footer>
-    Vistaraz · विस्ताराज़ — a student wellbeing ecosystem. <span data-i18n="crisis.line">In crisis? 24x7 helplines</span>: <a href="crisis.html">14416</a>.
-  </footer>
+      <section class="section checkin" id="checkin"><div class="checkin-card"><div class="checkin-info"><p class="eyebrow">TWO MINUTES, JUST FOR YOU</p><h2>How are you<br><em>really</em> doing?</h2><p>This small check-in is a starting point—not a label. It helps us suggest supportive next steps.</p><div class="progress"><span></span><span></span><span></span></div></div><form id="wellbeing-form" class="checkin-form"><p class="question-number">01 / 03</p><fieldset class="question active"><legend>How has life felt lately?</legend><button type="button" data-value="Light">Light, mostly</button><button type="button" data-value="Mixed">A little mixed</button><button type="button" data-value="Heavy">Heavy to carry</button><button type="button" data-value="Overwhelming">A lot, honestly</button></fieldset><fieldset class="question"><legend>What feels closest today?</legend><button type="button" data-value="Study pressure">Study / career pressure</button><button type="button" data-value="Stress">Stress or overthinking</button><button type="button" data-value="Connection">Feeling alone or disconnected</button><button type="button" data-value="Not sure">I’m not sure yet</button></fieldset><fieldset class="question"><legend>How would you like to be known here?</legend><button type="button" data-value="Anonymous">A nickname, please <small>Private with others</small></button><button type="button" data-value="Private">My private profile <small>Needed for some care services</small></button></fieldset><div class="checkin-result"><span class="result-mark">✦</span><p class="eyebrow">A POSSIBLE NEXT STEP</p><h3>A space to unpack<br>things, gently.</h3><p>Based on what you shared, a chat with a trained support listener could be a good place to begin.</p><a href="#support" class="button">Meet your support options <span>→</span></a><button type="button" class="restart">Start again</button></div></form></div></section>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/state.js"></script>
-  <script src="assets/js/common.js"></script>
-</body>
+      <section class="section support" id="support"><div class="support-top"><div><p class="eyebrow">SUPPORT, WITHOUT THE ONE-SIZE-FITS-ALL</p><h2>Someone to talk to,<br><em>at the right level.</em></h2></div><p>Whether you need a listening ear, a deeper conversation or professional care, you are never expected to figure it out alone.</p></div><div class="levels"><article class="level level-one"><p class="level-num">LEVEL 01</p><div class="level-symbol">♡</div><h3>Support listeners</h3><p>Chat with trained peer supporters and psychology students or interns who know how to listen—with care and clear boundaries.</p><ul><li>Text conversations</li><li>First conversation free</li><li>Change listeners anytime</li></ul><a href="#plans">Explore listener support <span>→</span></a></article><article class="level level-two"><p class="level-num">LEVEL 02</p><div class="level-symbol">⌁</div><h3>Live support</h3><p>When talking face-to-face feels more helpful, connect by voice or video with a trained support listener.</p><ul><li>Voice or video</li><li>Book around your schedule</li><li>Feedback after every session</li></ul><a href="#plans">Explore live support <span>→</span></a></article><article class="level level-three"><p class="level-num">LEVEL 03</p><div class="level-symbol">✦</div><h3>Qualified care</h3><p>For professional psychological support, meet verified, appropriately qualified mental-health professionals.</p><ul><li>Verified professionals</li><li>Care matched to your needs</li><li>Clear, upfront pricing</li></ul><a href="#plans">Explore professional care <span>→</span></a></article></div><p class="care-note">Vistaraz does not diagnose. Support listeners are not therapists, and we’ll always be clear about who you are speaking with.</p></section>
+
+      <section class="section tools" id="tools"><div class="tool-art"><div class="breathe-ring ring1"></div><div class="breathe-ring ring2"></div><div class="breathe-ring ring3"></div><div class="breathe-center"><span id="breath-word">Breathe in</span><b id="breath-count">4</b></div><button id="breath-toggle" aria-pressed="false">Start a 60 sec reset</button></div><div class="tool-copy"><p class="eyebrow">A MOMENT IS STILL A MOMENT</p><h2>Small tools for<br><em>when things feel big.</em></h2><p>Free, thoughtful practices for the messy in-between: grounding, breathing, sleep and focus—no subscription needed.</p><div class="tool-list"><span>01&nbsp; Breathing resets</span><span>02&nbsp; Grounding exercises</span><span>03&nbsp; Sleep & focus guides</span><span>04&nbsp; Reflective prompts</span></div><a href="#community" class="text-link">Find what might help today <span>→</span></a></div></section>
+
+      <section class="section community" id="community"><div class="community-copy"><p class="eyebrow">NOT ALONE IN THIS</p><h2>Stories, questions<br>and <em>real talk.</em></h2><p>A moderated, nickname-first community for sharing what is on your mind, finding a little recognition, and learning from each other.</p><a class="button button-light" href="#plans">Step into the community <span>→</span></a></div><div class="post-stack"><article class="post post-back">“How do you deal with the pressure to have a five-year plan?”<footer>↗&nbsp; 48 people found this helpful</footer></article><article class="post post-main"><div class="post-meta"><i>m</i> moonlitmango · 8 min ago <span>•••</span></div><h3>Is it normal to feel lonely even when you have friends?</h3><p>I keep wondering if there’s something wrong with me. I’m around people all the time but still feel completely… separate.</p><footer><span>♡ 24</span><span>⌁ 12 replies</span><b>Topic: Connection</b></footer></article><div class="moderated">✦ Thoughtfully moderated</div></div></section>
+
+      <section class="section plans" id="plans"><p class="eyebrow">CARE THAT CAN FIT STUDENT LIFE</p><h2>Keep it simple.<br><em>Keep it possible.</em></h2><div class="plan-grid"><article><p>FREE</p><h3>Start here</h3><strong>₹0</strong><ul><li>Wellbeing check-ins</li><li>Self-help tools & resources</li><li>Community access</li></ul><a href="#checkin">Begin gently →</a></article><article class="featured"><p>GROW</p><h3>More room</h3><strong>₹— <small>/ month</small></strong><ul><li>Listener chat allowance</li><li>Discounted live support</li><li>Priority matching</li></ul><a href="#checkin">Find your plan →</a></article><article><p>CARE</p><h3>Deeper support</h3><strong>Flexible</strong><ul><li>Professional sessions</li><li>Tailored care options</li><li>Continued check-ins</li></ul><a href="#checkin">Explore care →</a></article></div><p class="plan-footnote">Final memberships and pricing will be shaped with students and care partners. Support essentials remain accessible.</p></section>
+
+      <section class="safety"><div><span>✦</span><h2>Your safety matters<br>more than a screen.</h2></div><p>Vistaraz is not an emergency service. If you feel at immediate risk of harm, contact your local emergency service or crisis helpline now. We design clear escalation pathways and extra safeguarding for anyone under 18.</p><a href="mailto:care@vistaraz.com">Find urgent support <span>→</span></a></section>
+    </main>
+    <footer><a class="brand" href="#top"><i></i>Vistaraz</a><p>For the parts of life you don’t have to carry alone.</p><div><a href="#how">About</a><a href="#support">Support</a><a href="#community">Community</a><a href="mailto:hello@vistaraz.com">Contact</a></div><small>© 2026 Vistaraz. A wellbeing platform, not a crisis service.</small></footer>
+    <script src="assets/js/app.js"></script>
+  </body>
 </html>
