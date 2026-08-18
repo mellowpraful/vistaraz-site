@@ -1,11 +1,30 @@
-const copy={en:{home:'Home',assessment:'Check-in',support:'Support',tools:'Tools',community:'Community',plans:'Plans',begin:'Begin gently',language:'Language',book:'Choose this listener',saved:'Saved privately on this device.',continue:'Continue',start:'Start reset'},hi:{home:'होम',assessment:'चेक-इन',support:'सहायता',tools:'टूल्स',community:'समुदाय',plans:'प्लान',begin:'शुरू करें',language:'भाषा',book:'इस सहायक को चुनें',saved:'इस डिवाइस पर निजी रूप से सहेजा गया।',continue:'आगे बढ़ें',start:'रीसेट शुरू करें'},gu:{home:'હોમ',assessment:'ચેક-ઇન',support:'સહાય',tools:'ટૂલ્સ',community:'સમુદાય',plans:'પ્લાન',begin:'શરૂ કરો',language:'ભાષા',book:'આ સહાયક પસંદ કરો',saved:'આ ઉપકરણ પર ખાનગી રીતે સાચવેલ.',continue:'આગળ વધો',start:'રીસેટ શરૂ કરો'}};
-function applyLang(lang){localStorage.setItem('vistaraz-lang',lang);document.documentElement.lang=lang==='gu'?'gu':lang;document.querySelectorAll('[data-i]').forEach(e=>{const v=copy[lang][e.dataset.i];if(v)e.textContent=v});document.querySelectorAll('.lang').forEach(s=>s.value=lang)}
-document.querySelectorAll('.lang').forEach(s=>s.addEventListener('change',e=>applyLang(e.target.value)));applyLang(localStorage.getItem('vistaraz-lang')||'en');
-const navToggle=document.querySelector('.nav-toggle');if(navToggle)navToggle.addEventListener('click',()=>{const n=document.querySelector('nav');n.style.display=n.style.display==='flex'?'none':'flex';n.style.cssText+=';position:absolute;top:70px;left:0;right:0;background:#f8f5ef;padding:20px 25px;z-index:20;flex-direction:column;box-shadow:0 8px 15px #0002'});
-const toast=document.querySelector('.toast');function notify(t){if(!toast)return;toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3200)}
-document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(x=>x.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.12}).observe(el));
-document.querySelectorAll('[data-book]').forEach(b=>b.addEventListener('click',()=>{const m=document.querySelector('.modal');if(m)m.classList.add('open')}));document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>document.querySelector('.modal')?.classList.remove('open')));
-const quiz=[...document.querySelectorAll('.quiz fieldset')];let qi=0;quiz.forEach((q,i)=>q.querySelectorAll('.option').forEach(o=>o.addEventListener('click',()=>{q.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));o.classList.add('selected');localStorage.setItem('vistaraz-q'+i,o.dataset.value||o.textContent);setTimeout(()=>{q.classList.remove('active');qi++;document.querySelectorAll('.stepper span')[i+1]?.classList.add('active');if(quiz[qi])quiz[qi].classList.add('active');else document.querySelector('.quiz-result')?.classList.add('visible')},220)})));
-const breath=document.querySelector('[data-breath]');if(breath)breath.addEventListener('click',()=>{const box=document.querySelector('.breath-preview');if(box.classList.contains('running')){box.classList.remove('running');breath.textContent='Start a 60 sec reset';return}box.classList.add('running');let s=60;breath.textContent='Pause reset · 60';const id=setInterval(()=>{s--;breath.textContent='Pause reset · '+s;if(!s){clearInterval(id);box.classList.remove('running');breath.textContent='Start another reset'}},1000)});
-const journal=document.querySelector('#journal');if(journal){journal.value=localStorage.getItem('vistaraz-journal')||'';document.querySelector('#save-journal').addEventListener('click',()=>{localStorage.setItem('vistaraz-journal',journal.value);notify(copy[localStorage.getItem('vistaraz-lang')||'en'].saved)})}
-document.querySelector('#post-form')?.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),title=f.get('title').trim(),body=f.get('body').trim();if(!title||!body)return;const post=document.createElement('article');post.className='feed-post';post.innerHTML=`<small>your-nickname · just now</small><h3>${title}</h3><p>${body}</p><small>♡ 0 · Share with care</small>`;document.querySelector('#feed').prepend(post);e.target.reset();notify('Your post is now visible to you in this demo.')});
+// Intersection Observer for scroll animations
+document.addEventListener("DOMContentLoaded", () => {
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".reveal").forEach(el => {
+    observer.observe(el);
+  });
+
+  // Mobile Nav Toggle (Optional for future)
+  // const navToggle = document.querySelector('.nav-toggle');
+  // const nav = document.querySelector('nav');
+  // if (navToggle && nav) {
+  //   navToggle.addEventListener('click', () => {
+  //     nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+  //   });
+  // }
+});

@@ -1,1 +1,125 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Find support — Vistaraz</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/app.css"></head><body><header class="site-header"><a class="brand" href="index.html"><i></i>Vistaraz</a><nav><a data-i="home" href="index.html">Home</a><a data-i="assessment" href="assessment.html">Check-in</a><a class="active" data-i="support" href="support.html">Support</a><a data-i="tools" href="tools.html">Tools</a><a data-i="community" href="community.html">Community</a></nav><select class="lang"><option value="en">EN</option><option value="hi">हिंदी</option><option value="gu">ગુજરાતી</option></select></header><main><section class="page-hero"><p class="eyebrow">CHOOSE YOUR NEXT STEP</p><h1>Support that feels<br><em>right for you.</em></h1><p>Every person shown here is a sample profile for the prototype. The roles are deliberate: listeners offer support, qualified professionals offer professional care.</p></section><section class="app-layout"><div class="filter-row"><div><p class="eyebrow">LEVEL 01 · LISTENER MATCHING</p><h2 style="font-size:38px">Start with someone who listens.</h2></div><select aria-label="Language filter"><option>Any language</option><option>English</option><option>Hindi</option><option>Gujarati</option></select></div><div class="match-grid"><article class="listener"><div class="avatar">A</div><h3>Aanya R.</h3><small>Verified support listener · Psychology graduate</small><div class="tags"><span>English</span><span>Hindi</span><span>Academic stress</span></div><p>Warm, structured conversations for when pressure is crowding everything else.</p><button class="button" data-book data-i="book">Choose this listener</button></article><article class="listener"><div class="avatar">K</div><h3>Kunal S.</h3><small>Verified peer supporter · Trained listener</small><div class="tags"><span>English</span><span>Gujarati</span><span>Connection</span></div><p>A gentle, practical space for loneliness, change and difficult conversations.</p><button class="button" data-book data-i="book">Choose this listener</button></article><article class="listener"><div class="avatar">M</div><h3>Meera P.</h3><small>Verified support listener · Supervised trainee</small><div class="tags"><span>Hindi</span><span>English</span><span>Overthinking</span></div><p>Calm support for overthinking and the moments when a thought won’t let go.</p><button class="button" data-book data-i="book">Choose this listener</button></article></div><div class="membership-note"><b>Need more than a listener?</b> Move to a private voice/video conversation, or choose a verified psychologist or other appropriately qualified professional. You can stop, change your listener or ask for a different level at any time.</div><a class="button ghost" href="plans.html">Explore voice, video & professional care →</a></section></main><div class="modal"><div class="modal-card"><p class="eyebrow">DEMO BOOKING</p><h2 style="font-size:38px">A gentle first conversation.</h2><p>In the live product, you would choose a time and confirm how you want to be known. The first chat period is free; any paid continuation is always shown upfront.</p><button class="button" data-close>Got it</button></div></div><div class="toast"></div><script src="assets/js/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Find support — Vistaraz</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Vistaraz � Innovate, Heal, Impact" height="48"></a>
+    <nav>
+      <a data-i="home" href="index.html">Home</a>
+      <a data-i="assessment" href="assessment.html">Check-in</a>
+      <a class="active" data-i="support" href="support.html">Support</a>
+      <a data-i="tools" href="tools.html">Tools</a>
+      <a data-i="community" href="community.html">Community</a>
+      <a data-i="plans" href="plans.html">Plans</a>
+      <a href="dashboard.html" class="button ghost" style="padding: 8px 16px; font-size: 0.8rem;">Dashboard</a>
+    </nav>
+  </header>
+
+  <main style="padding-top: 60px;">
+    <section class="section" style="text-align: center; padding-top: 0; padding-bottom: 40px;">
+      <span class="eyebrow">CHOOSE YOUR NEXT STEP</span>
+      <h1>Support that feels<br><em>right for you.</em></h1>
+      <p style="margin: 0 auto;">Choose from trained listeners for chat, or verified professionals for deeper care.</p>
+    </section>
+
+    <!-- Chat Listeners -->
+    <section class="section" style="padding-top: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+        <div>
+          <span class="eyebrow" style="color: var(--accent-primary)">LEVEL 01 · CHAT SUPPORT</span>
+          <h2>Start with someone who listens.</h2>
+        </div>
+        <select style="width: auto; padding: 10px 20px; border-radius: 30px;">
+          <option>Filter by Topic</option>
+          <option>Academic Stress</option>
+          <option>Connection</option>
+          <option>Overthinking</option>
+        </select>
+      </div>
+
+      <div class="grid-3">
+        <!-- Listener 1 -->
+        <article class="glass-card reveal">
+          <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center; font-size: 1.5rem; font-family: var(--font-serif); color: #000;">A</div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.4rem;">Aanya R.</h3>
+              <small style="color: var(--success); font-family: var(--font-mono); font-size: 0.75rem;"><i class="fas fa-check-circle"></i> Verified Listener</small>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">Academic stress</span>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">English</span>
+          </div>
+          <p style="font-size: 0.95rem; min-height: 60px;">Warm, structured conversations for when pressure is crowding everything else.</p>
+          <a class="button ghost" href="chat.html" style="width: 100%;">Start Free Chat</a>
+        </article>
+
+        <!-- Listener 2 -->
+        <article class="glass-card reveal" style="transition-delay: 0.1s;">
+          <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--accent-secondary); display: grid; place-items: center; font-size: 1.5rem; font-family: var(--font-serif); color: #000;">K</div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.4rem;">Kunal S.</h3>
+              <small style="color: var(--success); font-family: var(--font-mono); font-size: 0.75rem;"><i class="fas fa-check-circle"></i> Peer Supporter</small>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">Connection</span>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">Hindi</span>
+          </div>
+          <p style="font-size: 0.95rem; min-height: 60px;">A gentle, practical space for loneliness, change and difficult conversations.</p>
+          <a class="button ghost" href="chat.html" style="width: 100%;">Start Free Chat</a>
+        </article>
+
+        <!-- Listener 3 -->
+        <article class="glass-card reveal" style="transition-delay: 0.2s;">
+          <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #c7dbc2; display: grid; place-items: center; font-size: 1.5rem; font-family: var(--font-serif); color: #000;">M</div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.4rem;">Meera P.</h3>
+              <small style="color: var(--success); font-family: var(--font-mono); font-size: 0.75rem;"><i class="fas fa-check-circle"></i> Supervised Trainee</small>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">Overthinking</span>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">English</span>
+          </div>
+          <p style="font-size: 0.95rem; min-height: 60px;">Calm support for overthinking and the moments when a thought won’t let go.</p>
+          <a class="button ghost" href="chat.html" style="width: 100%;">Start Free Chat</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Professional Support -->
+    <section class="section" style="border-top: 1px solid var(--line);">
+      <div class="reveal">
+        <span class="eyebrow" style="color: var(--accent-secondary)">LEVEL 02 & 03 · PROFESSIONAL CARE</span>
+        <h2>Need more than a listener?</h2>
+        <p>Move to a private voice/video conversation, or choose a verified psychologist. You can stop, change your listener or ask for a different level at any time.</p>
+      </div>
+
+      <div class="grid-2 reveal" style="margin-top: 40px;">
+        <div class="glass-card" style="background: rgba(138, 180, 248, 0.05); border-color: var(--accent-primary);">
+          <h3><i class="fas fa-video" style="color: var(--accent-primary); margin-right: 10px;"></i> Voice & Video Sessions</h3>
+          <p style="font-size: 0.95rem;">Step up to face-to-face support from the comfort of your room. Secure, private, and fully integrated into the platform.</p>
+          <a class="button primary" href="video-call.html">Book Video Session</a>
+        </div>
+        <div class="glass-card" style="background: rgba(195, 155, 119, 0.05); border-color: var(--accent-secondary);">
+          <h3><i class="fas fa-user-md" style="color: var(--accent-secondary); margin-right: 10px;"></i> Professional Psychology</h3>
+          <p style="font-size: 0.95rem;">Connect with verified clinical psychologists for diagnosis, therapy, and ongoing professional treatment.</p>
+          <a class="button ghost" href="plans.html">View Therapy Plans</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
