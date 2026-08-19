@@ -5,88 +5,565 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <title>Identity Setup — Vistaraz</title>
+  <title>Get Started — Vistaraz Portal</title>
   <link rel="stylesheet" href="assets/dist/app.b40f67f0.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .role-card-btn {
+      cursor: pointer;
+      border: 2px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .role-card-btn:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+      background: rgba(138, 180, 248, 0.05);
+    }
+    .role-card-btn.active {
+      border-color: var(--accent-primary);
+      background: rgba(138, 180, 248, 0.08);
+      box-shadow: 0 0 25px rgba(138, 180, 248, 0.15);
+    }
+    .role-card-btn.active::after {
+      content: '✓ Selected';
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      background: rgba(138, 180, 248, 0.15);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .auth-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab-btn.active {
+      background: var(--accent-primary);
+      color: #000;
+    }
+    .sub-profile-tab {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      color: var(--text-muted);
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .sub-profile-tab.active {
+      background: rgba(138, 180, 248, 0.1);
+      border-color: var(--accent-primary);
+      color: var(--text-main);
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz � Innovate, Heal, Impact" height="48"></a>
+    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz — Innovate, Heal, Impact" height="48"></a>
     <nav>
       <a data-i="home" href="index.html">Home</a>
+      <a data-i="assessment" href="assessment.html">Check-in</a>
       <a data-i="support" href="support.html">Support</a>
       <a data-i="tools" href="tools.html">Tools</a>
+      <a data-i="plans" href="plans.html">Plans</a>
     </nav>
   </header>
 
-  <main style="padding-top: 60px;">
-    <section class="section" style="text-align: center; padding-top: 0; padding-bottom: 40px;">
-      <span class="eyebrow">YOUR IDENTITY</span>
-      <h1>How would you like to be<br><em>known here?</em></h1>
-      <p style="margin: 0 auto;">Privacy is a core feature. You choose how much you share.</p>
+  <main style="padding-top: 50px; padding-bottom: 80px; max-width: 960px; margin: 0 auto; padding-left: 20px; padding-right: 20px;">
+    
+    <!-- Top Header -->
+    <section style="text-align: center; margin-bottom: 35px;">
+      <span class="eyebrow">CHOOSE YOUR PATHWAY</span>
+      <h1 style="font-size: 2.8rem; margin-bottom: 10px;">Welcome to <em>Vistaraz</em></h1>
+      <p style="color: var(--text-muted); max-width: 550px; margin: 0 auto; font-size: 0.95rem;">
+        Whether you are seeking a safe, confidential space or looking to offer compassionate support as a listener, select your pathway below.
+      </p>
     </section>
 
-    <div class="grid-2 reveal">
-      <!-- Anonymous Profile -->
-      <article class="glass-card" style="display: flex; flex-direction: column; height: 100%;">
-        <div style="flex: 1;">
-          <span class="eyebrow" style="color: var(--accent-primary)">OPTION 1</span>
-          <h3>Anonymous Profile</h3>
-          <p style="font-size: 0.95rem;">Interact using a nickname and avatar. Ideal for community discussions and basic support chats.</p>
-          
-          <div style="margin: 30px 0;">
-            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Choose an Avatar</label>
-            <div class="avatar-grid">
-              <div class="avatar-item selected">🦊</div>
-              <div class="avatar-item">🦉</div>
-              <div class="avatar-item">🌿</div>
-              <div class="avatar-item">🌙</div>
-              <div class="avatar-item">🌊</div>
-              <div class="avatar-item">✨</div>
+    <!-- STEP 1: Two Role Cards (I Need Help vs I Want to Help) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
+      
+      <!-- Option 1: I Need Help (Seeker) -->
+      <div id="role-seeker-card" class="role-card-btn active" onclick="selectRolePathway('seeker')">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(138, 180, 248, 0.15); display: grid; place-items: center; font-size: 1.3rem;">
+            🌿
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; color: #fff;">I Need Help</h3>
+            <span style="font-size: 0.75rem; color: var(--accent-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Youth & Students</span>
+          </div>
+        </div>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          Private emotional support, 2-min check-in, free breathing tools, and 1-on-1 chat/video sessions with verified listeners.
+        </p>
+      </div>
+
+      <!-- Option 2: I Want to Help (Provider) -->
+      <div id="role-provider-card" class="role-card-btn" onclick="selectRolePathway('provider')">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(167, 139, 250, 0.15); display: grid; place-items: center; font-size: 1.3rem;">
+            🤝
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; color: #fff;">I Want to Help</h3>
+            <span style="font-size: 0.75rem; color: var(--accent-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Listeners & Counselors</span>
+          </div>
+        </div>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          For psychology trainees, students & certified listeners. Manage live incoming queue, audio/video sessions, and schedules.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Auth Mode Toggle (Sign In vs Register) -->
+    <div style="text-align: center; margin-bottom: 30px;">
+      <div style="display: inline-flex; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 30px; border: 1px solid var(--line);">
+        <button id="auth-tab-register" class="auth-tab-btn active" onclick="setAuthAction('register')">Create Account</button>
+        <button id="auth-tab-login" class="auth-tab-btn" onclick="setAuthAction('login')">Sign In</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION A: "I NEED HELP" (Seeker) Form Container             -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="seeker-auth-container" class="glass-card reveal" style="max-width: 600px; margin: 0 auto; padding: 35px;">
+      
+      <!-- Seeker Register Mode -->
+      <div id="seeker-register-box">
+        <div style="margin-bottom: 20px;">
+          <span class="eyebrow" style="color: var(--accent-primary)">SEEKER ONBOARDING</span>
+          <h2 style="font-size: 1.8rem; margin: 5px 0 10px;">How would you like to appear?</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Privacy is our core foundation. Choose your comfort level.</p>
+        </div>
+
+        <!-- Identity Sub-Tabs: Anonymous vs Private -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px;">
+          <div id="tab-anon-btn" class="sub-profile-tab active" onclick="setSeekerProfileType('anon')">
+            <span style="font-size: 1.1rem;">🦊</span>
+            <div>
+              <div style="font-weight: 600; font-size: 0.85rem;">Anonymous Profile</div>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Avatar + Nickname</div>
+            </div>
+          </div>
+          <div id="tab-private-btn" class="sub-profile-tab" onclick="setSeekerProfileType('private')">
+            <span style="font-size: 1.1rem;">🔒</span>
+            <div>
+              <div style="font-weight: 600; font-size: 0.85rem;">Private Profile</div>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Real Name (Confidential)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form for Seeker -->
+        <form onsubmit="handleSeekerRegister(event)" id="seeker-reg-form">
+          <!-- Anonymous Inputs -->
+          <div id="seeker-anon-fields">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Choose an Avatar</label>
+            <div class="avatar-grid" style="margin-bottom: 20px;">
+              <div class="avatar-item selected" onclick="selectSeekerAvatar(this, '🦊')">🦊</div>
+              <div class="avatar-item" onclick="selectSeekerAvatar(this, '🦉')">🦉</div>
+              <div class="avatar-item" onclick="selectSeekerAvatar(this, '🌿')">🌿</div>
+              <div class="avatar-item" onclick="selectSeekerAvatar(this, '🌙')">🌙</div>
+              <div class="avatar-item" onclick="selectSeekerAvatar(this, '🌊')">🌊</div>
+              <div class="avatar-item" onclick="selectSeekerAvatar(this, '✨')">✨</div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Nickname / Handle</label>
+              <input type="text" id="seeker-anon-nickname" placeholder="e.g. moonlit_wanderer" style="width: 100%;">
             </div>
           </div>
 
-          <div style="margin-bottom: 20px;">
-            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Nickname</label>
-            <input type="text" placeholder="e.g. moonlitmango" id="nickname-input">
+          <!-- Private Inputs (Hidden by default) -->
+          <div id="seeker-private-fields" style="display: none;">
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Full Name</label>
+              <input type="text" id="seeker-private-name" placeholder="Your full name" style="width: 100%;">
+            </div>
           </div>
-        </div>
-        <a class="button primary" href="support.html" style="width: 100%;">Continue as Anonymous</a>
-      </article>
 
-      <!-- Private Profile -->
-      <article class="glass-card" style="display: flex; flex-direction: column; height: 100%; border-color: rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);">
-        <div style="flex: 1;">
-          <span class="eyebrow" style="color: var(--accent-secondary)">OPTION 2</span>
-          <h3>Private Profile</h3>
-          <p style="font-size: 0.95rem;">Use your real details privately. This is required for professional care, payments, or emergencies.</p>
-          
-          <div style="margin: 30px 0 20px;">
-            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Full Name</label>
-            <input type="text" placeholder="Your name">
+          <!-- Shared Email & Password -->
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Email Address</label>
+            <input type="email" id="seeker-email" required placeholder="you@example.com" style="width: 100%;">
           </div>
-          <div style="margin-bottom: 20px;">
-            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Email Address</label>
-            <input type="email" placeholder="you@example.com">
+
+          <div style="margin-bottom: 25px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Create Password</label>
+            <input type="password" id="seeker-password" required placeholder="••••••••" style="width: 100%;">
           </div>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">
-            <i class="fas fa-lock" style="margin-right: 5px;"></i> We will never share this with the community or listeners without your explicit consent.
-          </p>
+
+          <div id="seeker-error" style="display: none; color: #ff6b6b; font-size: 0.85rem; margin-bottom: 15px; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 8px;"></div>
+
+          <button type="submit" id="seeker-submit-btn" class="button primary" style="width: 100%;">
+            <span>Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Seeker Login Mode -->
+      <div id="seeker-login-box" style="display: none;">
+        <div style="margin-bottom: 20px;">
+          <span class="eyebrow" style="color: var(--accent-primary)">CLIENT SIGN IN</span>
+          <h2 style="font-size: 1.8rem; margin: 5px 0 10px;">Welcome back</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Access your wellbeing dashboard, chat logs, and upcoming appointments.</p>
         </div>
-        <a class="button ghost" href="support.html" style="width: 100%;">Setup Private Profile</a>
-      </article>
+
+        <form onsubmit="handleUniversalLogin(event, 'seeker')" id="seeker-login-form">
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Email Address</label>
+            <input type="email" id="seeker-login-email" required placeholder="you@example.com" style="width: 100%;">
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Password</label>
+            <input type="password" id="seeker-login-password" required placeholder="••••••••" style="width: 100%;">
+          </div>
+
+          <div id="seeker-login-error" style="display: none; color: #ff6b6b; font-size: 0.85rem; margin-bottom: 15px; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 8px;"></div>
+
+          <button type="submit" id="seeker-login-btn" class="button primary" style="width: 100%;">
+            <span>Sign In to Dashboard</span>
+          </button>
+        </form>
+      </div>
+
     </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION B: "I WANT TO HELP" (Provider / Counselor) Container   -->
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <div id="provider-auth-container" class="glass-card reveal" style="display: none; max-width: 600px; margin: 0 auto; padding: 35px; border-color: rgba(167, 139, 250, 0.2);">
+      
+      <!-- Provider Register Mode -->
+      <div id="provider-register-box">
+        <div style="margin-bottom: 20px;">
+          <span class="eyebrow" style="color: var(--accent-secondary)">LISTENER ONBOARDING</span>
+          <h2 style="font-size: 1.8rem; margin: 5px 0 10px;">Join the Support Network</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Connect with youth, conduct empathetic listening sessions, and manage your schedule.</p>
+        </div>
+
+        <form onsubmit="handleProviderRegister(event)" id="provider-reg-form">
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Full Name</label>
+            <input type="text" id="provider-name" required placeholder="e.g. Sarah Mitchell" style="width: 100%;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div>
+              <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Role / Background</label>
+              <select id="provider-qualification" style="width: 100%; background: #111827; border: 1px solid var(--line); color: #f0f4f8; padding: 10px; border-radius: 8px; font-size: 0.85rem;">
+                <option value="Psychology Student / Intern">Psychology Student / Intern</option>
+                <option value="Trained Peer Listener">Trained Peer Listener</option>
+                <option value="Certified Counselor">Certified Counselor</option>
+                <option value="Licensed Psychologist">Licensed Psychologist</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Languages</label>
+              <input type="text" id="provider-languages" placeholder="e.g. English, Hindi" value="English, Hindi" style="width: 100%;">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Professional / University Email</label>
+            <input type="email" id="provider-email" required placeholder="counselor@university.edu" style="width: 100%;">
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Password</label>
+            <input type="password" id="provider-password" required placeholder="••••••••" style="width: 100%;">
+          </div>
+
+          <div id="provider-error" style="display: none; color: #ff6b6b; font-size: 0.85rem; margin-bottom: 15px; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 8px;"></div>
+
+          <button type="submit" id="provider-submit-btn" class="button primary" style="width: 100%; background: var(--accent-secondary); color: #fff;">
+            <span>Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Provider Login Mode -->
+      <div id="provider-login-box" style="display: none;">
+        <div style="margin-bottom: 20px;">
+          <span class="eyebrow" style="color: var(--accent-secondary)">LISTENER SIGN IN</span>
+          <h2 style="font-size: 1.8rem; margin: 5px 0 10px;">Provider Workspace</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Log in to access your live queue, schedule, and pending calls.</p>
+        </div>
+
+        <form onsubmit="handleUniversalLogin(event, 'provider')" id="provider-login-form">
+          <div style="margin-bottom: 16px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Email Address</label>
+            <input type="email" id="provider-login-email" required placeholder="counselor@example.com" style="width: 100%;">
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Password</label>
+            <input type="password" id="provider-login-password" required placeholder="••••••••" style="width: 100%;">
+          </div>
+
+          <div id="provider-login-error" style="display: none; color: #ff6b6b; font-size: 0.85rem; margin-bottom: 15px; background: rgba(255,107,107,0.1); padding: 10px; border-radius: 8px;"></div>
+
+          <button type="submit" id="provider-login-btn" class="button primary" style="width: 100%; background: var(--accent-secondary); color: #fff;">
+            <span>Open Freelancer Panel</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
   </main>
 
+  <!-- Supabase JS & App Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/dist/supabase.9aba4fbd.js"></script>
   <script src="assets/dist/app.1d49be2f.js"></script>
+
   <script>
-    // Simple inline script for avatar selection demo
-    document.querySelectorAll('.avatar-item').forEach(item => {
-      item.addEventListener('click', () => {
-        document.querySelectorAll('.avatar-item').forEach(a => a.classList.remove('selected'));
-        item.classList.add('selected');
-      });
+    let currentRole = 'seeker'; // 'seeker' | 'provider'
+    let currentAuthAction = 'register'; // 'register' | 'login'
+    let currentSeekerProfileType = 'anon'; // 'anon' | 'private'
+    let currentSelectedAvatar = '🦊';
+
+    // Parse URL params for direct routing (e.g. ?role=counselor)
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const roleParam = params.get('role');
+      const actionParam = params.get('action');
+
+      if (roleParam === 'provider' || roleParam === 'counselor') {
+        selectRolePathway('provider');
+      } else {
+        selectRolePathway('seeker');
+      }
+
+      if (actionParam === 'login') {
+        setAuthAction('login');
+      }
     });
+
+    // 1. Role Pathway Selector
+    function selectRolePathway(role) {
+      currentRole = role;
+      const seekerCard = document.getElementById('role-seeker-card');
+      const providerCard = document.getElementById('role-provider-card');
+      const seekerContainer = document.getElementById('seeker-auth-container');
+      const providerContainer = document.getElementById('provider-auth-container');
+
+      if (role === 'seeker') {
+        seekerCard.classList.add('active');
+        providerCard.classList.remove('active');
+        seekerContainer.style.display = 'block';
+        providerContainer.style.display = 'none';
+      } else {
+        seekerCard.classList.remove('active');
+        providerCard.classList.add('active');
+        seekerContainer.style.display = 'none';
+        providerContainer.style.display = 'block';
+      }
+    }
+
+    // 2. Auth Action Selector (Register vs Login)
+    function setAuthAction(action) {
+      currentAuthAction = action;
+      const regBtn = document.getElementById('auth-tab-register');
+      const logBtn = document.getElementById('auth-tab-login');
+
+      // Seeker Boxes
+      const seekerRegBox = document.getElementById('seeker-register-box');
+      const seekerLogBox = document.getElementById('seeker-login-box');
+
+      // Provider Boxes
+      const provRegBox = document.getElementById('provider-register-box');
+      const provLogBox = document.getElementById('provider-login-box');
+
+      if (action === 'login') {
+        regBtn.classList.remove('active');
+        logBtn.classList.add('active');
+        seekerRegBox.style.display = 'none';
+        seekerLogBox.style.display = 'block';
+        provRegBox.style.display = 'none';
+        provLogBox.style.display = 'block';
+      } else {
+        regBtn.classList.add('active');
+        logBtn.classList.remove('active');
+        seekerRegBox.style.display = 'block';
+        seekerLogBox.style.display = 'none';
+        provRegBox.style.display = 'block';
+        provLogBox.style.display = 'none';
+      }
+    }
+
+    // 3. Seeker Profile Type (Anonymous vs Private)
+    function setSeekerProfileType(type) {
+      currentSeekerProfileType = type;
+      const tabAnon = document.getElementById('tab-anon-btn');
+      const tabPrivate = document.getElementById('tab-private-btn');
+      const anonFields = document.getElementById('seeker-anon-fields');
+      const privateFields = document.getElementById('seeker-private-fields');
+
+      if (type === 'anon') {
+        tabAnon.classList.add('active');
+        tabPrivate.classList.remove('active');
+        anonFields.style.display = 'block';
+        privateFields.style.display = 'none';
+      } else {
+        tabAnon.classList.remove('active');
+        tabPrivate.classList.add('active');
+        anonFields.style.display = 'none';
+        privateFields.style.display = 'block';
+      }
+    }
+
+    function selectSeekerAvatar(el, emoji) {
+      document.querySelectorAll('#seeker-anon-fields .avatar-item').forEach(a => a.classList.remove('selected'));
+      el.classList.add('selected');
+      currentSelectedAvatar = emoji;
+    }
+
+    // 4. Handle Seeker Registration
+    async function handleSeekerRegister(e) {
+      e.preventDefault();
+      const email = document.getElementById('seeker-email').value.trim();
+      const password = document.getElementById('seeker-password').value;
+      const errorEl = document.getElementById('seeker-error');
+      const btn = document.getElementById('seeker-submit-btn');
+
+      let nickname = '';
+      let fullName = '';
+      let avatar = currentSelectedAvatar;
+
+      if (currentSeekerProfileType === 'anon') {
+        nickname = document.getElementById('seeker-anon-nickname').value.trim() || 'Anonymous #' + Math.floor(1000 + Math.random() * 9000);
+        fullName = nickname;
+      } else {
+        fullName = document.getElementById('seeker-private-name').value.trim();
+        if (!fullName) {
+          errorEl.innerText = 'Please enter your full name.';
+          errorEl.style.display = 'block';
+          return;
+        }
+        nickname = fullName.split(' ')[0];
+        avatar = '👤';
+      }
+
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Setting up portal...';
+
+      const { data, error } = await VistarazAuth.signUp(email, password, {
+        fullName,
+        nickname,
+        role: 'user',
+        avatarUrl: avatar
+      });
+
+      if (error) {
+        errorEl.innerText = error.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
+      } else {
+        // Redirect directly to dashboard
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    // 5. Handle Provider / Counselor Registration
+    async function handleProviderRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('provider-name').value.trim();
+      const qualification = document.getElementById('provider-qualification').value;
+      const languages = document.getElementById('provider-languages').value.split(',').map(l => l.trim());
+      const email = document.getElementById('provider-email').value.trim();
+      const password = document.getElementById('provider-password').value;
+      const errorEl = document.getElementById('provider-error');
+      const btn = document.getElementById('provider-submit-btn');
+
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating listener workspace...';
+
+      const { data, error } = await VistarazAuth.signUp(email, password, {
+        fullName: name,
+        nickname: name.split(' ')[0],
+        role: 'counselor',
+        qualification,
+        languages,
+        avatarUrl: '🩺'
+      });
+
+      if (error) {
+        errorEl.innerText = error.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
+      } else {
+        // Redirect directly to freelancer panel
+        window.location.href = 'freelancer_panel.html';
+      }
+    }
+
+    // 6. Universal Login Handler (Auto-routes based on role)
+    async function handleUniversalLogin(e, roleType) {
+      e.preventDefault();
+      const email = roleType === 'seeker' 
+        ? document.getElementById('seeker-login-email').value.trim()
+        : document.getElementById('provider-login-email').value.trim();
+      
+      const password = roleType === 'seeker'
+        ? document.getElementById('seeker-login-password').value
+        : document.getElementById('provider-login-password').value;
+
+      const errorEl = roleType === 'seeker' ? document.getElementById('seeker-login-error') : document.getElementById('provider-login-error');
+      const btn = roleType === 'seeker' ? document.getElementById('seeker-login-btn') : document.getElementById('provider-login-btn');
+
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+      const { data, error } = await VistarazAuth.signIn(email, password);
+
+      if (error) {
+        errorEl.innerText = error.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = roleType === 'seeker' ? 'Sign In to Dashboard' : 'Open Freelancer Panel';
+      } else {
+        const user = data.user;
+        const profile = await VistarazAuth.getProfile(user.id);
+        const userRole = (profile && profile.role) || user.user_metadata?.role || 'user';
+
+        if (userRole === 'counselor') {
+          window.location.href = 'freelancer_panel.html';
+        } else {
+          window.location.href = 'dashboard.html';
+        }
+      }
+    }
   </script>
 </body>
 </html>

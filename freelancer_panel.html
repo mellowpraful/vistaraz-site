@@ -1037,6 +1037,11 @@
       }
       /* Delegate to existing handleToggle for badge/cards logic */
       handleToggle(online);
+
+      /* Sync with Supabase */
+      if (window.VistarazDB) {
+        VistarazDB.updateCounselorStatus(online).catch(err => console.warn('Supabase status sync error:', err));
+      }
     }
 
     /* ═══════════════════════════════════════════════
@@ -1093,6 +1098,16 @@
       if (daysEl && activeDays.length) daysEl.textContent = activeDays.join(', ');
       if (hoursEl && startTime && endTime) hoursEl.textContent = startTime + ' – ' + endTime;
       if (maxEl && maxSess) maxEl.textContent = maxSess + ' sessions / day';
+
+      /* Sync with Supabase */
+      if (window.VistarazDB) {
+        VistarazDB.saveCounselorSchedule({
+          startTime,
+          endTime,
+          activeDays,
+          maxDailySessions: parseInt(maxSess) || 4
+        }).catch(err => console.warn('Supabase schedule sync error:', err));
+      }
 
       closeScheduleModal();
     }
@@ -1221,6 +1236,9 @@
     </div>
   </div>
 
+  <!-- Supabase Integration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/dist/supabase.9aba4fbd.js"></script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz � Innovate, Heal, Impact" height="48"></a>
+    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz — Innovate, Heal, Impact" height="48"></a>
     <nav>
       <a data-i="home" href="index.html">Home</a>
       <a class="active" data-i="assessment" href="assessment.html">Check-in</a>
@@ -31,7 +31,7 @@
     </section>
 
     <section class="quiz-container glass-card reveal">
-      <div class="stepper">
+      <div class="stepper" id="quiz-stepper">
         <span class="active"></span>
         <span></span>
         <span></span>
@@ -42,43 +42,43 @@
         <!-- Q1 -->
         <fieldset class="active" data-step="1">
           <legend style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 30px;">How has life felt lately?</legend>
-          <button type="button" class="option-btn" data-value="light">Light, mostly</button>
-          <button type="button" class="option-btn" data-value="mixed">A little mixed</button>
-          <button type="button" class="option-btn" data-value="heavy">Heavy to carry</button>
-          <button type="button" class="option-btn" data-value="overwhelming">A lot, honestly</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(1, 'light', 10, 'Life Feeling')">Light, mostly</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(1, 'mixed', 25, 'Life Feeling')">A little mixed</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(1, 'heavy', 50, 'Life Feeling')">Heavy to carry</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(1, 'overwhelming', 80, 'Life Feeling')">A lot, honestly</button>
         </fieldset>
 
         <!-- Q2 -->
         <fieldset data-step="2" style="display: none;">
           <legend style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 30px;">What feels closest today?</legend>
-          <button type="button" class="option-btn" data-value="study">Study or career pressure</button>
-          <button type="button" class="option-btn" data-value="stress">Stress or overthinking</button>
-          <button type="button" class="option-btn" data-value="connection">Feeling alone or disconnected</button>
-          <button type="button" class="option-btn" data-value="sleep">Not sleeping well</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(2, 'study', 30, 'Primary Focus')">Study or career pressure</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(2, 'stress', 60, 'Primary Focus')">Stress or overthinking</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(2, 'connection', 75, 'Primary Focus')">Feeling alone or disconnected</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(2, 'sleep', 45, 'Primary Focus')">Not sleeping well</button>
         </fieldset>
 
         <!-- Q3 -->
         <fieldset data-step="3" style="display: none;">
           <legend style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 30px;">What kind of support sounds nice?</legend>
-          <button type="button" class="option-btn" data-value="listen">Someone to just listen</button>
-          <button type="button" class="option-btn" data-value="advice">Practical guidance</button>
-          <button type="button" class="option-btn" data-value="tools">Tools to manage on my own</button>
-          <button type="button" class="option-btn" data-value="unsure">I'm not sure yet</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(3, 'listen', 20, 'Support Style')">Someone to just listen</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(3, 'advice', 40, 'Support Style')">Practical guidance</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(3, 'tools', 30, 'Support Style')">Tools to manage on my own</button>
+          <button type="button" class="option-btn" onclick="selectAnswer(3, 'unsure', 50, 'Support Style')">I'm not sure yet</button>
         </fieldset>
 
         <!-- Result -->
-        <div class="quiz-result" style="display: none; text-align: center;">
+        <div class="quiz-result" id="quiz-result" style="display: none; text-align: center;">
           <i class="fas fa-chart-pie" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
           <span class="eyebrow">YOUR SUPPORT PROFILE</span>
           <h2 style="font-size: 2.5rem; margin-bottom: 15px;">A space to unpack<br><em>things, gently.</em></h2>
           
           <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; margin-bottom: 30px; text-align: left;">
             <p style="margin-bottom: 10px; font-size: 0.9rem; color: var(--text-main);"><strong>Current Focus Areas:</strong></p>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;"><span>Stress</span> <span>Moderate</span></div>
-            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 15px;"><div style="width: 60%; height: 100%; background: var(--accent-primary); border-radius: 3px;"></div></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;"><span>Stress Level</span> <span id="res-stress-label">Moderate</span></div>
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 15px;"><div id="res-stress-bar" style="width: 60%; height: 100%; background: var(--accent-primary); border-radius: 3px; transition: width 0.6s ease;"></div></div>
             
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;"><span>Connection</span> <span>Needs Attention</span></div>
-            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;"><div style="width: 80%; height: 100%; background: var(--accent-secondary); border-radius: 3px;"></div></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem;"><span>Connection & Wellbeing</span> <span id="res-conn-label">Needs Attention</span></div>
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;"><div id="res-conn-bar" style="width: 80%; height: 100%; background: var(--accent-secondary); border-radius: 3px; transition: width 0.6s ease;"></div></div>
           </div>
 
           <p>A conversation with a trained support listener could be a good place to begin. Before we match you, let's set up your profile.</p>
@@ -89,6 +89,62 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/dist/supabase.9aba4fbd.js"></script>
   <script src="assets/dist/app.1d49be2f.js"></script>
+  
+  <script>
+    const userAnswers = {};
+    let totalScore = 0;
+
+    async function selectAnswer(step, value, scorePoints, category) {
+      userAnswers[`step_${step}`] = { value, category, score: scorePoints };
+      totalScore += scorePoints;
+
+      // Update stepper
+      const stepIndicators = document.querySelectorAll('#quiz-stepper span');
+      if (stepIndicators[step - 1]) stepIndicators[step - 1].classList.remove('active');
+      if (stepIndicators[step]) stepIndicators[step].classList.add('active');
+
+      // Hide current step
+      const currentFieldset = document.querySelector(`fieldset[data-step="${step}"]`);
+      if (currentFieldset) currentFieldset.style.display = 'none';
+
+      // Show next step or results
+      const nextStep = step + 1;
+      const nextFieldset = document.querySelector(`fieldset[data-step="${nextStep}"]`);
+      
+      if (nextFieldset) {
+        nextFieldset.style.display = 'block';
+      } else {
+        // Show result screen
+        const resultScreen = document.getElementById('quiz-result');
+        resultScreen.style.display = 'block';
+        if (stepIndicators[3]) stepIndicators[3].classList.add('active');
+
+        // Dynamic score calculation
+        const stressPercent = Math.min(100, Math.max(20, Math.round(totalScore / 1.8)));
+        const connPercent = Math.min(100, Math.max(30, 100 - Math.round(totalScore / 3)));
+        
+        document.getElementById('res-stress-bar').style.width = stressPercent + '%';
+        document.getElementById('res-conn-bar').style.width = connPercent + '%';
+
+        // Save to Supabase
+        if (window.VistarazDB) {
+          try {
+            await VistarazDB.saveAssessment({
+              score: totalScore,
+              category: 'General Check-in',
+              answers: userAnswers,
+              notes: `Stress: ${stressPercent}%, Connection: ${connPercent}%`
+            });
+            console.log('✅ Assessment saved to Supabase');
+          } catch (e) {
+            console.warn('Could not save assessment to Supabase:', e);
+          }
+        }
+      }
+    }
+  </script>
 </body>
 </html>

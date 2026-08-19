@@ -128,6 +128,12 @@ function build() {
       `src="${manifest['assets/js/app.js'] || 'assets/js/app.js'}"`
     );
 
+    // Replace Supabase JS script
+    content = content.replace(
+      /src=["'](?:assets\/js\/supabase\.js|assets\/dist\/supabase\.[a-f0-9]+\.js)["']/g,
+      `src="${manifest['assets/js/supabase.js'] || 'assets/js/supabase.js'}"`
+    );
+
     // Replace Logo images (matches assets/logo.png, assets/logo.svg, and assets/dist/logo.*.png)
     content = content.replace(
       /src=["'](?:assets\/logo\.png|assets\/logo\.svg|assets\/dist\/logo\.[a-f0-9]+\.png)["']/g,
