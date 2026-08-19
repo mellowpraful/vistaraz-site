@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>Identity Setup — Vistaraz</title>
+  <link rel="stylesheet" href="assets/dist/app.e178876f.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz � Innovate, Heal, Impact" height="48"></a>
+    <nav>
+      <a data-i="home" href="index.html">Home</a>
+      <a data-i="support" href="support.html">Support</a>
+      <a data-i="tools" href="tools.html">Tools</a>
+    </nav>
+  </header>
+
+  <main style="padding-top: 60px;">
+    <section class="section" style="text-align: center; padding-top: 0; padding-bottom: 40px;">
+      <span class="eyebrow">YOUR IDENTITY</span>
+      <h1>How would you like to be<br><em>known here?</em></h1>
+      <p style="margin: 0 auto;">Privacy is a core feature. You choose how much you share.</p>
+    </section>
+
+    <div class="grid-2 reveal">
+      <!-- Anonymous Profile -->
+      <article class="glass-card" style="display: flex; flex-direction: column; height: 100%;">
+        <div style="flex: 1;">
+          <span class="eyebrow" style="color: var(--accent-primary)">OPTION 1</span>
+          <h3>Anonymous Profile</h3>
+          <p style="font-size: 0.95rem;">Interact using a nickname and avatar. Ideal for community discussions and basic support chats.</p>
+          
+          <div style="margin: 30px 0;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Choose an Avatar</label>
+            <div class="avatar-grid">
+              <div class="avatar-item selected">🦊</div>
+              <div class="avatar-item">🦉</div>
+              <div class="avatar-item">🌿</div>
+              <div class="avatar-item">🌙</div>
+              <div class="avatar-item">🌊</div>
+              <div class="avatar-item">✨</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Nickname</label>
+            <input type="text" placeholder="e.g. moonlitmango" id="nickname-input">
+          </div>
+        </div>
+        <a class="button primary" href="support.html" style="width: 100%;">Continue as Anonymous</a>
+      </article>
+
+      <!-- Private Profile -->
+      <article class="glass-card" style="display: flex; flex-direction: column; height: 100%; border-color: rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);">
+        <div style="flex: 1;">
+          <span class="eyebrow" style="color: var(--accent-secondary)">OPTION 2</span>
+          <h3>Private Profile</h3>
+          <p style="font-size: 0.95rem;">Use your real details privately. This is required for professional care, payments, or emergencies.</p>
+          
+          <div style="margin: 30px 0 20px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Full Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 10px;">Email Address</label>
+            <input type="email" placeholder="you@example.com">
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">
+            <i class="fas fa-lock" style="margin-right: 5px;"></i> We will never share this with the community or listeners without your explicit consent.
+          </p>
+        </div>
+        <a class="button ghost" href="support.html" style="width: 100%;">Setup Private Profile</a>
+      </article>
+    </div>
+  </main>
+
+  <script src="assets/dist/app.b107ef87.js"></script>
+  <script>
+    // Simple inline script for avatar selection demo
+    document.querySelectorAll('.avatar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.avatar-item').forEach(a => a.classList.remove('selected'));
+        item.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>
