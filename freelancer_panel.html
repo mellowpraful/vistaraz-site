@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>Freelancer Panel | Vistaraz</title>
-  <meta name="description" content="Vistaraz Care Support Provider Dashboard — manage your availability, incoming session requests and session history.">
+  <meta name="description"
+    content="Vistaraz Care Support Provider Dashboard — manage your availability, incoming session requests and session history.">
 
   <!-- Tailwind CSS Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,14 +25,14 @@
         extend: {
           fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            surface:   '#111827',   /* body bg       */
-            card:      '#1c2533',   /* card bg        */
-            border:    '#283144',   /* subtle borders */
-            muted:     '#6b7280',   /* secondary text */
-            accent:    '#3b82f6',   /* blue accent    */
-            success:   '#10b981',   /* emerald green  */
-            danger:    '#ef4444',   /* red            */
-            warning:   '#f59e0b',
+            surface: '#0a0f12',   /* body bg (matches --bg-dark) */
+            card: 'rgba(255, 255, 255, 0.03)',   /* card bg (matches --bg-card) */
+            border: 'rgba(255, 255, 255, 0.08)',   /* subtle borders (matches --line) */
+            muted: '#8ba1b0',   /* secondary text (matches --text-muted) */
+            accent: '#8ab4f8',   /* blue accent (matches --accent-primary) */
+            success: '#4cd964',   /* emerald green (matches --success) */
+            danger: '#ff6b6b',   /* red (matches --danger) */
+            warning: '#c39b77',   /* accent secondary (matches --accent-secondary) */
           }
         }
       }
@@ -38,6 +40,21 @@
   </script>
 
   <style>
+    :root {
+      --bg-dark: #0a0f12;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-glass: rgba(20, 30, 35, 0.6);
+      --text-main: #f0f4f8;
+      --text-muted: #8ba1b0;
+      --accent-primary: #8ab4f8;
+      --accent-secondary: #c39b77;
+      --accent-glow: rgba(138, 180, 248, 0.2);
+      --danger: #ff6b6b;
+      --success: #4cd964;
+      --line: rgba(255, 255, 255, 0.08);
+      --font-sans: 'Inter', sans-serif;
+    }
+
     /* ── Site-header (matches app.css .site-header) ──── */
     .site-header {
       position: sticky;
@@ -50,8 +67,9 @@
       background: rgba(10, 15, 18, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     }
+
     .site-header-inner {
       max-width: 1400px;
       width: 100%;
@@ -61,6 +79,7 @@
       align-items: center;
       gap: 24px;
     }
+
     /* Brand logo (matches app.css .brand img) */
     .brand img {
       height: 48px;
@@ -68,10 +87,18 @@
       filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
       transition: filter 0.3s ease;
     }
-    .brand:hover img { filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.6)); }
+
+    .brand:hover img {
+      filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.6));
+    }
 
     /* Nav links (matches app.css nav a) */
-    .site-nav { display: flex; gap: 32px; align-items: center; }
+    .site-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
     .site-nav a {
       font-size: 0.9rem;
       font-weight: 500;
@@ -80,116 +107,227 @@
       position: relative;
       transition: color 0.2s;
     }
-    .site-nav a:hover { color: #f0f4f8; }
+
+    .site-nav a:hover {
+      color: #f0f4f8;
+    }
+
     .site-nav a::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
       background: #8ab4f8;
       transition: width 0.3s ease;
     }
-    .site-nav a:hover::after { width: 100%; }
+
+    .site-nav a:hover::after {
+      width: 100%;
+    }
+
     .site-nav .btn-ghost {
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 6px 14px;
       font-size: 0.8rem;
     }
-    .site-nav .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+    .site-nav .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+    }
 
     /* ── Toggle switch (JS-driven) ────────────────────── */
-    .toggle-wrap { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle-wrap {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
     .toggle-track {
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       border-radius: 11px;
       background: #374151;
       transition: background-color .25s ease;
       cursor: pointer;
     }
-    .toggle-track.is-on { background: #10b981; }
+
+    .toggle-track.is-on {
+      background: #10b981;
+    }
+
     .toggle-knob {
       position: absolute;
-      top: 3px; left: 3px;
-      width: 16px; height: 16px;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: #fff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
       transition: transform .25s ease;
       pointer-events: none;
     }
-    .toggle-knob.is-on { transform: translateX(18px); }
+
+    .toggle-knob.is-on {
+      transform: translateX(18px);
+    }
 
     /* ── Tab underline active ─────────────────────────── */
-    .tab-btn.active { border-bottom: 2px solid #3b82f6; color: #f9fafb; }
+    .tab-btn.active {
+      border-bottom: 2px solid #3b82f6;
+      color: #f9fafb;
+    }
 
     /* ── Compact scrollbar ────────────────────────────── */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #111827; }
-    ::-webkit-scrollbar-thumb { background: #283144; border-radius: 3px; }
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #111827;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #283144;
+      border-radius: 3px;
+    }
 
     /* ── Card fade-in on load ─────────────────────────── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    .fade-in { animation: fadeUp .35s ease both; }
+
+    .fade-in {
+      animation: fadeUp .35s ease both;
+    }
 
     /* ── Request card transition ──────────────────────── */
-    .request-card { transition: opacity .25s ease, transform .25s ease; }
-    .request-card.dismissed { opacity: 0; transform: scale(0.97); pointer-events: none; }
+    .request-card {
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .request-card.dismissed {
+      opacity: 0;
+      transform: scale(0.97);
+      pointer-events: none;
+    }
 
     /* ── Toast notification ───────────────────────────── */
     #offlineToast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 9999;
-      display: flex; align-items: center; gap: 10px;
-      background: #1c2533; border: 1px solid #ef4444;
-      color: #f87171; font-size: 0.8rem; font-weight: 500;
-      padding: 10px 18px; border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-      opacity: 0; pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1c2533;
+      border: 1px solid #ef4444;
+      color: #f87171;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
       transition: opacity .25s ease;
     }
-    #offlineToast.show { opacity: 1; pointer-events: auto; }
+
+    #offlineToast.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     /* ── Schedule modal overlay ───────────────────────── */
     #scheduleModal {
-      position: fixed; inset: 0; z-index: 500;
-      background: rgba(0,0,0,0.65);
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity .2s ease;
     }
-    #scheduleModal.open { opacity: 1; pointer-events: auto; }
+
+    #scheduleModal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     #scheduleModalBox {
-      background: #1c2533; border: 1px solid #283144;
-      border-radius: 16px; padding: 28px;
-      width: 100%; max-width: 460px; margin: 16px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 460px;
+      margin: 16px;
       transform: translateY(16px);
       transition: transform .22s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
-    #scheduleModal.open #scheduleModalBox { transform: translateY(0); }
+
+    #scheduleModal.open #scheduleModalBox {
+      transform: translateY(0);
+    }
+
     .day-toggle {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 4px; cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
     }
-    .day-toggle input { display: none; }
+
+    .day-toggle input {
+      display: none;
+    }
+
     .day-pill {
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; font-weight: 700;
-      border: 1px solid #283144; background: #111827;
-      color: #6b7280; transition: all .15s;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      transition: all .15s;
     }
-    .day-toggle input:checked + .day-pill {
-      background: #064e3b; border-color: #10b981; color: #10b981;
+
+    .day-toggle input:checked+.day-pill {
+      background: rgba(76, 217, 100, 0.15);
+      border-color: var(--success);
+      color: var(--success);
     }
   </style>
 </head>
 
-<body class="bg-surface text-gray-100 font-sans min-h-screen flex flex-col antialiased text-[0.9rem]">
+<body
+  class="bg-[radial-gradient(circle_at_top_center,#152229_0%,var(--bg-dark)_100%)] text-gray-100 font-sans min-h-screen flex flex-col antialiased text-[0.9rem]">
 
   <!-- ═══════════════════════════════════════════════════════════
        NAVBAR
@@ -200,7 +338,7 @@
 
       <!-- Brand (app.css .brand pattern) -->
       <a class="brand flex-shrink-0" href="index.html">
-        <img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz">
+        <img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz" height="48">
       </a>
 
       <!-- Desktop Nav (matches app.css nav / .site-nav) -->
@@ -230,17 +368,16 @@
           <!-- Toggle (JS-driven, fixed 40×22 px wrapper) -->
           <div class="toggle-wrap" onclick="toggleStatus()" title="Toggle Live Status">
             <div id="toggleTrack" class="toggle-track is-on"></div>
-            <div id="toggleKnob"  class="toggle-knob  is-on"></div>
+            <div id="toggleKnob" class="toggle-knob  is-on"></div>
           </div>
         </div>
 
         <!-- Profile avatar -->
-        <a href="dashboard.html" title="My Profile"
-           style="width:34px;height:34px;border-radius:50%;
+        <a href="dashboard.html" title="My Profile" style="width:34px;height:34px;border-radius:50%;
                   background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
                   display:flex;align-items:center;justify-content:center;
-                  transition:border-color .2s;flex-shrink:0;"
-           onmouseover="this.style.borderColor='#8ab4f8'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+                  transition:border-color .2s;flex-shrink:0;" onmouseover="this.style.borderColor='#8ab4f8'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
           <i class="fa-regular fa-user" style="font-size:0.75rem;color:#8ab4f8;"></i>
         </a>
       </div>
@@ -258,12 +395,12 @@
       <div>
         <h1 class="text-xl font-semibold text-gray-100">Good evening, Care Support Provider</h1>
         <p id="statusSubtitle" class="text-xs text-muted mt-0.5">
-          You are <span id="statusWord" class="text-success font-medium">online</span> and visible to incoming session requests.
+          You are <span id="statusWord" class="text-success font-medium">online</span> and visible to incoming session
+          requests.
         </p>
       </div>
       <!-- Compact live badge -->
-      <div id="liveBadge"
-           class="self-start sm:self-auto flex items-center gap-1.5
+      <div id="liveBadge" class="self-start sm:self-auto flex items-center gap-1.5
                   bg-success/10 border border-success/20 text-success
                   text-[10px] font-semibold uppercase tracking-wider
                   px-3 py-1.5 rounded-full transition-all">
@@ -290,8 +427,7 @@
               </div>
               <h2 class="text-sm font-semibold text-gray-100">My Schedule</h2>
             </div>
-            <button onclick="editSchedule()"
-                    class="text-[10px] font-semibold text-accent hover:text-white
+            <button onclick="editSchedule()" class="text-[10px] font-semibold text-accent hover:text-white
                            bg-accent/10 hover:bg-accent/20 border border-accent/20
                            px-2.5 py-1 rounded-md transition-all flex items-center gap-1">
               <i class="fa-solid fa-pen text-[9px]"></i> Edit
@@ -332,23 +468,28 @@
           <div class="grid grid-cols-7 gap-1">
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">M</div>
-              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">
+                ON</div>
             </div>
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">T</div>
-              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">
+                ON</div>
             </div>
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">W</div>
-              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">
+                ON</div>
             </div>
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">T</div>
-              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">
+                ON</div>
             </div>
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">F</div>
-              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">
+                ON</div>
             </div>
             <div class="text-center">
               <div class="text-[9px] text-muted mb-1">S</div>
@@ -391,16 +532,14 @@
 
         <!-- Tab Bar -->
         <div class="flex border-b border-border gap-1">
-          <button id="tabRequests"
-                  onclick="switchTab('requests')"
-                  class="tab-btn active px-4 py-2.5 text-xs font-semibold text-gray-100 transition-colors border-b-2 border-accent">
+          <button id="tabRequests" onclick="switchTab('requests')"
+            class="tab-btn active px-4 py-2.5 text-xs font-semibold text-gray-100 transition-colors border-b-2 border-accent">
             <i class="fa-solid fa-inbox mr-1.5"></i>Incoming Requests
             <span id="reqBadge"
-                  class="ml-1.5 bg-accent/20 text-accent text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
+              class="ml-1.5 bg-accent/20 text-accent text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
           </button>
-          <button id="tabHistory"
-                  onclick="switchTab('history')"
-                  class="tab-btn px-4 py-2.5 text-xs font-semibold text-muted hover:text-white transition-colors border-b-2 border-transparent">
+          <button id="tabHistory" onclick="switchTab('history')"
+            class="tab-btn px-4 py-2.5 text-xs font-semibold text-muted hover:text-white transition-colors border-b-2 border-transparent">
             <i class="fa-solid fa-clock-rotate-left mr-1.5"></i>Past Sessions
           </button>
         </div>
@@ -412,7 +551,8 @@
           <div id="offlineNotice" class="hidden bg-card border border-border rounded-xl p-8 text-center">
             <i class="fa-solid fa-toggle-off text-3xl text-muted mb-3 block"></i>
             <h4 class="text-sm font-semibold text-gray-200 mb-1">You're currently offline</h4>
-            <p class="text-xs text-muted">Toggle the status switch in the header to go online and start receiving session requests.</p>
+            <p class="text-xs text-muted">Toggle the status switch in the header to go online and start receiving
+              session requests.</p>
           </div>
 
           <!-- ── Request Card 1 (oldest — FIFO, no badge) ── -->
@@ -460,18 +600,17 @@
 
             <!-- Action buttons -->
             <div class="flex gap-2 mt-3">
-              <button onclick="acceptRequest('req-1')"
-                      class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
+              <button onclick="acceptRequest('req-1')" class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
                              py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-check text-[11px]"></i> Accept Session
               </button>
-              <button onclick="rejectRequest('req-1')"
-                      class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
+              <button onclick="rejectRequest('req-1')" class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
                              py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-xmark text-[11px]"></i> Reject
               </button>
             </div>
           </div>
+
 
           <!-- ── Request Card 2 ── -->
           <div id="req-2" class="request-card bg-card border border-border rounded-xl p-4">
@@ -502,7 +641,8 @@
                 <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
                   <i class="fa-regular fa-hourglass-half mr-1"></i>45 Mins
                 </span>
-                <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 rounded px-2 py-1 font-medium">
+                <span
+                  class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 rounded px-2 py-1 font-medium">
                   <i class="fa-solid fa-message mr-1 text-[10px]"></i>Chat
                 </span>
               </div>
@@ -510,17 +650,16 @@
             </div>
 
             <div class="mt-3 bg-surface border border-border rounded-lg px-3 py-2 text-xs text-muted">
-              <span class="font-medium text-gray-300">Primary Concern:</span> Grief and loss — difficulty processing recent events
+              <span class="font-medium text-gray-300">Primary Concern:</span> Grief and loss — difficulty processing
+              recent events
             </div>
 
             <div class="flex gap-2 mt-3">
-              <button onclick="acceptRequest('req-2')"
-                      class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
+              <button onclick="acceptRequest('req-2')" class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
                              py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-check text-[11px]"></i> Accept Session
               </button>
-              <button onclick="rejectRequest('req-2')"
-                      class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
+              <button onclick="rejectRequest('req-2')" class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
                              py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-xmark text-[11px]"></i> Reject
               </button>
@@ -537,11 +676,6 @@
             </div>
             <h4 class="text-sm font-semibold text-gray-200 mb-1">Waiting for New Requests</h4>
             <p class="text-xs text-muted mb-4">You'll be notified as soon as a new client is matched to you.</p>
-            <button onclick="simulateRequest()"
-                    class="text-xs text-accent bg-accent/10 hover:bg-accent/20 border border-accent/20
-                           font-semibold px-3 py-1.5 rounded-lg transition-all">
-              <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Simulate Incoming Request
-            </button>
           </div>
 
         </div>
@@ -561,11 +695,16 @@
               <table class="w-full text-xs">
                 <thead>
                   <tr class="border-b border-border bg-surface/50">
-                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Client</th>
-                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Date &amp; Time</th>
-                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Duration</th>
-                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Type</th>
-                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Status</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Client
+                    </th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Date
+                      &amp; Time</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">
+                      Duration</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Type
+                    </th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Status
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-border">
@@ -573,7 +712,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_1155</span>
@@ -582,7 +722,8 @@
                     <td class="px-4 py-3 text-muted">18 Aug 2026, 9:45 PM</td>
                     <td class="px-4 py-3 text-muted">42 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
                         Video/Audio
                       </span>
                     </td>
@@ -594,7 +735,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_0982</span>
@@ -603,7 +745,8 @@
                     <td class="px-4 py-3 text-muted">18 Aug 2026, 7:10 PM</td>
                     <td class="px-4 py-3 text-muted">29 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
                         Chat
                       </span>
                     </td>
@@ -615,7 +758,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_2201</span>
@@ -624,7 +768,8 @@
                     <td class="px-4 py-3 text-muted">17 Aug 2026, 11:00 PM</td>
                     <td class="px-4 py-3 text-muted">55 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
                         Video/Audio
                       </span>
                     </td>
@@ -636,7 +781,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_3740</span>
@@ -645,7 +791,8 @@
                     <td class="px-4 py-3 text-muted">17 Aug 2026, 8:30 PM</td>
                     <td class="px-4 py-3 text-muted">20 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
                         Chat
                       </span>
                     </td>
@@ -657,7 +804,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_0567</span>
@@ -666,7 +814,8 @@
                     <td class="px-4 py-3 text-muted">16 Aug 2026, 3:00 PM</td>
                     <td class="px-4 py-3 text-muted">38 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
                         Video/Audio
                       </span>
                     </td>
@@ -678,7 +827,8 @@
                   <tr class="hover:bg-surface/50 transition-colors">
                     <td class="px-4 py-3">
                       <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                        <div
+                          class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
                           <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
                         </div>
                         <span class="font-medium text-gray-200">Anonymous_1889</span>
@@ -687,7 +837,8 @@
                     <td class="px-4 py-3 text-muted">15 Aug 2026, 10:15 PM</td>
                     <td class="px-4 py-3 text-muted">47 min</td>
                     <td class="px-4 py-3">
-                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                      <span
+                        class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
                         Video/Audio
                       </span>
                     </td>
@@ -717,8 +868,7 @@
   <!-- ═══════════════════════════════════════════════════════════
        CONNECTION OVERLAY (Accept → loading)
   ═══════════════════════════════════════════════════════════ -->
-  <div id="connectionOverlay"
-       class="fixed inset-0 z-[200] hidden bg-surface/95 backdrop-blur-sm
+  <div id="connectionOverlay" class="fixed inset-0 z-[200] hidden bg-surface/95 backdrop-blur-sm
               flex items-center justify-center">
     <div class="bg-card border border-border rounded-2xl p-8 max-w-sm w-full mx-4 text-center">
       <!-- Spinner -->
@@ -771,26 +921,26 @@
 
     /* ───────── Toggle Online / Offline ────────────── */
     function handleToggle(isOnline) {
-      const dot      = document.getElementById('navDot');
-      const label    = document.getElementById('navLabel');
-      const badge    = document.getElementById('liveBadge');
+      const dot = document.getElementById('navDot');
+      const label = document.getElementById('navLabel');
+      const badge = document.getElementById('liveBadge');
       const badgeTxt = document.getElementById('liveBadgeText');
-      const pulse    = document.getElementById('livePulse');
-      const word     = document.getElementById('statusWord');
-      const notice   = document.getElementById('offlineNotice');
-      const panel    = document.getElementById('panelRequests');
+      const pulse = document.getElementById('livePulse');
+      const word = document.getElementById('statusWord');
+      const notice = document.getElementById('offlineNotice');
+      const panel = document.getElementById('panelRequests');
 
       if (isOnline) {
-        dot.className      = 'w-2 h-2 rounded-full bg-success flex-shrink-0 transition-colors';
-        label.className    = 'text-xs font-semibold text-success transition-colors flex-shrink-0 w-12';
-        label.textContent  = 'Online';
-        badge.className    = badge.className.replace('bg-muted/10 border-muted/20 text-muted',
-                                'bg-success/10 border-success/20 text-success');
+        dot.className = 'w-2 h-2 rounded-full bg-success flex-shrink-0 transition-colors';
+        label.className = 'text-xs font-semibold text-success transition-colors flex-shrink-0 w-12';
+        label.textContent = 'Online';
+        badge.className = badge.className.replace('bg-muted/10 border-muted/20 text-muted',
+          'bg-success/10 border-success/20 text-success');
         badgeTxt.textContent = 'Live & Online';
-        pulse.innerHTML    = `<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-60"></span>
+        pulse.innerHTML = `<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-60"></span>
                                <span class="relative inline-flex h-2 w-2 rounded-full bg-success"></span>`;
-        word.className     = 'text-success font-medium';
-        word.textContent   = 'online';
+        word.className = 'text-success font-medium';
+        word.textContent = 'online';
         notice.classList.add('hidden');
         // Show any active request cards
         activeRequests.forEach(id => {
@@ -800,13 +950,13 @@
         if (activeRequests.length === 0) document.getElementById('emptyState').classList.remove('hidden');
 
       } else {
-        dot.className      = 'w-2 h-2 rounded-full bg-muted flex-shrink-0 transition-colors';
-        label.className    = 'text-xs font-semibold text-muted transition-colors flex-shrink-0 w-12';
-        label.textContent  = 'Offline';
+        dot.className = 'w-2 h-2 rounded-full bg-muted flex-shrink-0 transition-colors';
+        label.className = 'text-xs font-semibold text-muted transition-colors flex-shrink-0 w-12';
+        label.textContent = 'Offline';
         badgeTxt.textContent = 'Offline';
-        pulse.innerHTML    = `<span class="relative inline-flex h-2 w-2 rounded-full bg-muted"></span>`;
-        word.className     = 'text-muted font-medium';
-        word.textContent   = 'offline';
+        pulse.innerHTML = `<span class="relative inline-flex h-2 w-2 rounded-full bg-muted"></span>`;
+        word.className = 'text-muted font-medium';
+        word.textContent = 'offline';
         // Hide request cards and empty state; show offline notice
         activeRequests.forEach(id => {
           const card = document.getElementById(id);
@@ -820,7 +970,7 @@
     /* ───────── Accept ─────────────────────────────── */
     function acceptRequest(id) {
       const overlay = document.getElementById('connectionOverlay');
-      const bar     = document.getElementById('progressBar');
+      const bar = document.getElementById('progressBar');
       overlay.classList.remove('hidden');
       overlay.style.display = 'flex';
       // Kick off progress animation
@@ -839,67 +989,10 @@
       }, 280);
     }
 
-    /* ───────── Simulate new request ──────────────── */
-    function simulateRequest() {
-      // Re-insert a fresh card above emptyState
-      const container  = document.getElementById('panelRequests');
-      const emptyState = document.getElementById('emptyState');
-      const fakeId     = 'req-sim-' + Date.now();
-
-      const card = document.createElement('div');
-      card.id        = fakeId;
-      card.className = 'request-card bg-card border border-border rounded-xl p-4 fade-in';
-      card.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-surface border-2 border-border flex items-center justify-center flex-shrink-0">
-              <i class="fa-solid fa-user-secret text-accent text-sm"></i>
-            </div>
-            <div>
-              <p class="text-sm font-semibold text-gray-100">Anonymous_${Math.floor(Math.random()*9000+1000)}</p>
-              <div class="flex items-center gap-1.5 mt-0.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-success flex-shrink-0"></span>
-                <span class="text-[11px] text-success font-medium">Online</span>
-                <span class="text-muted">·</span>
-                <span class="text-[11px] text-muted">Age ${Math.floor(Math.random()*12+18)}</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-2 text-[11px]">
-            <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
-              <i class="fa-regular fa-clock mr-1"></i>Just now
-            </span>
-            <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
-              <i class="fa-regular fa-hourglass-half mr-1"></i>30 Mins
-            </span>
-            <span class="bg-accent/10 border border-accent/20 text-accent rounded px-2 py-1 font-medium">
-              <i class="fa-solid fa-video mr-1 text-[10px]"></i>Video/Audio
-            </span>
-          </div>
-        </div>
-        <div class="mt-3 bg-surface border border-border rounded-lg px-3 py-2 text-xs text-muted">
-          <span class="font-medium text-gray-300">Primary Concern:</span> Stress and burnout — simulated request
-        </div>
-        <div class="flex gap-2 mt-3">
-          <button onclick="acceptRequest('${fakeId}')"
-                  class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-check text-[11px]"></i> Accept Session
-          </button>
-          <button onclick="rejectRequest('${fakeId}')"
-                  class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-xmark text-[11px]"></i> Reject
-          </button>
-        </div>
-      `;
-      container.insertBefore(card, emptyState);
-      emptyState.classList.add('hidden');
-      activeRequests.push(fakeId);
-      updateQueueBadge();
-    }
 
     /* ───────── Tab switching ──────────────────────── */
     function switchTab(name) {
-      const tabs    = ['requests', 'history'];
+      const tabs = ['requests', 'history'];
       tabs.forEach(t => {
         document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
         const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -928,19 +1021,19 @@
     function applyOnlineState(online) {
       /* Toggle visuals */
       const track = document.getElementById('toggleTrack');
-      const knob  = document.getElementById('toggleKnob');
-      const dot   = document.getElementById('navDot');
+      const knob = document.getElementById('toggleKnob');
+      const dot = document.getElementById('navDot');
       const label = document.getElementById('navLabel');
       if (online) {
-        track.classList.add('is-on');    knob.classList.add('is-on');
-        dot.style.background  = '#10b981';
-        label.style.color     = '#10b981';
-        label.textContent     = 'Online';
+        track.classList.add('is-on'); knob.classList.add('is-on');
+        dot.style.background = '#10b981';
+        label.style.color = '#10b981';
+        label.textContent = 'Online';
       } else {
         track.classList.remove('is-on'); knob.classList.remove('is-on');
-        dot.style.background  = '#6b7280';
-        label.style.color     = '#6b7280';
-        label.textContent     = 'Offline';
+        dot.style.background = '#6b7280';
+        label.style.color = '#6b7280';
+        label.textContent = 'Offline';
       }
       /* Delegate to existing handleToggle for badge/cards logic */
       handleToggle(online);
@@ -955,7 +1048,7 @@
         return;
       }
       const overlay = document.getElementById('connectionOverlay');
-      const bar     = document.getElementById('progressBar');
+      const bar = document.getElementById('progressBar');
       overlay.classList.remove('hidden');
       overlay.style.display = 'flex';
       requestAnimationFrame(() => { bar.style.width = '100%'; });
@@ -983,20 +1076,20 @@
     function saveSchedule() {
       /* Collect form values */
       const startTime = document.getElementById('schStart').value;
-      const endTime   = document.getElementById('schEnd').value;
-      const maxSess   = document.getElementById('schMax').value;
+      const endTime = document.getElementById('schEnd').value;
+      const maxSess = document.getElementById('schMax').value;
 
       /* Collect checked days */
-      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-      const dayKeys = ['sch-mon','sch-tue','sch-wed','sch-thu','sch-fri','sch-sat','sch-sun'];
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const dayKeys = ['sch-mon', 'sch-tue', 'sch-wed', 'sch-thu', 'sch-fri', 'sch-sat', 'sch-sun'];
       const activeDays = dayKeys
-        .map((k,i) => document.getElementById(k).checked ? days[i] : null)
+        .map((k, i) => document.getElementById(k).checked ? days[i] : null)
         .filter(Boolean);
 
       /* Update the display in the schedule card */
       const daysEl = document.getElementById('dispActiveDays');
       const hoursEl = document.getElementById('dispHours');
-      const maxEl  = document.getElementById('dispMax');
+      const maxEl = document.getElementById('dispMax');
       if (daysEl && activeDays.length) daysEl.textContent = activeDays.join(', ');
       if (hoursEl && startTime && endTime) hoursEl.textContent = startTime + ' – ' + endTime;
       if (maxEl && maxSess) maxEl.textContent = maxSess + ' sessions / day';
@@ -1010,7 +1103,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateQueueBadge();
       /* Close modal on backdrop click */
-      document.getElementById('scheduleModal').addEventListener('click', function(e) {
+      document.getElementById('scheduleModal').addEventListener('click', function (e) {
         if (e.target === this) closeScheduleModal();
       });
     });
@@ -1036,10 +1129,9 @@
             Edit Schedule
           </h3>
         </div>
-        <button onclick="closeScheduleModal()"
-                style="background:none;border:none;color:#6b7280;cursor:pointer;
+        <button onclick="closeScheduleModal()" style="background:none;border:none;color:#6b7280;cursor:pointer;
                        font-size:1rem;padding:4px;line-height:1;border-radius:6px"
-                onmouseover="this.style.color='#f0f4f8'" onmouseout="this.style.color='#6b7280'">
+          onmouseover="this.style.color='#f0f4f8'" onmouseout="this.style.color='#6b7280'">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -1085,15 +1177,13 @@
                   align-items:center;margin-bottom:20px">
         <div>
           <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">From</label>
-          <input id="schStart" type="time" value="10:00"
-                 style="width:100%;background:#111827;border:1px solid #283144;
+          <input id="schStart" type="time" value="10:00" style="width:100%;background:#111827;border:1px solid #283144;
                         color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
         </div>
         <span style="color:#6b7280;font-size:0.8rem;padding-top:18px">–</span>
         <div>
           <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">To</label>
-          <input id="schEnd" type="time" value="18:00"
-                 style="width:100%;background:#111827;border:1px solid #283144;
+          <input id="schEnd" type="time" value="18:00" style="width:100%;background:#111827;border:1px solid #283144;
                         color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
         </div>
       </div>
@@ -1101,8 +1191,7 @@
       <!-- Daily max -->
       <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
                 letter-spacing:.08em;margin-bottom:10px">Daily Session Limit</p>
-      <select id="schMax"
-              style="width:100%;background:#111827;border:1px solid #283144;
+      <select id="schMax" style="width:100%;background:#111827;border:1px solid #283144;
                      color:#f0f4f8;padding:9px 12px;border-radius:8px;
                      font-size:0.8rem;margin-bottom:24px">
         <option value="3">3 sessions / day</option>
@@ -1115,18 +1204,16 @@
 
       <!-- Actions -->
       <div style="display:flex;gap:10px;justify-content:flex-end">
-        <button onclick="closeScheduleModal()"
-                style="background:transparent;border:1px solid #283144;color:#8ba1b0;
+        <button onclick="closeScheduleModal()" style="background:transparent;border:1px solid #283144;color:#8ba1b0;
                        font-size:0.8rem;font-weight:500;padding:8px 18px;border-radius:8px;
-                       cursor:pointer;transition:border-color .15s"
-                onmouseover="this.style.borderColor='#6b7280'" onmouseout="this.style.borderColor='#283144'">
+                       cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#6b7280'"
+          onmouseout="this.style.borderColor='#283144'">
           Cancel
         </button>
-        <button onclick="saveSchedule()"
-                style="background:#3b82f6;border:none;color:#fff;
+        <button onclick="saveSchedule()" style="background:#3b82f6;border:none;color:#fff;
                        font-size:0.8rem;font-weight:600;padding:8px 20px;border-radius:8px;
-                       cursor:pointer;transition:background .15s"
-                onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+                       cursor:pointer;transition:background .15s" onmouseover="this.style.background='#2563eb'"
+          onmouseout="this.style.background='#3b82f6'">
           <i class="fa-solid fa-check" style="margin-right:6px;font-size:0.7rem"></i>Save Schedule
         </button>
       </div>
@@ -1135,4 +1222,5 @@
   </div>
 
 </body>
+
 </html>
