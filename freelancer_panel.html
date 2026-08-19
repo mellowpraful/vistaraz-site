@@ -2,480 +2,1135 @@
 <html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">  <title>Freelancer Panel | Vistaraz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancer Panel | Vistaraz</title>
+  <meta name="description" content="Vistaraz Care Support Provider Dashboard — manage your availability, incoming session requests and session history.">
+
   <!-- Tailwind CSS Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            brandDark: '#0a0f12',
-            brandCard: 'rgba(255, 255, 255, 0.03)',
-            brandLine: 'rgba(255, 255, 255, 0.08)',
-            accentPrimary: '#8ab4f8',
-            accentSecondary: '#c39b77',
-            dangerColor: '#ff6b6b',
-            successColor: '#4cd964',
-          },
-          fontFamily: {
-            sans: ['Inter', 'DM Sans', 'sans-serif'],
-            serif: ['Fraunces', 'serif'],
-          },
-          animation: {
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'sonar': 'sonar 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-          },
-          keyframes: {
-            sonar: {
-              '0%': { transform: 'scale(0.8)', opacity: '0.5' },
-              '100%': { transform: 'scale(2.2)', opacity: '0' },
-            }
+            surface:   '#111827',   /* body bg       */
+            card:      '#1c2533',   /* card bg        */
+            border:    '#283144',   /* subtle borders */
+            muted:     '#6b7280',   /* secondary text */
+            accent:    '#3b82f6',   /* blue accent    */
+            success:   '#10b981',   /* emerald green  */
+            danger:    '#ef4444',   /* red            */
+            warning:   '#f59e0b',
           }
         }
       }
     }
   </script>
 
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .glass {
-        background: rgba(20, 30, 35, 0.7);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
-      }
-      .glass-card-hover {
-        @apply transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:bg-white/5 hover:shadow-black/40;
-      }
+  <style>
+    /* ── Site-header (matches app.css .site-header) ──── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      background: rgba(10, 15, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    
-    /* Toggle switch customization */
-   /* Checkbox check hone par dot right shift hoga */
-.toggle-checkbox:checked {
-  transform: translateX(100%);
-  border-color: #10B981; /* Optional: success green border */
-}
+    .site-header-inner {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    /* Brand logo (matches app.css .brand img) */
+    .brand img {
+      height: 48px;
+      width: auto;
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
+      transition: filter 0.3s ease;
+    }
+    .brand:hover img { filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.6)); }
 
-/* Checkbox check hone par background color change hoga */
-.toggle-checkbox:checked + .toggle-label {
-  background-color: #10B981;
-}
+    /* Nav links (matches app.css nav a) */
+    .site-nav { display: flex; gap: 32px; align-items: center; }
+    .site-nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #8ba1b0;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: #f0f4f8; }
+    .site-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: #8ab4f8;
+      transition: width 0.3s ease;
+    }
+    .site-nav a:hover::after { width: 100%; }
+    .site-nav .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+    }
+    .site-nav .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+    /* ── Toggle switch (JS-driven) ────────────────────── */
+    .toggle-wrap { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle-track {
+      position: absolute; inset: 0;
+      border-radius: 11px;
+      background: #374151;
+      transition: background-color .25s ease;
+      cursor: pointer;
+    }
+    .toggle-track.is-on { background: #10b981; }
+    .toggle-knob {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      transition: transform .25s ease;
+      pointer-events: none;
+    }
+    .toggle-knob.is-on { transform: translateX(18px); }
+
+    /* ── Tab underline active ─────────────────────────── */
+    .tab-btn.active { border-bottom: 2px solid #3b82f6; color: #f9fafb; }
+
+    /* ── Compact scrollbar ────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #111827; }
+    ::-webkit-scrollbar-thumb { background: #283144; border-radius: 3px; }
+
+    /* ── Card fade-in on load ─────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeUp .35s ease both; }
+
+    /* ── Request card transition ──────────────────────── */
+    .request-card { transition: opacity .25s ease, transform .25s ease; }
+    .request-card.dismissed { opacity: 0; transform: scale(0.97); pointer-events: none; }
+
+    /* ── Toast notification ───────────────────────────── */
+    #offlineToast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 9999;
+      display: flex; align-items: center; gap: 10px;
+      background: #1c2533; border: 1px solid #ef4444;
+      color: #f87171; font-size: 0.8rem; font-weight: 500;
+      padding: 10px 18px; border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    #offlineToast.show { opacity: 1; pointer-events: auto; }
+
+    /* ── Schedule modal overlay ───────────────────────── */
+    #scheduleModal {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    #scheduleModal.open { opacity: 1; pointer-events: auto; }
+    #scheduleModalBox {
+      background: #1c2533; border: 1px solid #283144;
+      border-radius: 16px; padding: 28px;
+      width: 100%; max-width: 460px; margin: 16px;
+      transform: translateY(16px);
+      transition: transform .22s ease;
+    }
+    #scheduleModal.open #scheduleModalBox { transform: translateY(0); }
+    .day-toggle {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px; cursor: pointer;
+    }
+    .day-toggle input { display: none; }
+    .day-pill {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      border: 1px solid #283144; background: #111827;
+      color: #6b7280; transition: all .15s;
+    }
+    .day-toggle input:checked + .day-pill {
+      background: #064e3b; border-color: #10b981; color: #10b981;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-b from-[#152229] to-brandDark min-h-screen text-[#f0f4f8] font-sans antialiased flex flex-col justify-between">
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 w-full bg-brandDark/85 backdrop-blur-md border-b border-brandLine py-4 px-6 md:px-12 flex justify-between items-center max-w-[1400px] mx-auto">
-    <!-- Brand Logo -->
-    <a class="brand flex items-center transition-all duration-300 hover:opacity-90" href="index.html">
-      <img src="assets/logo.svg" alt="Vistaraz" height="48" class="h-12 w-auto filter drop-shadow-[0_0_10px_rgba(0,212,255,0.3)] hover:drop-shadow-[0_0_16px_rgba(0,212,255,0.6)] transition-all">
-    </a>
+<body class="bg-surface text-gray-100 font-sans min-h-screen flex flex-col antialiased text-[0.9rem]">
 
-    <!-- Nav Links (Hidden on small screens) -->
-    <nav class="hidden lg:flex gap-8 items-center">
-      <a data-i="home" href="index.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Home</a>
-      <a data-i="assessment" href="assessment.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Check-in</a>
-      <a data-i="support" href="support.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Support</a>
-      <a data-i="tools" href="tools.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Tools</a>
-      <a data-i="community" href="community.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Community</a>
-      <a data-i="plans" href="plans.html" class="text-sm font-medium text-[#8ba1b0] hover:text-white transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-accentPrimary after:transition-all">Plans</a>
-      <a href="dashboard.html" class="border border-brandLine rounded-full px-4 py-1.5 text-xs font-semibold tracking-wider hover:bg-white/5 hover:border-white/20 transition-all text-[#8ba1b0] hover:text-white">Dashboard</a>
-    </nav>
+  <!-- ═══════════════════════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════════════════════ -->
+  <!-- ════════════════ SITE HEADER ════════════════ -->
+  <header class="site-header">
+    <div class="site-header-inner">
 
-    <!-- Header Actions (Toggle on Right) -->
-    <div class="flex items-center gap-4">
-      <!-- Live Toggle Button Group -->
-      <div class="flex items-center gap-3 bg-brandCard border border-brandLine rounded-full px-3.5 py-1.5 shadow-md">
-        <span id="statusLabel" class="text-xs font-semibold uppercase tracking-wider text-successColor transition-all duration-300">Live</span>
-        <div class="relative inline-block w-10 select-none align-middle transition duration-200 ease-in">
-          <input type="checkbox" name="statusToggle" id="statusToggle" checked class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-transparent appearance-none cursor-pointer transition-transform duration-300 ease-in-out left-0 top-0"/>
-          <label for="statusToggle" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-600 cursor-pointer transition-colors duration-300"></label>
+      <!-- Brand (app.css .brand pattern) -->
+      <a class="brand flex-shrink-0" href="index.html">
+        <img src="assets/logo.svg" alt="Vistaraz">
+      </a>
+
+      <!-- Desktop Nav (matches app.css nav / .site-nav) -->
+      <nav class="site-nav hidden md:flex">
+        <a href="index.html">Home</a>
+        <a href="assessment.html">Check-in</a>
+        <a href="support.html">Support</a>
+        <a href="tools.html">Tools</a>
+        <a href="community.html">Community</a>
+        <a href="plans.html">Plans</a>
+        <a href="dashboard.html" class="btn-ghost">Dashboard</a>
+      </nav>
+
+      <!-- Right cluster: Status pill + Profile avatar -->
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+
+        <!-- Status toggle pill (fixed width — no layout shift) -->
+        <div style="display:flex;align-items:center;gap:8px;
+                    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+                    border-radius:999px;padding:5px 12px;">
+          <!-- Dot -->
+          <span id="navDot" style="width:8px;height:8px;border-radius:50%;
+                 background:#10b981;flex-shrink:0;transition:background .25s"></span>
+          <!-- Fixed-width label so pill never resizes -->
+          <span id="navLabel" style="font-size:0.75rem;font-weight:600;color:#10b981;
+                 width:44px;text-align:left;transition:color .25s">Online</span>
+          <!-- Toggle (JS-driven, fixed 40×22 px wrapper) -->
+          <div class="toggle-wrap" onclick="toggleStatus()" title="Toggle Live Status">
+            <div id="toggleTrack" class="toggle-track is-on"></div>
+            <div id="toggleKnob"  class="toggle-knob  is-on"></div>
+          </div>
         </div>
+
+        <!-- Profile avatar -->
+        <a href="dashboard.html" title="My Profile"
+           style="width:34px;height:34px;border-radius:50%;
+                  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+                  display:flex;align-items:center;justify-content:center;
+                  transition:border-color .2s;flex-shrink:0;"
+           onmouseover="this.style.borderColor='#8ab4f8'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+          <i class="fa-regular fa-user" style="font-size:0.75rem;color:#8ab4f8;"></i>
+        </a>
       </div>
 
-      <!-- User Avatar / Profile -->
-      <a href="dashboard.html" class="h-10 w-10 rounded-full bg-[#152229] border border-brandLine flex items-center justify-center hover:border-accentPrimary hover:scale-105 transition-all" title="Provider Profile">
-        <i class="fa-regular fa-user text-accentPrimary"></i>
-      </a>
     </div>
   </header>
 
-  <!-- Mobile Navigation (visible on small screens) -->
-  <div class="lg:hidden w-full flex justify-center gap-4 px-6 py-2 border-b border-brandLine/50 bg-brandDark/40 overflow-x-auto text-xs">
-    <a href="index.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap">Home</a>
-    <a href="assessment.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap">Check-in</a>
-    <a href="support.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap">Support</a>
-    <a href="tools.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap">Tools</a>
-    <a href="community.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap font-semibold">Community</a>
-    <a href="plans.html" class="text-[#8ba1b0] hover:text-white whitespace-nowrap">Plans</a>
-  </div>
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════════════════════ -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 flex flex-col gap-5">
 
-  <!-- Main Content -->
-  <main class="flex-grow max-w-4xl w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-8">
-    
-    <!-- Greeting Banner / Status Indicator -->
-    <section class="glass-card p-6 md:p-8 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 relative overflow-hidden">
-      <!-- Decorative background blur gradient -->
-      <div class="absolute -right-16 -top-16 w-36 h-36 bg-accentPrimary/10 rounded-full blur-2xl pointer-events-none"></div>
-      
+    <!-- ── Greeting Row ─────────────────────────────────────── -->
+    <div class="fade-in flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
-        <h1 class="font-serif text-3xl md:text-4xl mb-2 text-white">Hello, Care Support Provider!</h1>
-        <p id="statusSubtitle" class="text-sm md:text-base text-[#8ba1b0] max-w-xl mb-0">
-          You are currently live and ready to support individuals in need. Incoming requests will appear below.
+        <h1 class="text-xl font-semibold text-gray-100">Good evening, Care Support Provider</h1>
+        <p id="statusSubtitle" class="text-xs text-muted mt-0.5">
+          You are <span id="statusWord" class="text-success font-medium">online</span> and visible to incoming session requests.
         </p>
       </div>
-
-      <!-- Pulse Status Badge -->
-      <div id="statusBadge" class="flex items-center gap-2.5 bg-successColor/10 border border-successColor/20 text-successColor px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300">
-        <span class="relative flex h-2.5 w-2.5">
-          <span id="badgePulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-successColor opacity-75"></span>
-          <span id="badgeDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-successColor"></span>
+      <!-- Compact live badge -->
+      <div id="liveBadge"
+           class="self-start sm:self-auto flex items-center gap-1.5
+                  bg-success/10 border border-success/20 text-success
+                  text-[10px] font-semibold uppercase tracking-wider
+                  px-3 py-1.5 rounded-full transition-all">
+        <span id="livePulse" class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-60"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-success"></span>
         </span>
-        <span id="badgeText">Live & Online</span>
+        <span id="liveBadgeText">Live &amp; Online</span>
       </div>
-    </section>
+    </div>
 
-    <!-- Availability Block -->
-    <section class="glass-card p-6 md:p-8 rounded-2xl">
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-accentPrimary/15 flex items-center justify-center">
-            <i class="fa-regular fa-clock text-accentPrimary"></i>
-          </div>
-          <h3 class="font-serif text-xl text-white">Weekly Availability Schedule</h3>
-        </div>
-        <button type="button" class="text-xs font-semibold text-accentPrimary hover:text-white transition-colors flex items-center gap-1.5 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-brandLine">
-          <i class="fa-solid fa-pen text-[10px]"></i> Edit Schedule
-        </button>
-      </div>
-      
-      <!-- Week Planner Interface -->
-      <div class="grid grid-cols-4 sm:grid-cols-7 gap-3 mb-4">
-        <div class="flex flex-col items-center bg-white/5 border border-accentPrimary/30 rounded-xl p-3 shadow-md">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Mon</span>
-          <span class="text-sm font-semibold text-white">Active</span>
-        </div>
-        <div class="flex flex-col items-center bg-white/5 border border-accentPrimary/30 rounded-xl p-3 shadow-md">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Tue</span>
-          <span class="text-sm font-semibold text-white">Active</span>
-        </div>
-        <div class="flex flex-col items-center bg-white/5 border border-accentPrimary/30 rounded-xl p-3 shadow-md">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Wed</span>
-          <span class="text-sm font-semibold text-white">Active</span>
-        </div>
-        <div class="flex flex-col items-center bg-white/5 border border-accentPrimary/30 rounded-xl p-3 shadow-md">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Thu</span>
-          <span class="text-sm font-semibold text-white">Active</span>
-        </div>
-        <div class="flex flex-col items-center bg-white/5 border border-accentPrimary/30 rounded-xl p-3 shadow-md">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Fri</span>
-          <span class="text-sm font-semibold text-white">Active</span>
-        </div>
-        <div class="flex flex-col items-center bg-brandCard/40 border border-brandLine/60 rounded-xl p-3 opacity-60">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Sat</span>
-          <span class="text-sm font-semibold text-[#8ba1b0]">Off</span>
-        </div>
-        <div class="flex flex-col items-center bg-brandCard/40 border border-brandLine/60 rounded-xl p-3 opacity-60">
-          <span class="text-xs text-[#8ba1b0] uppercase font-bold tracking-wider mb-1">Sun</span>
-          <span class="text-sm font-semibold text-[#8ba1b0]">Off</span>
-        </div>
-      </div>
-      
-      <p class="text-xs text-[#8ba1b0] flex items-center gap-1.5 mt-2">
-        <i class="fa-solid fa-circle-info text-accentSecondary"></i>
-        Your preset matching hours are <strong>8:00 PM – 12:00 AM (EST)</strong>.
-      </p>
-    </section>
+    <!-- ── Two-column grid (Schedule | Requests) ────────────── -->
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-5 fade-in" style="animation-delay:.08s">
 
-    <!-- Support Request Section -->
-    <div id="requestContainer" class="relative min-h-[300px] flex flex-col justify-center">
-      
-      <!-- Interactive Support Request details card -->
-      <section id="requestCard" class="glass-card p-6 md:p-8 rounded-2xl glass-card-hover border-accentPrimary/20 relative transition-all duration-500">
-        <!-- Floating Pulsing Alert Badge -->
-        <span class="absolute -top-3 left-6 flex h-6">
-          <span class="animate-ping absolute inline-flex h-full w-24 rounded-full bg-accentPrimary/20 opacity-75"></span>
-          <span class="relative inline-flex items-center gap-1 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-semibold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
-            <i class="fa-solid fa-bell animate-bounce text-[9px]"></i> New Match Request
-          </span>
-        </span>
+      <!-- ══ LEFT COLUMN : Schedule Card ══════════════════════ -->
+      <aside class="flex flex-col gap-4">
 
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 mt-2">
-          <!-- Client Identity Block -->
-          <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-full bg-[#1e293b] border-2 border-accentPrimary/40 flex items-center justify-center text-xl font-bold text-accentPrimary shadow-inner">
-              <i class="fa-solid fa-user-secret text-[#8ab4f8]"></i>
+        <!-- Schedule & Availability -->
+        <div class="bg-card border border-border rounded-xl p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center">
+                <i class="fa-regular fa-calendar-check text-accent text-xs"></i>
+              </div>
+              <h2 class="text-sm font-semibold text-gray-100">My Schedule</h2>
             </div>
-            <div>
-              <h4 class="font-serif text-2xl text-white">Anonymous_1310</h4>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="flex h-2 w-2 rounded-full bg-successColor"></span>
-                <span class="text-xs text-successColor font-semibold uppercase tracking-wider">Client Online</span>
+            <button onclick="editSchedule()"
+                    class="text-[10px] font-semibold text-accent hover:text-white
+                           bg-accent/10 hover:bg-accent/20 border border-accent/20
+                           px-2.5 py-1 rounded-md transition-all flex items-center gap-1">
+              <i class="fa-solid fa-pen text-[9px]"></i> Edit
+            </button>
+          </div>
+
+          <ul class="space-y-2.5 text-xs">
+            <!-- Active Days -->
+            <li class="flex items-start justify-between">
+              <span class="text-muted">Active Days</span>
+              <span id="dispActiveDays" class="font-medium text-gray-200 text-right">Mon – Fri</span>
+            </li>
+            <!-- Active Hours -->
+            <li class="flex items-start justify-between">
+              <span class="text-muted">Matching Hours</span>
+              <span id="dispHours" class="font-medium text-gray-200 text-right">10:00 AM – 6:00 PM</span>
+            </li>
+            <!-- Session Type -->
+            <li class="flex items-start justify-between">
+              <span class="text-muted">Session Type</span>
+              <span class="font-medium text-gray-200 text-right">Video · Audio · Chat</span>
+            </li>
+            <!-- Max Sessions -->
+            <li class="flex items-start justify-between">
+              <span class="text-muted">Daily Max</span>
+              <span id="dispMax" class="font-medium text-gray-200 text-right">6 sessions / day</span>
+            </li>
+            <!-- Timezone -->
+            <li class="flex items-start justify-between">
+              <span class="text-muted">Timezone</span>
+              <span class="font-medium text-gray-200 text-right">IST (UTC+5:30)</span>
+            </li>
+          </ul>
+
+          <hr class="border-border my-4">
+
+          <!-- Day grid -->
+          <div class="grid grid-cols-7 gap-1">
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">M</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">T</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">W</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">T</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">F</div>
+              <div class="w-full rounded bg-success/15 border border-success/25 py-1 text-[9px] font-bold text-success">ON</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">S</div>
+              <div class="w-full rounded bg-border py-1 text-[9px] font-bold text-muted opacity-60">OFF</div>
+            </div>
+            <div class="text-center">
+              <div class="text-[9px] text-muted mb-1">S</div>
+              <div class="w-full rounded bg-border py-1 text-[9px] font-bold text-muted opacity-60">OFF</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="bg-card border border-border rounded-xl p-4">
+          <h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Today's Stats</h3>
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-muted">Sessions Completed</span>
+              <span class="text-sm font-bold text-gray-100">3</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-muted">Sessions Rejected</span>
+              <span class="text-sm font-bold text-danger">1</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-muted">Avg. Duration</span>
+              <span class="text-sm font-bold text-gray-100">34 min</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-muted">Queue Waiting</span>
+              <span id="queueCount" class="text-sm font-bold text-warning">2</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ══ RIGHT COLUMN : Tabs (Requests | History) ══════════ -->
+      <section class="flex flex-col gap-4">
+
+        <!-- Tab Bar -->
+        <div class="flex border-b border-border gap-1">
+          <button id="tabRequests"
+                  onclick="switchTab('requests')"
+                  class="tab-btn active px-4 py-2.5 text-xs font-semibold text-gray-100 transition-colors border-b-2 border-accent">
+            <i class="fa-solid fa-inbox mr-1.5"></i>Incoming Requests
+            <span id="reqBadge"
+                  class="ml-1.5 bg-accent/20 text-accent text-[10px] font-bold px-1.5 py-0.5 rounded-full">2</span>
+          </button>
+          <button id="tabHistory"
+                  onclick="switchTab('history')"
+                  class="tab-btn px-4 py-2.5 text-xs font-semibold text-muted hover:text-white transition-colors border-b-2 border-transparent">
+            <i class="fa-solid fa-clock-rotate-left mr-1.5"></i>Past Sessions
+          </button>
+        </div>
+
+        <!-- ─────────── REQUESTS PANEL ─────────── -->
+        <div id="panelRequests" class="flex flex-col gap-3">
+
+          <!-- ── Offline Overlay ── -->
+          <div id="offlineNotice" class="hidden bg-card border border-border rounded-xl p-8 text-center">
+            <i class="fa-solid fa-toggle-off text-3xl text-muted mb-3 block"></i>
+            <h4 class="text-sm font-semibold text-gray-200 mb-1">You're currently offline</h4>
+            <p class="text-xs text-muted">Toggle the status switch in the header to go online and start receiving session requests.</p>
+          </div>
+
+          <!-- ── Request Card 1 (oldest — FIFO, no badge) ── -->
+          <div id="req-1" class="request-card bg-card border border-border rounded-xl p-4">
+
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+
+              <!-- Left: Client info -->
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-surface border-2 border-border
+                            flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-user-secret text-accent text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-gray-100">Anonymous_1310</p>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <!-- Online indicator -->
+                    <span class="w-1.5 h-1.5 rounded-full bg-success flex-shrink-0"></span>
+                    <span class="text-[11px] text-success font-medium">Online</span>
+                    <span class="text-muted">·</span>
+                    <span class="text-[11px] text-muted">Age 21</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Meta chips -->
+              <div class="flex flex-wrap gap-2 text-[11px] sm:text-right">
+                <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+                  <i class="fa-regular fa-clock mr-1"></i>11:00 PM Today
+                </span>
+                <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+                  <i class="fa-regular fa-hourglass-half mr-1"></i>30 Mins
+                </span>
+                <span class="bg-accent/10 border border-accent/20 text-accent rounded px-2 py-1 font-medium">
+                  <i class="fa-solid fa-video mr-1 text-[10px]"></i>Video/Audio
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Concern -->
+            <div class="mt-3 bg-surface border border-border rounded-lg px-3 py-2 text-xs text-muted">
+              <span class="font-medium text-gray-300">Primary Concern:</span> Overthinking, anxiety spirals at night
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex gap-2 mt-3">
+              <button onclick="acceptRequest('req-1')"
+                      class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
+                             py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-check text-[11px]"></i> Accept Session
+              </button>
+              <button onclick="rejectRequest('req-1')"
+                      class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
+                             py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-xmark text-[11px]"></i> Reject
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Request Card 2 ── -->
+          <div id="req-2" class="request-card bg-card border border-border rounded-xl p-4">
+
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-surface border-2 border-border
+                            flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-user-secret text-accent text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-gray-100">Anonymous_2047</p>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <!-- Offline indicator -->
+                    <span class="w-1.5 h-1.5 rounded-full bg-muted flex-shrink-0"></span>
+                    <span class="text-[11px] text-muted font-medium">Offline (queued)</span>
+                    <span class="text-muted">·</span>
+                    <span class="text-[11px] text-muted">Age 26</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-2 text-[11px]">
+                <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+                  <i class="fa-regular fa-clock mr-1"></i>11:18 PM Today
+                </span>
+                <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+                  <i class="fa-regular fa-hourglass-half mr-1"></i>45 Mins
+                </span>
+                <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 rounded px-2 py-1 font-medium">
+                  <i class="fa-solid fa-message mr-1 text-[10px]"></i>Chat
+                </span>
+              </div>
+
+            </div>
+
+            <div class="mt-3 bg-surface border border-border rounded-lg px-3 py-2 text-xs text-muted">
+              <span class="font-medium text-gray-300">Primary Concern:</span> Grief and loss — difficulty processing recent events
+            </div>
+
+            <div class="flex gap-2 mt-3">
+              <button onclick="acceptRequest('req-2')"
+                      class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold
+                             py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-check text-[11px]"></i> Accept Session
+              </button>
+              <button onclick="rejectRequest('req-2')"
+                      class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold
+                             py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-xmark text-[11px]"></i> Reject
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Empty / Waiting State ── (shown when all requests handled) -->
+          <div id="emptyState" class="hidden bg-card border border-border rounded-xl p-8 text-center">
+            <div class="relative w-14 h-14 mx-auto mb-4 flex items-center justify-center">
+              <div class="absolute inset-0 rounded-full border border-accent/20 animate-ping"></div>
+              <div class="w-14 h-14 rounded-full bg-surface border border-border flex items-center justify-center">
+                <i class="fa-solid fa-satellite-dish text-accent text-lg animate-pulse"></i>
               </div>
             </div>
+            <h4 class="text-sm font-semibold text-gray-200 mb-1">Waiting for New Requests</h4>
+            <p class="text-xs text-muted mb-4">You'll be notified as soon as a new client is matched to you.</p>
+            <button onclick="simulateRequest()"
+                    class="text-xs text-accent bg-accent/10 hover:bg-accent/20 border border-accent/20
+                           font-semibold px-3 py-1.5 rounded-lg transition-all">
+              <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Simulate Incoming Request
+            </button>
           </div>
-          
-          <!-- Request Time -->
-          <div class="bg-white/5 border border-brandLine rounded-xl px-4 py-2 text-right self-stretch md:self-auto flex md:flex-col justify-between items-center md:items-end">
-            <span class="text-xs text-[#8ba1b0]">Requested on</span>
-            <span class="text-sm font-semibold text-white">11:00 PM (10m ago)</span>
+
+        </div>
+
+        <!-- ─────────── HISTORY PANEL ─────────── -->
+        <div id="panelHistory" class="hidden">
+          <div class="bg-card border border-border rounded-xl overflow-hidden">
+
+            <!-- Table header -->
+            <div class="px-4 py-3 border-b border-border flex items-center justify-between">
+              <h3 class="text-xs font-semibold text-muted uppercase tracking-wider">Past Attended Sessions</h3>
+              <span class="text-[10px] text-muted">Showing 6 of 24</span>
+            </div>
+
+            <!-- Scrollable table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs">
+                <thead>
+                  <tr class="border-b border-border bg-surface/50">
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Client</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Date &amp; Time</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Duration</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Type</th>
+                    <th class="text-left px-4 py-2.5 text-muted font-medium uppercase tracking-wider text-[10px]">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_1155</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">18 Aug 2026, 9:45 PM</td>
+                    <td class="px-4 py-3 text-muted">42 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                        Video/Audio
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-success font-medium text-[10px]">Completed</span>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_0982</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">18 Aug 2026, 7:10 PM</td>
+                    <td class="px-4 py-3 text-muted">29 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
+                        Chat
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-success font-medium text-[10px]">Completed</span>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_2201</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">17 Aug 2026, 11:00 PM</td>
+                    <td class="px-4 py-3 text-muted">55 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                        Video/Audio
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-success font-medium text-[10px]">Completed</span>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_3740</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">17 Aug 2026, 8:30 PM</td>
+                    <td class="px-4 py-3 text-muted">20 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-emerald-900/30 border border-emerald-700/30 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-medium">
+                        Chat
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-danger font-medium text-[10px]">Client Left</span>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_0567</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">16 Aug 2026, 3:00 PM</td>
+                    <td class="px-4 py-3 text-muted">38 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                        Video/Audio
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-success font-medium text-[10px]">Completed</span>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-full bg-surface border border-border flex items-center justify-center flex-shrink-0">
+                          <i class="fa-solid fa-user-secret text-muted text-[10px]"></i>
+                        </div>
+                        <span class="font-medium text-gray-200">Anonymous_1889</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-muted">15 Aug 2026, 10:15 PM</td>
+                    <td class="px-4 py-3 text-muted">47 min</td>
+                    <td class="px-4 py-3">
+                      <span class="bg-accent/10 border border-accent/20 text-accent px-2 py-0.5 rounded text-[10px] font-medium">
+                        Video/Audio
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="text-success font-medium text-[10px]">Completed</span>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table footer -->
+            <div class="px-4 py-3 border-t border-border flex items-center justify-between">
+              <span class="text-[10px] text-muted">Total: 24 sessions · 5 hrs 34 min</span>
+              <a href="dashboard.html" class="text-[10px] text-accent hover:underline">View full history →</a>
+            </div>
+
           </div>
         </div>
 
-        <!-- Problem Detail Badges Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="bg-[#152229] border border-brandLine/60 rounded-xl p-4 flex items-center gap-3">
-            <i class="fa-solid fa-baby-carriage text-accentSecondary text-lg"></i>
-            <div>
-              <span class="block text-[10px] text-[#8ba1b0] uppercase font-bold tracking-wider">Age</span>
-              <span class="text-sm font-semibold text-white">21 years old</span>
-            </div>
-          </div>
-          
-          <div class="bg-[#152229] border border-brandLine/60 rounded-xl p-4 flex items-center gap-3">
-            <i class="fa-solid fa-brain text-accentPrimary text-lg"></i>
-            <div>
-              <span class="block text-[10px] text-[#8ba1b0] uppercase font-bold tracking-wider">Primary Concern</span>
-              <span class="text-sm font-semibold text-white">Overthinking</span>
-            </div>
-          </div>
-          
-          <div class="bg-[#152229] border border-brandLine/60 rounded-xl p-4 flex items-center gap-3">
-            <i class="fa-solid fa-video text-cyan-400 text-lg"></i>
-            <div>
-              <span class="block text-[10px] text-[#8ba1b0] uppercase font-bold tracking-wider">Support Type</span>
-              <span class="text-sm font-semibold text-white">Video/Audio Call</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="border-t border-brandLine/60 my-6"></div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-          <button type="button" id="acceptBtn" class="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/20 active:translate-y-0 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-check"></i> Accept Support Session
-          </button>
-          <button type="button" id="rejectBtn" class="sm:w-36 bg-transparent hover:bg-dangerColor/10 text-dangerColor hover:text-red-300 border border-dangerColor/20 hover:border-dangerColor/40 font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-xmark"></i> Reject
-          </button>
-        </div>
       </section>
-
-      <!-- Empty / Waiting State placeholder (Hidden by default) -->
-      <section id="emptyState" class="hidden glass-card p-10 rounded-2xl flex flex-col items-center justify-center text-center gap-6 transition-all duration-500">
-        <!-- Sonar Scanner Graphics -->
-        <div class="relative w-20 h-20 flex items-center justify-center mb-2">
-          <div class="absolute w-12 h-12 bg-accentPrimary/10 border border-accentPrimary/20 rounded-full animate-sonar"></div>
-          <div class="absolute w-16 h-16 bg-accentPrimary/5 border border-accentPrimary/10 rounded-full animate-sonar" style="animation-delay: 0.6s"></div>
-          <div class="relative w-12 h-12 bg-[#1e293b] border border-brandLine rounded-full flex items-center justify-center">
-            <i class="fa-solid fa-radar text-accentPrimary animate-pulse-slow"></i>
-          </div>
-        </div>
-
-        <div class="max-w-md">
-          <h4 class="font-serif text-xl text-white mb-2">Waiting for New Requests</h4>
-          <p id="emptyStateDesc" class="text-sm text-[#8ba1b0]">
-            You're actively queued to receive patients. You will hear an alert chime as soon as a new request is matched with you.
-          </p>
-        </div>
-
-        <!-- Simulation Button to bring back request -->
-        <button type="button" id="simulateBtn" class="bg-white/5 border border-brandLine hover:bg-white/10 hover:border-white/20 text-accentPrimary text-xs font-semibold py-2 px-4 rounded-xl transition-all duration-200">
-          <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Simulate Incoming Request
-        </button>
-      </section>
-
-      <!-- Connection Overlay / Modal -->
-      <div id="connectionOverlay" class="fixed inset-0 z-[100] hidden bg-brandDark/90 backdrop-blur-lg flex items-center justify-center">
-        <div class="glass max-w-md w-full mx-4 p-8 rounded-3xl text-center border-accentPrimary/30 shadow-glow-cyan flex flex-col items-center gap-6">
-          <div class="relative w-24 h-24 flex items-center justify-center">
-            <!-- Pulsing outer circle -->
-            <div class="absolute inset-0 rounded-full border border-cyan-500/30 animate-ping"></div>
-            <!-- Rotating border -->
-            <div class="absolute inset-2 rounded-full border-t-2 border-r-2 border-cyan-400 animate-spin"></div>
-            <!-- Center lock icon -->
-            <div class="w-16 h-16 rounded-full bg-[#152229] border border-cyan-500/20 flex items-center justify-center">
-              <i class="fa-solid fa-lock text-cyan-400 text-xl animate-pulse"></i>
-            </div>
-          </div>
-          
-          <div>
-            <h3 class="font-serif text-2xl text-white mb-2">Connecting Session</h3>
-            <p class="text-sm text-[#8ba1b0] mb-1">Establishing encrypted audio/video peer stream...</p>
-            <p class="text-xs text-accentSecondary italic font-mono">Patient: Anonymous_1310</p>
-          </div>
-
-          <div class="w-full bg-[#152229] rounded-full h-1.5 overflow-hidden border border-brandLine">
-            <div class="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full w-0 animate-[loadingBar_2s_ease-out_forwards]"></div>
-          </div>
-          
-          <span class="text-[10px] text-cyan-500/60 uppercase tracking-widest font-bold">Secure Hipaa Compliant Link</span>
-        </div>
-      </div>
-
     </div>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer bg-brandDark/50 border-t border-brandLine py-8 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 max-w-[1400px] mx-auto w-full">
-    <div class="flex items-center gap-3">
-      <img src="assets/logo.svg" alt="Vistaraz" height="32" class="h-8 w-auto opacity-70">
-      <span class="text-xs text-[#8ba1b0] font-mono">Innovate · Heal · Impact</span>
+  <!-- ═══════════════════════════════════════════════════════════
+       CONNECTION OVERLAY (Accept → loading)
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="connectionOverlay"
+       class="fixed inset-0 z-[200] hidden bg-surface/95 backdrop-blur-sm
+              flex items-center justify-center">
+    <div class="bg-card border border-border rounded-2xl p-8 max-w-sm w-full mx-4 text-center">
+      <!-- Spinner -->
+      <div class="relative w-16 h-16 mx-auto mb-5">
+        <div class="absolute inset-0 rounded-full border-2 border-border animate-ping opacity-40"></div>
+        <div class="absolute inset-1 rounded-full border-t-2 border-r-2 border-accent animate-spin"></div>
+        <div class="w-16 h-16 rounded-full bg-surface border border-border flex items-center justify-center">
+          <i class="fa-solid fa-lock text-accent text-lg animate-pulse"></i>
+        </div>
+      </div>
+      <h3 class="text-base font-semibold text-gray-100 mb-1">Connecting Session</h3>
+      <p class="text-xs text-muted mb-5">Establishing encrypted peer stream…</p>
+      <!-- Progress bar -->
+      <div class="w-full h-1 bg-border rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full bg-accent rounded-full" style="width:0%;transition:width 2.2s ease"></div>
+      </div>
+      <p class="text-[10px] text-muted mt-3 uppercase tracking-widest font-semibold">HIPAA-Compliant Connection</p>
     </div>
-    <div class="text-xs text-[#8ba1b0]">
-      &copy; 2026 Vistaraz. All rights reserved. For provider dashboard use only.
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════ -->
+  <footer class="border-t border-border bg-card mt-4">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <img src="assets/logo.svg" alt="Vistaraz" class="h-7 w-auto opacity-60">
+        <span class="text-[10px] text-muted font-mono">Innovate · Heal · Impact</span>
+      </div>
+      <p class="text-[10px] text-muted">&copy; 2026 Vistaraz. Provider Panel — Internal Use Only.</p>
     </div>
   </footer>
 
-  <!-- Inline CSS Keyframe for loading bar animation inside CSS layer -->
-  <style>
-    @keyframes loadingBar {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-  </style>
-
-  <!-- JavaScript Interactions -->
+  <!-- ═══════════════════════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════════════════════ -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const statusToggle = document.getElementById("statusToggle");
-      const statusLabel = document.getElementById("statusLabel");
-      const statusSubtitle = document.getElementById("statusSubtitle");
-      const statusBadge = document.getElementById("statusBadge");
-      const badgePulse = document.getElementById("badgePulse");
-      const badgeDot = document.getElementById("badgeDot");
-      const badgeText = document.getElementById("badgeText");
-      
-      const requestContainer = document.getElementById("requestContainer");
-      const requestCard = document.getElementById("requestCard");
-      const emptyState = document.getElementById("emptyState");
-      const emptyStateDesc = document.getElementById("emptyStateDesc");
-      const simulateBtn = document.getElementById("simulateBtn");
-      
-      const acceptBtn = document.getElementById("acceptBtn");
-      const rejectBtn = document.getElementById("rejectBtn");
-      const connectionOverlay = document.getElementById("connectionOverlay");
+    /* ───────── State ──────────────────────────────── */
+    let activeRequests = ['req-1', 'req-2'];
 
-      // Handle Online/Offline Status Toggle
-      statusToggle.addEventListener("change", (e) => {
-        const isLive = e.target.checked;
-        
-        if (isLive) {
-          // Change switch label text
-          statusLabel.innerText = "Live";
-          statusLabel.className = "text-xs font-semibold uppercase tracking-wider text-successColor";
-          
-          // Update Greeting Banner status texts
-          statusSubtitle.innerText = "You are currently live and ready to support individuals in need. Incoming requests will appear below.";
-          
-          // Reset greeting status badge state
-          statusBadge.className = "flex items-center gap-2.5 bg-successColor/10 border border-successColor/20 text-successColor px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300";
-          badgePulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-successColor opacity-75";
-          badgeDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-successColor";
-          badgeText.innerText = "Live & Online";
+    /* ───────── Helpers ────────────────────────────── */
+    function updateQueueBadge() {
+      const n = activeRequests.length;
+      document.getElementById('reqBadge').textContent = n;
+      document.getElementById('queueCount').textContent = n;
+      if (n === 0) {
+        document.getElementById('emptyState').classList.remove('hidden');
+      }
+    }
 
-          // Transition to show request card if it wasn't rejected, or show waiting state
-          if (requestCard.classList.contains("hidden")) {
-            emptyState.classList.add("hidden");
-            emptyState.style.display = "none";
-            requestCard.classList.remove("hidden");
-            requestCard.style.opacity = "1";
-          } else {
-            emptyState.classList.add("hidden");
-            emptyState.style.display = "none";
-            requestCard.classList.remove("hidden");
-            requestCard.style.opacity = "1";
-          }
-          
-        } else {
-          // Switch to offline status
-          statusLabel.innerText = "Offline";
-          statusLabel.className = "text-xs font-semibold uppercase tracking-wider text-[#8ba1b0]";
-          
-          statusSubtitle.innerText = "You are currently offline. Toggle your status back to Live to receive client match requests.";
-          
-          statusBadge.className = "flex items-center gap-2.5 bg-white/5 border border-brandLine text-[#8ba1b0] px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300";
-          badgePulse.className = "hidden";
-          badgeDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-500";
-          badgeText.innerText = "Offline";
+    /* ───────── Toggle Online / Offline ────────────── */
+    function handleToggle(isOnline) {
+      const dot      = document.getElementById('navDot');
+      const label    = document.getElementById('navLabel');
+      const badge    = document.getElementById('liveBadge');
+      const badgeTxt = document.getElementById('liveBadgeText');
+      const pulse    = document.getElementById('livePulse');
+      const word     = document.getElementById('statusWord');
+      const notice   = document.getElementById('offlineNotice');
+      const panel    = document.getElementById('panelRequests');
 
-          // Hide request card and show offline message placeholder
-          requestCard.classList.add("hidden");
-          emptyState.classList.remove("hidden");
-          emptyState.style.display = "flex";
-          emptyStateDesc.innerText = "You are offline. Go online using the toggle switch in the header to start matching with patients.";
-          simulateBtn.classList.add("hidden"); // Can't simulate while offline
-        }
+      if (isOnline) {
+        dot.className      = 'w-2 h-2 rounded-full bg-success flex-shrink-0 transition-colors';
+        label.className    = 'text-xs font-semibold text-success transition-colors flex-shrink-0 w-12';
+        label.textContent  = 'Online';
+        badge.className    = badge.className.replace('bg-muted/10 border-muted/20 text-muted',
+                                'bg-success/10 border-success/20 text-success');
+        badgeTxt.textContent = 'Live & Online';
+        pulse.innerHTML    = `<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-60"></span>
+                               <span class="relative inline-flex h-2 w-2 rounded-full bg-success"></span>`;
+        word.className     = 'text-success font-medium';
+        word.textContent   = 'online';
+        notice.classList.add('hidden');
+        // Show any active request cards
+        activeRequests.forEach(id => {
+          const card = document.getElementById(id);
+          if (card) card.classList.remove('hidden');
+        });
+        if (activeRequests.length === 0) document.getElementById('emptyState').classList.remove('hidden');
+
+      } else {
+        dot.className      = 'w-2 h-2 rounded-full bg-muted flex-shrink-0 transition-colors';
+        label.className    = 'text-xs font-semibold text-muted transition-colors flex-shrink-0 w-12';
+        label.textContent  = 'Offline';
+        badgeTxt.textContent = 'Offline';
+        pulse.innerHTML    = `<span class="relative inline-flex h-2 w-2 rounded-full bg-muted"></span>`;
+        word.className     = 'text-muted font-medium';
+        word.textContent   = 'offline';
+        // Hide request cards and empty state; show offline notice
+        activeRequests.forEach(id => {
+          const card = document.getElementById(id);
+          if (card) card.classList.add('hidden');
+        });
+        document.getElementById('emptyState').classList.add('hidden');
+        notice.classList.remove('hidden');
+      }
+    }
+
+    /* ───────── Accept ─────────────────────────────── */
+    function acceptRequest(id) {
+      const overlay = document.getElementById('connectionOverlay');
+      const bar     = document.getElementById('progressBar');
+      overlay.classList.remove('hidden');
+      overlay.style.display = 'flex';
+      // Kick off progress animation
+      requestAnimationFrame(() => { bar.style.width = '100%'; });
+      setTimeout(() => { window.location.href = 'video-call.html'; }, 2500);
+    }
+
+    /* ───────── Reject ─────────────────────────────── */
+    function rejectRequest(id) {
+      const card = document.getElementById(id);
+      card.classList.add('dismissed');
+      setTimeout(() => {
+        card.remove();
+        activeRequests = activeRequests.filter(r => r !== id);
+        updateQueueBadge();
+      }, 280);
+    }
+
+    /* ───────── Simulate new request ──────────────── */
+    function simulateRequest() {
+      // Re-insert a fresh card above emptyState
+      const container  = document.getElementById('panelRequests');
+      const emptyState = document.getElementById('emptyState');
+      const fakeId     = 'req-sim-' + Date.now();
+
+      const card = document.createElement('div');
+      card.id        = fakeId;
+      card.className = 'request-card bg-card border border-border rounded-xl p-4 fade-in';
+      card.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-surface border-2 border-border flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-user-secret text-accent text-sm"></i>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-100">Anonymous_${Math.floor(Math.random()*9000+1000)}</p>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-success flex-shrink-0"></span>
+                <span class="text-[11px] text-success font-medium">Online</span>
+                <span class="text-muted">·</span>
+                <span class="text-[11px] text-muted">Age ${Math.floor(Math.random()*12+18)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 text-[11px]">
+            <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+              <i class="fa-regular fa-clock mr-1"></i>Just now
+            </span>
+            <span class="bg-surface border border-border rounded px-2 py-1 text-muted">
+              <i class="fa-regular fa-hourglass-half mr-1"></i>30 Mins
+            </span>
+            <span class="bg-accent/10 border border-accent/20 text-accent rounded px-2 py-1 font-medium">
+              <i class="fa-solid fa-video mr-1 text-[10px]"></i>Video/Audio
+            </span>
+          </div>
+        </div>
+        <div class="mt-3 bg-surface border border-border rounded-lg px-3 py-2 text-xs text-muted">
+          <span class="font-medium text-gray-300">Primary Concern:</span> Stress and burnout — simulated request
+        </div>
+        <div class="flex gap-2 mt-3">
+          <button onclick="acceptRequest('${fakeId}')"
+                  class="flex-1 bg-accent hover:bg-blue-600 text-white text-xs font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-check text-[11px]"></i> Accept Session
+          </button>
+          <button onclick="rejectRequest('${fakeId}')"
+                  class="border border-danger/30 hover:border-danger text-danger text-xs font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-xmark text-[11px]"></i> Reject
+          </button>
+        </div>
+      `;
+      container.insertBefore(card, emptyState);
+      emptyState.classList.add('hidden');
+      activeRequests.push(fakeId);
+      updateQueueBadge();
+    }
+
+    /* ───────── Tab switching ──────────────────────── */
+    function switchTab(name) {
+      const tabs    = ['requests', 'history'];
+      tabs.forEach(t => {
+        document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
+        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        btn.classList.remove('active');
+        btn.classList.add('text-muted');
+        btn.classList.remove('text-gray-100');
       });
+      document.getElementById('panel' + name.charAt(0).toUpperCase() + name.slice(1)).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab' + name.charAt(0).toUpperCase() + name.slice(1));
+      activeBtn.classList.add('active');
+      activeBtn.classList.add('text-gray-100');
+      activeBtn.classList.remove('text-muted');
+    }
 
-      // Reject Button Request flow
-      rejectBtn.addEventListener("click", () => {
-        // Play fadeout animation
-        requestCard.style.opacity = "0";
-        requestCard.style.transform = "scale(0.95)";
-        
-        setTimeout(() => {
-          requestCard.classList.add("hidden");
-          
-          // Show wait queue empty state
-          emptyState.classList.remove("hidden");
-          emptyState.style.display = "flex";
-          emptyStateDesc.innerText = "You're actively queued to receive patients. You will hear an alert chime as soon as a new request is matched with you.";
-          
-          // Enable simulator button
-          if (statusToggle.checked) {
-            simulateBtn.classList.remove("hidden");
-          }
-        }, 300);
+    /* ═══════════════════════════════════════════════
+       TOGGLE SWITCH — JS-driven (bypasses broken CSS
+       sibling selector on sr-only hidden inputs)
+    ═══════════════════════════════════════════════ */
+    let isOnline = true;   // single source of truth
+
+    function toggleStatus() {
+      isOnline = !isOnline;
+      applyOnlineState(isOnline);
+    }
+
+    function applyOnlineState(online) {
+      /* Toggle visuals */
+      const track = document.getElementById('toggleTrack');
+      const knob  = document.getElementById('toggleKnob');
+      const dot   = document.getElementById('navDot');
+      const label = document.getElementById('navLabel');
+      if (online) {
+        track.classList.add('is-on');    knob.classList.add('is-on');
+        dot.style.background  = '#10b981';
+        label.style.color     = '#10b981';
+        label.textContent     = 'Online';
+      } else {
+        track.classList.remove('is-on'); knob.classList.remove('is-on');
+        dot.style.background  = '#6b7280';
+        label.style.color     = '#6b7280';
+        label.textContent     = 'Offline';
+      }
+      /* Delegate to existing handleToggle for badge/cards logic */
+      handleToggle(online);
+    }
+
+    /* ═══════════════════════════════════════════════
+       ACCEPT — guard: block if provider is offline
+    ═══════════════════════════════════════════════ */
+    function acceptRequest(id) {
+      if (!isOnline) {
+        showOfflineToast();
+        return;
+      }
+      const overlay = document.getElementById('connectionOverlay');
+      const bar     = document.getElementById('progressBar');
+      overlay.classList.remove('hidden');
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => { bar.style.width = '100%'; });
+      setTimeout(() => { window.location.href = 'video-call.html'; }, 2500);
+    }
+
+    /* Offline toast */
+    let toastTimer = null;
+    function showOfflineToast() {
+      const toast = document.getElementById('offlineToast');
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    /* ═══════════════════════════════════════════════
+       EDIT SCHEDULE MODAL
+    ═══════════════════════════════════════════════ */
+    function editSchedule() {
+      document.getElementById('scheduleModal').classList.add('open');
+    }
+    function closeScheduleModal() {
+      document.getElementById('scheduleModal').classList.remove('open');
+    }
+    function saveSchedule() {
+      /* Collect form values */
+      const startTime = document.getElementById('schStart').value;
+      const endTime   = document.getElementById('schEnd').value;
+      const maxSess   = document.getElementById('schMax').value;
+
+      /* Collect checked days */
+      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const dayKeys = ['sch-mon','sch-tue','sch-wed','sch-thu','sch-fri','sch-sat','sch-sun'];
+      const activeDays = dayKeys
+        .map((k,i) => document.getElementById(k).checked ? days[i] : null)
+        .filter(Boolean);
+
+      /* Update the display in the schedule card */
+      const daysEl = document.getElementById('dispActiveDays');
+      const hoursEl = document.getElementById('dispHours');
+      const maxEl  = document.getElementById('dispMax');
+      if (daysEl && activeDays.length) daysEl.textContent = activeDays.join(', ');
+      if (hoursEl && startTime && endTime) hoursEl.textContent = startTime + ' – ' + endTime;
+      if (maxEl && maxSess) maxEl.textContent = maxSess + ' sessions / day';
+
+      closeScheduleModal();
+    }
+
+    /* ═══════════════════════════════════════════════
+       INIT
+    ═══════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      updateQueueBadge();
+      /* Close modal on backdrop click */
+      document.getElementById('scheduleModal').addEventListener('click', function(e) {
+        if (e.target === this) closeScheduleModal();
       });
-
-      // Accept Button Request flow
-      acceptBtn.addEventListener("click", () => {
-        // Show connecting popup overlay
-        connectionOverlay.classList.remove("hidden");
-        
-        // Wait and redirect to video-call.html
-        setTimeout(() => {
-          window.location.href = "video-call.html";
-        }, 2500);
-      });
-
-      // Simulate incoming request click flow
-      simulateBtn.addEventListener("click", () => {
-        // Reset request card transforms & opacity
-        requestCard.style.opacity = "0";
-        requestCard.style.transform = "scale(0.95)";
-        requestCard.classList.remove("hidden");
-        
-        // Hide empty state
-        emptyState.classList.add("hidden");
-        emptyState.style.display = "none";
-        
-        // Play entry fade animation
-        setTimeout(() => {
-          requestCard.style.opacity = "1";
-          requestCard.style.transform = "scale(1)";
-        }, 50);
-      });
-
     });
   </script>
+  <!-- ══ Offline Toast ══════════════════════════════════════════ -->
+  <div id="offlineToast" role="alert" aria-live="polite">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Panel is not live. Please switch to <strong style="margin:0 3px">Live</strong> mode to accept requests.
+  </div>
+
+  <!-- ══ Edit Schedule Modal ════════════════════════════════════ -->
+  <div id="scheduleModal" role="dialog" aria-modal="true" aria-labelledby="schedModalTitle">
+    <div id="scheduleModalBox">
+
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:30px;height:30px;border-radius:8px;background:rgba(59,130,246,0.12);
+                      display:flex;align-items:center;justify-content:center">
+            <i class="fa-regular fa-calendar-check" style="font-size:0.8rem;color:#3b82f6"></i>
+          </div>
+          <h3 id="schedModalTitle" style="font-size:0.95rem;font-weight:600;color:#f0f4f8;margin:0">
+            Edit Schedule
+          </h3>
+        </div>
+        <button onclick="closeScheduleModal()"
+                style="background:none;border:none;color:#6b7280;cursor:pointer;
+                       font-size:1rem;padding:4px;line-height:1;border-radius:6px"
+                onmouseover="this.style.color='#f0f4f8'" onmouseout="this.style.color='#6b7280'">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Day selector -->
+      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
+                letter-spacing:.08em;margin-bottom:10px">Active Days</p>
+      <div style="display:flex;gap:8px;margin-bottom:20px">
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-mon" checked>
+          <span class="day-pill">M</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-tue" checked>
+          <span class="day-pill">T</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-wed" checked>
+          <span class="day-pill">W</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-thu" checked>
+          <span class="day-pill">T</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-fri" checked>
+          <span class="day-pill">F</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-sat">
+          <span class="day-pill">S</span>
+        </label>
+        <label class="day-toggle">
+          <input type="checkbox" id="sch-sun">
+          <span class="day-pill">S</span>
+        </label>
+      </div>
+
+      <!-- Hours row -->
+      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
+                letter-spacing:.08em;margin-bottom:10px">Matching Hours</p>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;
+                  align-items:center;margin-bottom:20px">
+        <div>
+          <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">From</label>
+          <input id="schStart" type="time" value="10:00"
+                 style="width:100%;background:#111827;border:1px solid #283144;
+                        color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
+        </div>
+        <span style="color:#6b7280;font-size:0.8rem;padding-top:18px">–</span>
+        <div>
+          <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">To</label>
+          <input id="schEnd" type="time" value="18:00"
+                 style="width:100%;background:#111827;border:1px solid #283144;
+                        color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
+        </div>
+      </div>
+
+      <!-- Daily max -->
+      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
+                letter-spacing:.08em;margin-bottom:10px">Daily Session Limit</p>
+      <select id="schMax"
+              style="width:100%;background:#111827;border:1px solid #283144;
+                     color:#f0f4f8;padding:9px 12px;border-radius:8px;
+                     font-size:0.8rem;margin-bottom:24px">
+        <option value="3">3 sessions / day</option>
+        <option value="4">4 sessions / day</option>
+        <option value="5">5 sessions / day</option>
+        <option value="6" selected>6 sessions / day</option>
+        <option value="8">8 sessions / day</option>
+        <option value="10">10 sessions / day</option>
+      </select>
+
+      <!-- Actions -->
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button onclick="closeScheduleModal()"
+                style="background:transparent;border:1px solid #283144;color:#8ba1b0;
+                       font-size:0.8rem;font-weight:500;padding:8px 18px;border-radius:8px;
+                       cursor:pointer;transition:border-color .15s"
+                onmouseover="this.style.borderColor='#6b7280'" onmouseout="this.style.borderColor='#283144'">
+          Cancel
+        </button>
+        <button onclick="saveSchedule()"
+                style="background:#3b82f6;border:none;color:#fff;
+                       font-size:0.8rem;font-weight:600;padding:8px 20px;border-radius:8px;
+                       cursor:pointer;transition:background .15s"
+                onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+          <i class="fa-solid fa-check" style="margin-right:6px;font-size:0.7rem"></i>Save Schedule
+        </button>
+      </div>
+
+    </div>
+  </div>
 
 </body>
 </html>
