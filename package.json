@@ -1,0 +1,18 @@
+{
+  "name": "vistaraz-site",
+  "version": "1.0.0",
+  "description": "Vistaraz - Youth Wellbeing Support Platform with production-grade cache invalidation",
+  "main": "server.js",
+  "scripts": {
+    "build": "node scripts/build-assets.js",
+    "serve": "node server.js",
+    "test:cache": "node scripts/test-cache.js"
+  },
+  "keywords": [
+    "vistaraz",
+    "cache-invalidation",
+    "static-site"
+  ],
+  "author": "Vistaraz",
+  "license": "ISC"
+}
