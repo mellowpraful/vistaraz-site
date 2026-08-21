@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,18 +10,23 @@
   <link rel="stylesheet" href="assets/dist/app.b40f67f0.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz — Innovate, Heal, Impact" height="48"></a>
+    <a class="brand" href="index.html"><img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz — Innovate, Heal, Impact"
+        height="48"></a>
     <nav>
       <a data-i="home" href="index.html">Home</a>
       <a data-i="support" href="support.html">Support</a>
       <a data-i="tools" href="tools.html">Tools</a>
       <div style="width: 1px; height: 20px; background: var(--line); margin: 0 10px;"></div>
       <div style="display: flex; align-items: center; gap: 10px;">
-        <div id="user-avatar-badge" style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center; color: #000; font-weight: 600; font-size: 1.1rem;">🦊</div>
+        <div id="user-avatar-badge"
+          style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center; color: #000; font-weight: 600; font-size: 1.1rem;">
+          🦊</div>
         <span id="user-profile-type" style="font-size: 0.9rem; color: var(--text-main);">My Profile</span>
-        <button onclick="VistarazAuth.signOut()" class="button ghost" style="padding: 4px 10px; font-size: 0.75rem; margin-left: 5px;" title="Sign Out">
+        <button onclick="VistarazAuth.signOut()" class="button ghost"
+          style="padding: 4px 10px; font-size: 0.75rem; margin-left: 5px;" title="Sign Out">
           <i class="fas fa-sign-out-alt"></i>
         </button>
       </div>
@@ -34,21 +40,25 @@
         <p style="margin: 0;">Here is a summary of your wellbeing, upcoming support, and active plan.</p>
       </div>
       <div style="display: flex; gap: 10px;">
-        <a class="button ghost" href="plans.html" style="font-size: 0.8rem;"><i class="fas fa-crown" style="color: var(--accent-secondary); margin-right: 8px;"></i> Upgrade Plan</a>
+        <a class="button ghost" href="plans.html" style="font-size: 0.8rem;"><i class="fas fa-crown"
+            style="color: var(--accent-secondary); margin-right: 8px;"></i> Upgrade Plan</a>
       </div>
     </div>
 
     <!-- Wearable Insight Prompt -->
-    <div class="glass-card reveal" style="background: linear-gradient(90deg, rgba(138, 180, 248, 0.1), rgba(138, 180, 248, 0)); border-left: 4px solid var(--accent-primary); margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; padding: 20px 30px;">
+    <div class="glass-card reveal"
+      style="background: linear-gradient(90deg, rgba(138, 180, 248, 0.1), rgba(138, 180, 248, 0)); border-left: 4px solid var(--accent-primary); margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; padding: 20px 30px;">
       <div style="display: flex; gap: 20px; align-items: center;">
         <i class="fas fa-watch" style="font-size: 2rem; color: var(--accent-primary);"></i>
         <div>
           <h4 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 4px;">Wearable Insight</h4>
-          <p style="font-size: 0.9rem; margin: 0; max-width: 500px;">Your average sleep duration dropped by 1.5 hours over the last 3 days. Would you like to do a quick check-in?</p>
+          <p style="font-size: 0.9rem; margin: 0; max-width: 500px;">Your average sleep duration dropped by 1.5 hours
+            over the last 3 days. Would you like to do a quick check-in?</p>
         </div>
       </div>
       <div style="display: flex; gap: 10px;">
-        <button class="button ghost" onclick="this.closest('.glass-card').style.display='none'" style="padding: 8px 16px;">Dismiss</button>
+        <button class="button ghost" onclick="this.closest('.glass-card').style.display='none'"
+          style="padding: 8px 16px;">Dismiss</button>
         <a class="button primary" href="assessment.html" style="padding: 8px 16px;">Check-in</a>
       </div>
     </div>
@@ -57,8 +67,9 @@
       <!-- Active Membership -->
       <article class="glass-card reveal">
         <span class="eyebrow">YOUR PLAN</span>
-        <h3 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; margin-bottom: 15px;" id="user-plan-title">Silver Membership</h3>
-        
+        <h3 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; margin-bottom: 15px;"
+          id="user-plan-title">Silver Membership</h3>
+
         <div style="margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem;">
             <span>Chat Allowance</span>
@@ -83,16 +94,19 @@
       <!-- Upcoming Sessions -->
       <article class="glass-card reveal" style="transition-delay: 0.1s;">
         <span class="eyebrow" style="color: var(--success);">UPCOMING SUPPORT</span>
-        <h3 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; margin-bottom: 15px;">Video Session</h3>
-        
+        <h3 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; margin-bottom: 15px;">Video
+          Session</h3>
+
         <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
-          <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center; color: #000; font-family: var(--font-serif); font-size: 1.2rem;">S</div>
+          <div
+            style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-primary); display: grid; place-items: center; color: #000; font-family: var(--font-serif); font-size: 1.2rem;">
+            S</div>
           <div>
-            <p style="margin: 0; font-weight: 600; color: var(--text-main);">Dr. Sarah M.</p>
+            <p style="margin: 0; font-weight: 600; color: var(--text-main);">Dr. Nidhi M.</p>
             <p style="margin: 0; font-size: 0.85rem;">Tomorrow, 4:00 PM</p>
           </div>
         </div>
-        
+
         <a class="button ghost" href="video-call.html" style="width: 100%;">Join Waiting Room</a>
       </article>
 
@@ -102,16 +116,19 @@
           <span class="eyebrow" style="color: var(--accent-primary);">CONNECTED DEVICES</span>
           <i class="fas fa-check-circle" style="color: var(--success);"></i>
         </div>
-        
-        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--line);">
+
+        <div
+          style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--line);">
           <i class="fab fa-apple" style="font-size: 1.5rem; color: var(--text-main);"></i>
           <div>
-            <p style="margin: 0; font-weight: 500; font-size: 0.95rem; color: var(--text-main);">Apple Watch Series 8</p>
+            <p style="margin: 0; font-weight: 500; font-size: 0.95rem; color: var(--text-main);">Apple Watch Series 8
+            </p>
             <p style="margin: 0; font-size: 0.8rem;">Syncing sleep & activity</p>
           </div>
         </div>
 
-        <button class="button ghost" style="width: 100%; font-size: 0.85rem;"><i class="fas fa-cog" style="margin-right: 8px;"></i> Manage Permissions</button>
+        <button class="button ghost" style="width: 100%; font-size: 0.85rem;"><i class="fas fa-cog"
+            style="margin-right: 8px;"></i> Manage Permissions</button>
       </article>
     </div>
   </main>
@@ -139,4 +156,5 @@
     });
   </script>
 </body>
+
 </html>

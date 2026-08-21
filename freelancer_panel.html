@@ -580,7 +580,7 @@
               <div class="bg-surface border border-border rounded-lg p-3 flex items-center justify-between">
                 <div>
                   <p class="text-xs font-semibold text-gray-200">Anonymous_2047 · Chat Support</p>
-                  <p class="text-[11px] text-muted">Primary Concern: Grief & loss processing ·   45.00.00 mins</p>
+                  <p class="text-[11px] text-muted">Primary Concern: Grief & loss processing · 45.00.00 mins</p>
                 </div>
                 <button onclick="switchView('requests')" class="text-xs text-accent font-medium hover:underline">Accept
                   in Requests →</button>
@@ -1240,7 +1240,7 @@
             <!-- Rate breakdown indicator -->
             <div class="text-right">
               <span class="text-xs text-accent font-semibold block">Introductory Free Support</span>
-              <span class="text-[11px] text-muted">15 Min Free (3m remaining) · Then  ₹ 15/hr</span>
+              <span class="text-[11px] text-muted">15 Min Free (3m remaining) · Then ₹ 15/hr</span>
             </div>
           </div>
 
@@ -1464,13 +1464,13 @@
 
         <div class="bg-card border border-border rounded-xl p-5">
           <p class="text-xs font-medium text-muted">This Week</p>
-          <p class="text-2xl font-bold text-gray-100 mt-1"> ₹   350.00</p>
+          <p class="text-2xl font-bold text-gray-100 mt-1"> ₹ 350.00</p>
           <p class="text-[10px] text-accent mt-1">11 Sessions total</p>
         </div>
 
         <div class="bg-card border border-border rounded-xl p-5">
           <p class="text-xs font-medium text-muted">This Month</p>
-          <p class="text-2xl font-bold text-gray-100 mt-1"> ₹ 1,  350.00</p>
+          <p class="text-2xl font-bold text-gray-100 mt-1"> ₹ 1, 350.00</p>
           <p class="text-[10px] text-success mt-1">August 2026</p>
         </div>
 
@@ -1532,7 +1532,7 @@
                     Call</span></td>
                 <td class="px-4 py-3 text-muted">42 min</td>
                 <td class="px-4 py-3 text-muted">15m Free + 27m Paid</td>
-                <td class="px-4 py-3 font-bold text-gray-100"> ₹   45.00</td>
+                <td class="px-4 py-3 font-bold text-gray-100"> ₹ 45.00</td>
                 <td class="px-4 py-3"><span class="text-success font-semibold text-[10px]">Credited</span></td>
               </tr>
               <tr class="hover:bg-surface/50">
@@ -1541,7 +1541,7 @@
                     class="bg-emerald-900/30 text-emerald-400 px-2 py-0.5 rounded text-[10px]">Chat Support</span></td>
                 <td class="px-4 py-3 text-muted">29 min</td>
                 <td class="px-4 py-3 text-muted">15m Free + 14m Paid</td>
-                <td class="px-4 py-3 font-bold text-gray-100"> ₹  28.00</td>
+                <td class="px-4 py-3 font-bold text-gray-100"> ₹ 28.00</td>
                 <td class="px-4 py-3"><span class="text-success font-semibold text-[10px]">Credited</span></td>
               </tr>
             </tbody>
@@ -1613,7 +1613,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
                 <span class="text-muted block">Full Name</span>
-                <span class="font-medium text-gray-200">Sarah Jenkins</span>
+                <span class="font-medium text-gray-200">Nidhi Sharma</span>
               </div>
               <div>
                 <span class="text-muted block">Languages Spoken</span>
@@ -1953,7 +1953,7 @@
   <footer class="border-t border-border bg-card mt-4">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-2.5">
-        <img src="assets/logo.svg" alt="Vistaraz" class="h-7 w-auto opacity-60">
+        <img src="assets/logo.png" alt="Vistaraz" class="h-7 w-auto opacity-60">
         <span class="text-[10px] text-muted font-mono">Innovate · Heal · Impact</span>
       </div>
       <p class="text-[11px] text-muted">&copy; 2026 Vistaraz Care Support Provider Panel. Internal Use Only.</p>
@@ -2094,41 +2094,6 @@
       activeBtn.classList.remove('text-muted');
     }
 
-    /* ═══════════════════════════════════════════════
-       TOGGLE SWITCH — JS-driven (bypasses broken CSS
-       sibling selector on sr-only hidden inputs)
-    ═══════════════════════════════════════════════ */
-    let isOnline = true;   // single source of truth
-
-    function toggleStatus() {
-      isOnline = !isOnline;
-      applyOnlineState(isOnline);
-    }
-
-    function applyOnlineState(online) {
-      /* Toggle visuals */
-      const track = document.getElementById('toggleTrack');
-      const knob = document.getElementById('toggleKnob');
-      const dot = document.getElementById('navDot');
-      const label = document.getElementById('navLabel');
-      if (online) {
-        track.classList.add('is-on'); knob.classList.add('is-on');
-        dot.style.background = '#10b981';
-        label.style.color = '#10b981';
-        label.textContent = 'Online';
-      } else {
-        track.classList.remove('is-on'); knob.classList.remove('is-on');
-        dot.style.background = '#6b7280';
-        label.style.color = '#6b7280';
-        label.textContent = 'Offline';
-      }
-      /* Delegate to existing handleToggle for badge/cards logic */
-      handleToggle(online);
-    }
-
-    /* ═══════════════════════════════════════════════
-       ACCEPT — guard: block if provider is offline
-    ═══════════════════════════════════════════════ */
     function acceptRequest(id) {
       if (currentStatus === 'offline') {
         showToast('Cannot accept sessions while Offline. Switch status to Available.', 'warning');
@@ -2136,8 +2101,8 @@
       }
       const overlay = document.getElementById('connectionOverlay');
       const bar = document.getElementById('progressBar');
-      overlay.classList.remove('hidden');
-      requestAnimationFrame(() => { bar.style.width = '100%'; });
+      if (overlay) overlay.classList.remove('hidden');
+      if (bar) requestAnimationFrame(() => { bar.style.width = '100%'; });
       setTimeout(() => { window.location.href = 'video-call.html'; }, 2200);
     }
 
@@ -2147,165 +2112,118 @@
         card.classList.add('dismissed');
         setTimeout(() => {
           card.remove();
-          activeRequests = activeRequests.filter(r => r !== id);
-          document.getElementById('reqBadge').textContent = activeRequests.length;
-          document.getElementById('queueCount').textContent = activeRequests.length;
-          if (activeRequests.length === 0) document.getElementById('emptyState').classList.remove('hidden');
+          delete mockRequestsData[id];
+          const remaining = document.querySelectorAll('#panelRequests .request-card').length;
+          const reqBadge = document.getElementById('reqBadge');
+          const queueCount = document.getElementById('queueCount');
+          if (reqBadge) reqBadge.textContent = remaining;
+          if (queueCount) queueCount.textContent = remaining;
+          if (remaining === 0) document.getElementById('emptyState').classList.remove('hidden');
         }, 280);
       }
     }
 
-    /* ──────── Modals Handlers ──────── */
-    function openChatModal(name) { document.getElementById('chatModal').classList.add('open'); }
-    function closeChatModal() { document.getElementById('chatModal').classList.remove('open'); }
-    function openVideoModal(name) { document.getElementById('videoModal').classList.add('open'); }
-    function closeVideoModal() { document.getElementById('videoModal').classList.remove('open'); }
-    function openReportModal(name) { document.getElementById('reportModal').classList.add('open'); }
-    function closeReportModal() { document.getElementById('reportModal').classList.remove('open'); }
+    function openChatModal(name) { const el = document.getElementById('chatModal'); if (el) el.classList.add('open'); }
+    function closeChatModal() { const el = document.getElementById('chatModal'); if (el) el.classList.remove('open'); }
+    function openVideoModal(name) { const el = document.getElementById('videoModal'); if (el) el.classList.add('open'); }
+    function closeVideoModal() { const el = document.getElementById('videoModal'); if (el) el.classList.remove('open'); }
+    function openReportModal(name) { const el = document.getElementById('reportModal'); if (el) el.classList.add('open'); }
+    function closeReportModal() { const el = document.getElementById('reportModal'); if (el) el.classList.remove('open'); }
 
-    function editSchedule() { document.getElementById('scheduleModal').classList.add('open'); }
-    function closeScheduleModal() { document.getElementById('scheduleModal').classList.remove('open'); }
+    function editSchedule() { const el = document.getElementById('scheduleModal'); if (el) el.classList.add('open'); }
+    function closeScheduleModal() { const el = document.getElementById('scheduleModal'); if (el) el.classList.remove('open'); }
     function saveSchedule() {
-      const startTime = document.getElementById('schStart').value;
-      const endTime = document.getElementById('schEnd').value;
-      const maxSess = document.getElementById('schMax').value;
+      const startTime = document.getElementById('schStart')?.value;
+      const endTime = document.getElementById('schEnd')?.value;
+      const maxSess = document.getElementById('schMax')?.value;
 
       const hoursEl = document.getElementById('dispHours');
       const maxEl = document.getElementById('dispMax');
       if (hoursEl && startTime && endTime) hoursEl.textContent = startTime + ' – ' + endTime;
       if (maxEl && maxSess) maxEl.textContent = maxSess + ' sessions / day';
 
-      /* Sync with Supabase */
-      if (window.VistarazDB) {
-        VistarazDB.saveCounselorSchedule({
-          startTime,
-          endTime,
-          activeDays,
-          maxDailySessions: parseInt(maxSess) || 4
-        }).catch(err => console.warn('Supabase schedule sync error:', err));
-      }
-
       closeScheduleModal();
       showToast('Schedule preferences updated successfully.', 'success');
     }
 
-    /* Close modal when clicking backdrop */
     document.querySelectorAll('.modal-backdrop').forEach(modal => {
       modal.addEventListener('click', function (e) {
         if (e.target === this) this.classList.remove('open');
       });
     });
   </script>
-  <!-- ══ Offline Toast ══════════════════════════════════════════ -->
-  <div id="offlineToast" role="alert" aria-live="polite">
-    <i class="fa-solid fa-triangle-exclamation"></i>
-    Panel is not live. Please switch to <strong style="margin:0 3px">Live</strong> mode to accept requests.
-  </div>
 
-  <!-- ══ Edit Schedule Modal ════════════════════════════════════ -->
-  <div id="scheduleModal" role="dialog" aria-modal="true" aria-labelledby="schedModalTitle">
-    <div id="scheduleModalBox">
-
-      <!-- Header -->
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:30px;height:30px;border-radius:8px;background:rgba(59,130,246,0.12);
-                      display:flex;align-items:center;justify-content:center">
-            <i class="fa-regular fa-calendar-check" style="font-size:0.8rem;color:#3b82f6"></i>
+  <!-- Schedule Modal Overlay -->
+  <div id="scheduleModal" class="modal-backdrop">
+    <div class="modal-box w-full max-w-md p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-border">
+        <div class="flex items-center gap-2.5">
+          <div
+            class="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <i class="fa-regular fa-calendar-check text-xs"></i>
           </div>
-          <h3 id="schedModalTitle" style="font-size:0.95rem;font-weight:600;color:#f0f4f8;margin:0">
-            Edit Schedule
-          </h3>
+          <h4 class="text-sm font-bold text-gray-100">Edit Schedule Preferences</h4>
         </div>
-        <button onclick="closeScheduleModal()" style="background:none;border:none;color:#6b7280;cursor:pointer;
-                       font-size:1rem;padding:4px;line-height:1;border-radius:6px"
-          onmouseover="this.style.color='#f0f4f8'" onmouseout="this.style.color='#6b7280'">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <button onclick="closeScheduleModal()" class="text-muted hover:text-white"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- Day selector -->
-      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
-                letter-spacing:.08em;margin-bottom:10px">Active Days</p>
-      <div style="display:flex;gap:8px;margin-bottom:20px">
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-mon" checked>
-          <span class="day-pill">M</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-tue" checked>
-          <span class="day-pill">T</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-wed" checked>
-          <span class="day-pill">W</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-thu" checked>
-          <span class="day-pill">T</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-fri" checked>
-          <span class="day-pill">F</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-sat">
-          <span class="day-pill">S</span>
-        </label>
-        <label class="day-toggle">
-          <input type="checkbox" id="sch-sun">
-          <span class="day-pill">S</span>
-        </label>
-      </div>
-
-      <!-- Hours row -->
-      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
-                letter-spacing:.08em;margin-bottom:10px">Matching Hours</p>
-      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;
-                  align-items:center;margin-bottom:20px">
+      <div class="space-y-4 text-xs">
         <div>
-          <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">From</label>
-          <input id="schStart" type="time" value="10:00" style="width:100%;background:#111827;border:1px solid #283144;
-                        color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
+          <label class="block text-muted font-medium uppercase text-[10px] tracking-wider mb-2">Active Working
+            Days</label>
+          <div class="flex gap-2">
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-mon" checked><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">M</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-tue" checked><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">T</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-wed" checked><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">W</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-thu" checked><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">T</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-fri" checked><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">F</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-sat"><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">S</span></label>
+            <label class="day-toggle flex-1 text-center"><input type="checkbox" id="sch-sun"><span
+                class="day-pill w-full h-8 rounded-lg border border-border flex items-center justify-center font-bold text-muted hover:text-white transition-colors cursor-pointer">S</span></label>
+          </div>
         </div>
-        <span style="color:#6b7280;font-size:0.8rem;padding-top:18px">–</span>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-muted mb-1 text-[11px]">Matching Start</label>
+            <input id="schStart" type="time" value="10:00"
+              class="w-full bg-surface border border-border text-gray-100 p-2 rounded-lg font-mono text-xs">
+          </div>
+          <div>
+            <label class="block text-muted mb-1 text-[11px]">Matching End</label>
+            <input id="schEnd" type="time" value="18:00"
+              class="w-full bg-surface border border-border text-gray-100 p-2 rounded-lg font-mono text-xs">
+          </div>
+        </div>
+
         <div>
-          <label style="font-size:0.7rem;color:#6b7280;display:block;margin-bottom:4px">To</label>
-          <input id="schEnd" type="time" value="18:00" style="width:100%;background:#111827;border:1px solid #283144;
-                        color:#f0f4f8;padding:8px 10px;border-radius:8px;font-size:0.8rem">
+          <label class="block text-muted mb-1 text-[11px]">Daily Session Limit</label>
+          <select id="schMax" class="w-full bg-surface border border-border text-gray-100 p-2 rounded-lg text-xs">
+            <option value="3">3 sessions / day</option>
+            <option value="4">4 sessions / day</option>
+            <option value="5">5 sessions / day</option>
+            <option value="6" selected>6 sessions / day</option>
+            <option value="8">8 sessions / day</option>
+            <option value="10">10 sessions / day</option>
+          </select>
         </div>
       </div>
 
-      <!-- Daily max -->
-      <p style="font-size:0.7rem;font-weight:600;color:#6b7280;text-transform:uppercase;
-                letter-spacing:.08em;margin-bottom:10px">Daily Session Limit</p>
-      <select id="schMax" style="width:100%;background:#111827;border:1px solid #283144;
-                     color:#f0f4f8;padding:9px 12px;border-radius:8px;
-                     font-size:0.8rem;margin-bottom:24px">
-        <option value="3">3 sessions / day</option>
-        <option value="4">4 sessions / day</option>
-        <option value="5">5 sessions / day</option>
-        <option value="6" selected>6 sessions / day</option>
-        <option value="8">8 sessions / day</option>
-        <option value="10">10 sessions / day</option>
-      </select>
-
-      <!-- Actions -->
-      <div style="display:flex;gap:10px;justify-content:flex-end">
-        <button onclick="closeScheduleModal()" style="background:transparent;border:1px solid #283144;color:#8ba1b0;
-                       font-size:0.8rem;font-weight:500;padding:8px 18px;border-radius:8px;
-                       cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#6b7280'"
-          onmouseout="this.style.borderColor='#283144'">
-          Cancel
-        </button>
-        <button onclick="saveSchedule()" style="background:#3b82f6;border:none;color:#fff;
-                       font-size:0.8rem;font-weight:600;padding:8px 20px;border-radius:8px;
-                       cursor:pointer;transition:background .15s" onmouseover="this.style.background='#2563eb'"
-          onmouseout="this.style.background='#3b82f6'">
-          <i class="fa-solid fa-check" style="margin-right:6px;font-size:0.7rem"></i>Save Schedule
+      <div class="flex justify-end gap-2 pt-2 border-t border-border">
+        <button onclick="closeScheduleModal()"
+          class="bg-surface border border-border text-muted px-4 py-2 rounded-lg text-xs font-medium hover:text-white transition-colors">Cancel</button>
+        <button onclick="saveSchedule()"
+          class="bg-accent hover:bg-blue-600 text-black font-bold px-4 py-2 rounded-lg text-xs transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-check text-[10px]"></i> Save Schedule
         </button>
       </div>
-
     </div>
   </div>
 
