@@ -544,8 +544,19 @@
         btn.disabled = false;
         btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
       } else {
-        // Redirect directly to the client care panel
-        window.location.href = 'client_panel.html';
+        if (data && data.session) {
+          // Redirect directly to the client care panel
+          window.location.href = 'client_panel.html';
+        } else {
+          // Email confirmation is required
+          errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
+          errorEl.style.color = '#4cd964';
+          errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
+          errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = 'Check Your Email';
+        }
       }
     }
 
@@ -579,8 +590,19 @@
         btn.disabled = false;
         btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
       } else {
-        // Redirect directly to freelancer panel
-        window.location.href = 'freelancer_panel.html';
+        if (data && data.session) {
+          // Redirect directly to freelancer panel
+          window.location.href = 'freelancer_panel.html';
+        } else {
+          // Email confirmation is required
+          errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
+          errorEl.style.color = '#4cd964';
+          errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
+          errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = 'Check Your Email';
+        }
       }
     }
 

@@ -301,7 +301,7 @@
 
       <!-- Brand Logo (Original PNG per project rules) -->
       <a class="brand flex-shrink-0" href="index.html">
-        <img src="assets/logo.png" alt="Vistaraz" height="48">
+        <img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz" height="48">
       </a>
 
       <!-- Desktop Primary Freelancer Navigation (Strictly 7 Items) -->
@@ -352,9 +352,15 @@
         </div>
 
         <!-- Profile Quick Avatar button -->
-        <button onclick="switchView('profile')" title="Provider Profile"
+        <button id="provider-avatar-btn" onclick="switchView('profile')" title="Provider Profile"
           class="w-8 h-8 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent hover:bg-accent hover:text-black transition-all flex-shrink-0">
-          <i class="fa-regular fa-user text-xs"></i>
+          🩺
+        </button>
+
+        <!-- Sign Out Button -->
+        <button onclick="VistarazAuth.signOut()" title="Sign Out"
+          class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-danger hover:border-danger/30 transition-all flex-shrink-0">
+          <i class="fa-solid fa-sign-out-alt text-xs"></i>
         </button>
 
         <!-- Mobile Drawer Menu Toggle -->
@@ -374,7 +380,7 @@
     class="hidden fixed inset-0 z-[150] bg-black/80 backdrop-blur-md flex flex-col justify-between p-6 lg:hidden">
     <div>
       <div class="flex items-center justify-between pb-6 border-b border-border">
-        <img src="assets/logo.png" alt="Vistaraz" height="38">
+        <img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz" height="38">
         <button onclick="toggleMobileDrawer()" class="text-muted hover:text-white text-xl">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -408,6 +414,10 @@
         <a onclick="switchView('profile'); toggleMobileDrawer();"
           class="text-gray-200 hover:text-accent flex items-center gap-3">
           <i class="fa-solid fa-id-card w-5 text-accent"></i> Profile
+        </a>
+        <a onclick="VistarazAuth.signOut(); toggleMobileDrawer();"
+          class="text-gray-200 hover:text-danger flex items-center gap-3 cursor-pointer">
+          <i class="fa-solid fa-sign-out-alt w-5 text-danger"></i> Sign Out
         </a>
       </nav>
     </div>
@@ -447,7 +457,7 @@
             <i class="fa-solid fa-shield-halved text-[10px]"></i> Support Listener Trainee · Verified
           </div>
           <h1 class="text-2xl sm:text-3xl font-normal text-gray-100 font-serif mb-2">Welcome back, <span
-              class="text-accent italic font-normal">KrushnaRaj</span></h1>
+              id="provider-welcome-name" class="text-accent italic font-normal">KrushnaRaj</span></h1>
           <p id="homeSubtitle" class="text-xs sm:text-sm text-muted mb-0">
             You are currently <span id="homeStatusBadge" class="text-success font-semibold">🟢 Available</span> to
             receive peer support requests from students in need.
@@ -1613,11 +1623,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
                 <span class="text-muted block">Full Name</span>
-                <span class="font-medium text-gray-200">Nidhi Sharma</span>
+                <span id="provider-profile-name" class="font-medium text-gray-200">Nidhi Sharma</span>
               </div>
               <div>
                 <span class="text-muted block">Languages Spoken</span>
-                <span class="font-medium text-gray-200">English (Fluent), Hindi (Conversational)</span>
+                <span id="provider-profile-languages" class="font-medium text-gray-200">English (Fluent), Hindi (Conversational)</span>
               </div>
               <div class="sm:col-span-2">
                 <span class="text-muted block mb-1">Provider Bio</span>
@@ -1636,11 +1646,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
                 <span class="text-muted block">Education</span>
-                <span class="font-medium text-gray-200">B.A. Psychology (Honours)</span>
+                <span id="provider-profile-education" class="font-medium text-gray-200">B.A. Psychology (Honours)</span>
               </div>
               <div>
                 <span class="text-muted block">Qualification</span>
-                <span class="font-medium text-gray-200">Certified Peer Listener (Vistaraz L2)</span>
+                <span id="provider-profile-qualification" class="font-medium text-gray-200">Certified Peer Listener (Vistaraz L2)</span>
               </div>
               <div>
                 <span class="text-muted block">Experience</span>
@@ -1953,17 +1963,59 @@
   <footer class="border-t border-border bg-card mt-4">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-2.5">
-        <img src="assets/logo.png" alt="Vistaraz" class="h-7 w-auto opacity-60">
+        <img src="assets/dist/logo.4203ec3a.png" alt="Vistaraz" class="h-7 w-auto opacity-60">
         <span class="text-[10px] text-muted font-mono">Innovate · Heal · Impact</span>
       </div>
       <p class="text-[11px] text-muted">&copy; 2026 Vistaraz Care Support Provider Panel. Internal Use Only.</p>
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/dist/supabase.0681f239.js"></script>
+
   <!-- ═══════════════════════════════════════════════════════════
        JAVASCRIPT LOGIC
   ═══════════════════════════════════════════════════════════ -->
   <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check session
+      const user = await VistarazAuth.getUser();
+      if (!user) {
+        window.location.href = 'register.html?action=login&role=provider';
+        return;
+      }
+      const profile = await VistarazAuth.getProfile(user.id);
+      if (profile && profile.role !== 'counselor' && profile.role !== 'admin') {
+        window.location.href = 'client_panel.html';
+        return;
+      }
+
+      // Update UI with Supabase details
+      const name = profile?.full_name || user.user_metadata?.full_name || 'Listener';
+      const nickname = profile?.nickname || user.user_metadata?.nickname || name.split(' ')[0];
+      const avatar = profile?.avatar_url || user.user_metadata?.avatar_url || '🩺';
+      const qualification = profile?.qualification || user.user_metadata?.qualification || 'Trained Peer Listener';
+      const languages = (profile?.languages || user.user_metadata?.languages || ['English', 'Hindi']).join(', ');
+
+      const welcomeNameEl = document.getElementById('provider-welcome-name');
+      if (welcomeNameEl) welcomeNameEl.textContent = nickname;
+
+      const avatarBtn = document.getElementById('provider-avatar-btn');
+      if (avatarBtn) avatarBtn.textContent = avatar;
+
+      const profileNameEl = document.getElementById('provider-profile-name');
+      if (profileNameEl) profileNameEl.textContent = name;
+
+      const profileLangEl = document.getElementById('provider-profile-languages');
+      if (profileLangEl) profileLangEl.textContent = languages;
+
+      const profileQualEl = document.getElementById('provider-profile-qualification');
+      if (profileQualEl) profileQualEl.textContent = qualification;
+      
+      const profileEdEl = document.getElementById('provider-profile-education');
+      if (profileEdEl) profileEdEl.textContent = qualification;
+    });
+
     /* ──────── State Management ──────────────── */
     let currentStatus = 'available'; // 'available', 'away', 'offline'
     let activeRequests = ['req-1', 'req-2'];
