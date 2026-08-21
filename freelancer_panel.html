@@ -306,13 +306,17 @@
 
       <!-- Desktop Primary Freelancer Navigation (Strictly 7 Items) -->
       <nav class="site-nav hidden lg:flex">
-        <a id="nav-home" onclick="switchView('home')" class="active">Home</a>
-        <a id="nav-dashboard" onclick="switchView('dashboard')">Dashboard</a>
-        <a id="nav-requests" onclick="switchView('requests')">Requests</a>
-        <a id="nav-sessions" onclick="switchView('sessions')">Sessions</a>
-        <a id="nav-community" onclick="switchView('community')">Community</a>
-        <a id="nav-earnings" onclick="switchView('earnings')">Earnings</a>
-        <a id="nav-profile" onclick="switchView('profile')">Profile</a>
+        <a id="nav-home"      onclick="switchView('home')"      class="active">Home</a>
+        <a id="nav-dashboard" onclick="switchView('dashboard')" >Dashboard</a>
+        <a id="nav-requests"  onclick="switchView('requests')"  >Requests</a>
+        <a id="nav-sessions"  onclick="switchView('sessions')"  >Sessions</a>
+        <a id="nav-community" onclick="switchView('community')" >Community</a>
+        <a id="nav-earnings"  onclick="switchView('earnings')"  >Earnings</a>
+        <a id="nav-profile"   onclick="switchView('profile')"   >Profile</a>
+        <button data-vz-theme-btn onclick="vzToggleTheme()" title="Switch Theme" aria-label="Switch Theme"
+          class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted hover:text-accent hover:border-accent/30 transition-all text-sm cursor-pointer">
+          🌙
+        </button>
       </nav>
 
       <!-- Header Right Cluster: Availability Control & Profile Quick Trigger -->
@@ -358,7 +362,7 @@
         </button>
 
         <!-- Sign Out Button -->
-        <button onclick="VistarazAuth.signOut()" title="Sign Out"
+        <button onclick="window.location.href='register.html'" title="Sign Out"
           class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-danger hover:border-danger/30 transition-all flex-shrink-0">
           <i class="fa-solid fa-sign-out-alt text-xs"></i>
         </button>

@@ -124,6 +124,12 @@
         class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
         <i class="fa-solid fa-lock text-[10px]"></i> E2E Encrypted
       </span>
+      <button data-vz-theme-btn
+        onclick="(function(btn){var t=localStorage.getItem('vz-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('vz-theme',t);btn.textContent=t==='dark'?'\u2600\uFE0F':'\uD83C\uDF19';})(this)"
+        title="Switch Theme" aria-label="Switch Theme"
+        class="w-8 h-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-gray-300 hover:text-accent hover:border-accent/40 transition-all text-sm cursor-pointer">
+        🌙
+      </button>
       <a href="freelancer_panel.html"
         class="bg-surface hover:bg-white/10 border border-border text-muted hover:text-white px-3 py-1.5 rounded-lg transition-all text-xs font-semibold">
         Exit Room

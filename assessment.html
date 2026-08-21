@@ -118,6 +118,11 @@
         <a href="assessment.html" class="text-white font-semibold">Check-in</a>
         <a href="dashboard.html"
           class="bg-accent/10 border border-accent/30 text-accent px-3 py-1.5 rounded-lg hover:bg-accent hover:text-black transition-all">Dashboard</a>
+        <button data-vz-theme-btn onclick="vzToggleTheme ? vzToggleTheme() : (document.documentElement.setAttribute('data-theme', localStorage.getItem('vz-theme')==='dark'?'light':'dark'), localStorage.setItem('vz-theme', document.documentElement.getAttribute('data-theme')), this.textContent=document.documentElement.getAttribute('data-theme')==='dark'?'\u2600\uFE0F':'\uD83C\uDF19')"
+          title="Switch Theme" aria-label="Switch Theme"
+          class="w-9 h-9 rounded-full bg-white/5 border border-white/15 text-muted hover:text-accent hover:border-accent/50 flex items-center justify-center transition-all text-base cursor-pointer">
+          🌙
+        </button>
       </nav>
     </div>
   </header>
@@ -728,7 +733,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/dist/api.0681f239.js"></script>
-  <script src="assets/dist/app.1d49be2f.js"></script>
+  <script src="assets/dist/app.a1ac9d94.js"></script>
 
   <footer class="border-t border-border bg-surface/50 py-4 mt-8">
     <div class="max-w-4xl mx-auto px-4 flex items-center justify-between text-xs text-muted">
