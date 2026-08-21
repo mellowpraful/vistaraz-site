@@ -531,32 +531,39 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Setting up portal...';
 
-      const { data, error } = await VistarazAuth.signUp(email, password, {
-        fullName,
-        nickname,
-        role: 'user',
-        avatarUrl: avatar
-      });
+      try {
+        const { data, error } = await VistarazAuth.signUp(email, password, {
+          fullName,
+          nickname,
+          role: 'user',
+          avatarUrl: avatar
+        });
 
-      if (error) {
-        errorEl.innerText = error.message;
+        if (error) {
+          errorEl.innerText = error.message || 'Unknown error occurred.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
+        } else {
+          if (data && data.session) {
+            // Redirect directly to the client care panel
+            window.location.href = 'client_panel.html';
+          } else {
+            // Email confirmation is required
+            errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
+            errorEl.style.color = '#4cd964';
+            errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
+            errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
+            errorEl.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = 'Check Your Email';
+          }
+        }
+      } catch (err) {
+        errorEl.innerText = 'Application error: ' + (err.message || err);
         errorEl.style.display = 'block';
         btn.disabled = false;
         btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-      } else {
-        if (data && data.session) {
-          // Redirect directly to the client care panel
-          window.location.href = 'client_panel.html';
-        } else {
-          // Email confirmation is required
-          errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
-          errorEl.style.color = '#4cd964';
-          errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
-          errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
-          errorEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = 'Check Your Email';
-        }
       }
     }
 
@@ -575,34 +582,41 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating listener workspace...';
 
-      const { data, error } = await VistarazAuth.signUp(email, password, {
-        fullName: name,
-        nickname: name.split(' ')[0],
-        role: 'counselor',
-        qualification,
-        languages,
-        avatarUrl: '🩺'
-      });
+      try {
+        const { data, error } = await VistarazAuth.signUp(email, password, {
+          fullName: name,
+          nickname: name.split(' ')[0],
+          role: 'counselor',
+          qualification,
+          languages,
+          avatarUrl: '🩺'
+        });
 
-      if (error) {
-        errorEl.innerText = error.message;
+        if (error) {
+          errorEl.innerText = error.message || 'Unknown error occurred.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
+        } else {
+          if (data && data.session) {
+            // Redirect directly to freelancer panel
+            window.location.href = 'freelancer_panel.html';
+          } else {
+            // Email confirmation is required
+            errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
+            errorEl.style.color = '#4cd964';
+            errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
+            errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
+            errorEl.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = 'Check Your Email';
+          }
+        }
+      } catch (err) {
+        errorEl.innerText = 'Application error: ' + (err.message || err);
         errorEl.style.display = 'block';
         btn.disabled = false;
         btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-      } else {
-        if (data && data.session) {
-          // Redirect directly to freelancer panel
-          window.location.href = 'freelancer_panel.html';
-        } else {
-          // Email confirmation is required
-          errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
-          errorEl.style.color = '#4cd964';
-          errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
-          errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
-          errorEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = 'Check Your Email';
-        }
       }
     }
 
@@ -624,23 +638,30 @@
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
-      const { data, error } = await VistarazAuth.signIn(email, password);
+      try {
+        const { data, error } = await VistarazAuth.signIn(email, password);
 
-      if (error) {
-        errorEl.innerText = error.message;
+        if (error) {
+          errorEl.innerText = error.message || 'Unknown error occurred.';
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = roleType === 'seeker' ? 'Sign In to Dashboard' : 'Open Freelancer Panel';
+        } else {
+          const user = data.user;
+          const profile = await VistarazAuth.getProfile(user.id);
+          const userRole = (profile && profile.role) || user.user_metadata?.role || 'user';
+
+          if (userRole === 'counselor') {
+            window.location.href = 'freelancer_panel.html';
+          } else {
+            window.location.href = 'client_panel.html';
+          }
+        }
+      } catch (err) {
+        errorEl.innerText = 'Application error: ' + (err.message || err);
         errorEl.style.display = 'block';
         btn.disabled = false;
         btn.innerHTML = roleType === 'seeker' ? 'Sign In to Dashboard' : 'Open Freelancer Panel';
-      } else {
-        const user = data.user;
-        const profile = await VistarazAuth.getProfile(user.id);
-        const userRole = (profile && profile.role) || user.user_metadata?.role || 'user';
-
-        if (userRole === 'counselor') {
-          window.location.href = 'freelancer_panel.html';
-        } else {
-          window.location.href = 'client_panel.html';
-        }
       }
     }
   </script>
