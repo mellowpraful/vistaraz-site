@@ -1978,24 +1978,12 @@
   ═══════════════════════════════════════════════════════════ -->
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      // Check session
-      const user = await VistarazAuth.getUser();
-      if (!user) {
-        window.location.href = 'register.html?action=login&role=provider';
-        return;
-      }
-      const profile = await VistarazAuth.getProfile(user.id);
-      if (profile && profile.role !== 'counselor' && profile.role !== 'admin') {
-        window.location.href = 'client_panel.html';
-        return;
-      }
-
-      // Update UI with Supabase details
-      const name = profile?.full_name || user.user_metadata?.full_name || 'Listener';
-      const nickname = profile?.nickname || user.user_metadata?.nickname || name.split(' ')[0];
-      const avatar = profile?.avatar_url || user.user_metadata?.avatar_url || '🩺';
-      const qualification = profile?.qualification || user.user_metadata?.qualification || 'Trained Peer Listener';
-      const languages = (profile?.languages || user.user_metadata?.languages || ['English', 'Hindi']).join(', ');
+      // Dummy user details for UI preview since Supabase is disabled
+      const nickname = 'Freelancer';
+      const name = 'Freelancer Provider';
+      const avatar = '🩺';
+      const qualification = 'Trained Peer Listener';
+      const languages = 'English, Hindi';
 
       const welcomeNameEl = document.getElementById('provider-welcome-name');
       if (welcomeNameEl) welcomeNameEl.textContent = nickname;

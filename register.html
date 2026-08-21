@@ -504,165 +504,47 @@
     // 4. Handle Seeker Registration
     async function handleSeekerRegister(e) {
       e.preventDefault();
-      const email = document.getElementById('seeker-email').value.trim();
-      const password = document.getElementById('seeker-password').value;
-      const errorEl = document.getElementById('seeker-error');
       const btn = document.getElementById('seeker-submit-btn');
-
-      let nickname = '';
-      let fullName = '';
-      let avatar = currentSelectedAvatar;
-
-      if (currentSeekerProfileType === 'anon') {
-        nickname = document.getElementById('seeker-anon-nickname').value.trim() || 'Anonymous #' + Math.floor(1000 + Math.random() * 9000);
-        fullName = nickname;
-      } else {
-        fullName = document.getElementById('seeker-private-name').value.trim();
-        if (!fullName) {
-          errorEl.innerText = 'Please enter your full name.';
-          errorEl.style.display = 'block';
-          return;
-        }
-        nickname = fullName.split(' ')[0];
-        avatar = '👤';
-      }
-
-      errorEl.style.display = 'none';
+      
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Setting up portal...';
 
-      try {
-        const { data, error } = await VistarazAuth.signUp(email, password, {
-          fullName,
-          nickname,
-          role: 'user',
-          avatarUrl: avatar
-        });
-
-        if (error) {
-          errorEl.innerText = error.message || 'Unknown error occurred.';
-          errorEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-        } else {
-          if (data && data.session) {
-            // Redirect directly to the client care panel
-            window.location.href = 'client_panel.html';
-          } else {
-            // Email confirmation is required
-            errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
-            errorEl.style.color = '#4cd964';
-            errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
-            errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
-            errorEl.style.display = 'block';
-            btn.disabled = false;
-            btn.innerHTML = 'Check Your Email';
-          }
-        }
-      } catch (err) {
-        errorEl.innerText = 'Application error: ' + (err.message || err);
-        errorEl.style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-      }
+      // Dummy delay to simulate network request
+      setTimeout(() => {
+        window.location.href = 'client_panel.html';
+      }, 800);
     }
 
     // 5. Handle Provider / Counselor Registration
     async function handleProviderRegister(e) {
       e.preventDefault();
-      const name = document.getElementById('provider-name').value.trim();
-      const qualification = document.getElementById('provider-qualification').value;
-      const languages = document.getElementById('provider-languages').value.split(',').map(l => l.trim());
-      const email = document.getElementById('provider-email').value.trim();
-      const password = document.getElementById('provider-password').value;
-      const errorEl = document.getElementById('provider-error');
       const btn = document.getElementById('provider-submit-btn');
 
-      errorEl.style.display = 'none';
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating listener workspace...';
 
-      try {
-        const { data, error } = await VistarazAuth.signUp(email, password, {
-          fullName: name,
-          nickname: name.split(' ')[0],
-          role: 'counselor',
-          qualification,
-          languages,
-          avatarUrl: '🩺'
-        });
-
-        if (error) {
-          errorEl.innerText = error.message || 'Unknown error occurred.';
-          errorEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-        } else {
-          if (data && data.session) {
-            // Redirect directly to freelancer panel
-            window.location.href = 'freelancer_panel.html';
-          } else {
-            // Email confirmation is required
-            errorEl.style.background = 'rgba(76, 217, 100, 0.1)';
-            errorEl.style.color = '#4cd964';
-            errorEl.style.borderColor = 'rgba(76, 217, 100, 0.2)';
-            errorEl.innerText = 'Registration successful! A verification link has been sent to your email. Please check your inbox and verify your email before signing in.';
-            errorEl.style.display = 'block';
-            btn.disabled = false;
-            btn.innerHTML = 'Check Your Email';
-          }
-        }
-      } catch (err) {
-        errorEl.innerText = 'Application error: ' + (err.message || err);
-        errorEl.style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = 'Launch Freelancer Panel <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
-      }
+      // Dummy delay to simulate network request
+      setTimeout(() => {
+        window.location.href = 'freelancer_panel.html';
+      }, 800);
     }
 
     // 6. Universal Login Handler (Auto-routes based on role)
     async function handleUniversalLogin(e, roleType) {
       e.preventDefault();
-      const email = roleType === 'seeker'
-        ? document.getElementById('seeker-login-email').value.trim()
-        : document.getElementById('provider-login-email').value.trim();
-
-      const password = roleType === 'seeker'
-        ? document.getElementById('seeker-login-password').value
-        : document.getElementById('provider-login-password').value;
-
-      const errorEl = roleType === 'seeker' ? document.getElementById('seeker-login-error') : document.getElementById('provider-login-error');
       const btn = roleType === 'seeker' ? document.getElementById('seeker-login-btn') : document.getElementById('provider-login-btn');
 
-      errorEl.style.display = 'none';
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
-      try {
-        const { data, error } = await VistarazAuth.signIn(email, password);
-
-        if (error) {
-          errorEl.innerText = error.message || 'Unknown error occurred.';
-          errorEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = roleType === 'seeker' ? 'Sign In to Dashboard' : 'Open Freelancer Panel';
+      // Dummy delay to simulate network request
+      setTimeout(() => {
+        if (roleType === 'counselor' || roleType === 'provider') {
+          window.location.href = 'freelancer_panel.html';
         } else {
-          const user = data.user;
-          const profile = await VistarazAuth.getProfile(user.id);
-          const userRole = (profile && profile.role) || user.user_metadata?.role || 'user';
-
-          if (userRole === 'counselor') {
-            window.location.href = 'freelancer_panel.html';
-          } else {
-            window.location.href = 'client_panel.html';
-          }
+          window.location.href = 'client_panel.html';
         }
-      } catch (err) {
-        errorEl.innerText = 'Application error: ' + (err.message || err);
-        errorEl.style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = roleType === 'seeker' ? 'Sign In to Dashboard' : 'Open Freelancer Panel';
-      }
+      }, 800);
     }
   </script>
 </body>

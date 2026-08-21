@@ -148,21 +148,12 @@
   <script src="assets/dist/app.1d49be2f.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      const user = await VistarazAuth.getUser();
-      if (!user) {
-        window.location.href = 'register.html?action=login&role=seeker';
-        return;
-      }
-      const profile = await VistarazAuth.getProfile(user.id);
-      if (profile?.role === 'counselor') {
-        window.location.href = 'freelancer_panel.html';
-        return;
-      }
-      const name = profile?.nickname || profile?.full_name || user.user_metadata?.nickname || 'Friend';
+      // Dummy user details for UI preview since Supabase is disabled
+      const name = 'Seeker Profile';
       document.getElementById('client-name').textContent = name;
       document.getElementById('client-name-short').textContent = name;
-      document.getElementById('client-avatar').textContent = profile?.avatar_url || user.user_metadata?.avatar_url || '🦊';
-      document.getElementById('client-plan').textContent = (profile?.plan || 'Free') + ' Membership';
+      document.getElementById('client-avatar').textContent = '👤';
+      document.getElementById('client-plan').textContent = 'Free Membership';
     });
 
     function selectMood(button, mood) {
