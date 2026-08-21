@@ -9,8 +9,6 @@ const VzTheme = (() => {
   const STORAGE_KEY = 'vz-theme';
   const DARK  = 'dark';
   const LIGHT = 'light';
-
-  // Icons for the toggle button
   const ICON_DARK  = '🌙';
   const ICON_LIGHT = '☀️';
 
@@ -34,7 +32,7 @@ const VzTheme = (() => {
     apply(next);
   }
 
-  // Apply saved theme immediately on page load (prevents FOUC)
+  // Apply saved theme immediately (prevents FOUC)
   function init() {
     apply(getCurrent());
   }
@@ -42,8 +40,13 @@ const VzTheme = (() => {
   return { init, toggle, apply, getCurrent };
 })();
 
-// Run immediately (not inside DOMContentLoaded) to avoid flash-of-wrong-theme
+// ── Run immediately, NOT inside DOMContentLoaded ─────────────
+// This prevents flash-of-wrong-theme on every page load
 VzTheme.init();
+
+// ── Expose globally IMMEDIATELY (not inside DOMContentLoaded) ─
+// This ensures onclick="vzToggleTheme()" always works
+window.vzToggleTheme = function() { VzTheme.toggle(); };
 
 // ── SCROLL REVEAL ANIMATIONS ────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,9 +62,5 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     { rootMargin: '0px', threshold: 0.1 }
   );
-
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // Expose toggle globally for inline onclick handlers
-  window.vzToggleTheme = VzTheme.toggle.bind(VzTheme);
 });
