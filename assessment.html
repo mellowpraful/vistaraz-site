@@ -153,52 +153,65 @@
       <!-- Form Steps -->
       <form id="assessmentForm" onsubmit="event.preventDefault();">
 
-        <!-- Q1: Current Mood -->
+        <!-- Q1: Primary Challenge -->
         <fieldset data-step="1" class="step-fieldset space-y-5">
           <div class="space-y-2">
-            <h2 class="text-2xl sm:text-3xl font-serif text-gray-100">1. How would you describe your <em>current
-                mood</em> over the last few days?</h2>
-            <p class="text-xs text-muted">Select the option that best reflects your emotional state.</p>
+            <h2 class="text-2xl sm:text-3xl font-serif text-gray-100">1. What kind of <em>mental issue or challenge</em> are you facing?</h2>
+            <p class="text-xs text-muted">Select the option that best describes your situation. This helps your helper understand you better.</p>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
             <div
-              onclick="recordAnswer('currentMood', 'Thriving & Upbeat', 15, 'fa-face-laugh-beam', '#4cd964', 'Optimal')"
+              onclick="recordAnswer('currentMood', 'Relationship Issues', 50, 'fa-heart', '#ff6b6b', 'Struggling')"
               class="option-card bg-surface border border-border rounded-2xl p-4 flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-success flex items-center justify-center text-lg">
-                <i class="fa-solid fa-face-laugh-beam"></i></div>
+              <div class="w-10 h-10 rounded-xl bg-red-500/10 text-danger flex items-center justify-center text-lg">
+                <i class="fa-solid fa-heart"></i></div>
               <div>
-                <p class="text-sm font-semibold text-gray-100">Thriving & Energetic</p>
-                <p class="text-xs text-muted">Positive, motivated and calm</p>
+                <p class="text-sm font-semibold text-gray-100">Relationship Issues</p>
+                <p class="text-xs text-muted">Family, friends, partner, or social conflicts</p>
               </div>
             </div>
-            <div onclick="recordAnswer('currentMood', 'Balanced & Stable', 35, 'fa-face-smile', '#8ab4f8', 'Stable')"
+            <div onclick="recordAnswer('currentMood', 'Academic & Career Stress', 60, 'fa-graduation-cap', '#8ab4f8', 'Struggling')"
               class="option-card bg-surface border border-border rounded-2xl p-4 flex items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-lg"><i
-                  class="fa-solid fa-face-smile"></i></div>
+                  class="fa-solid fa-graduation-cap"></i></div>
               <div>
-                <p class="text-sm font-semibold text-gray-100">Generally Balanced</p>
-                <p class="text-xs text-muted">A few ups and downs, but steady</p>
+                <p class="text-sm font-semibold text-gray-100">Academic & Career Stress</p>
+                <p class="text-xs text-muted">Workload, exams, job search, performance</p>
               </div>
             </div>
             <div
-              onclick="recordAnswer('currentMood', 'Low & Melancholic', 70, 'fa-face-frown', '#f59e0b', 'Struggling')"
+              onclick="recordAnswer('currentMood', 'Financial Stress', 70, 'fa-wallet', '#f59e0b', 'Struggling')"
               class="option-card bg-surface border border-border rounded-2xl p-4 flex items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-warning flex items-center justify-center text-lg"><i
-                  class="fa-solid fa-face-frown"></i></div>
+                  class="fa-solid fa-wallet"></i></div>
               <div>
-                <p class="text-sm font-semibold text-gray-100">Low & Exhausted</p>
-                <p class="text-xs text-muted">Feeling heavy, drained, or blue</p>
+                <p class="text-sm font-semibold text-gray-100">Financial Stress</p>
+                <p class="text-xs text-muted">Expenses, debt, stability, or cost of living</p>
               </div>
             </div>
             <div
-              onclick="recordAnswer('currentMood', 'Overwhelmed & Empty', 90, 'fa-face-sad-cry', '#ff6b6b', 'High Distress')"
+              id="q1-other-opt"
+              onclick="selectQ1Other()"
               class="option-card bg-surface border border-border rounded-2xl p-4 flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-red-500/10 text-danger flex items-center justify-center text-lg"><i
-                  class="fa-solid fa-face-sad-cry"></i></div>
+              <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg"><i
+                  class="fa-solid fa-circle-question"></i></div>
               <div>
-                <p class="text-sm font-semibold text-gray-100">Deeply Distressed</p>
-                <p class="text-xs text-muted">Numb, tearful, or struggling</p>
+                <p class="text-sm font-semibold text-gray-100">Other Issue</p>
+                <p class="text-xs text-muted">Describe your custom situation below</p>
               </div>
+            </div>
+          </div>
+
+          <!-- Typing bar for Other Option -->
+          <div id="q1-other-container" class="hidden space-y-3 pt-3 border-t border-border/40">
+            <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider">Describe the challenge you are facing:</label>
+            <div class="flex gap-2">
+              <input id="q1-other-input" type="text" placeholder="Type your issue here..."
+                class="flex-grow bg-surface border border-border text-gray-100 text-sm p-3 rounded-xl focus:outline-none focus:border-accent">
+              <button onclick="submitQ1Other()"
+                class="bg-accent hover:bg-blue-600 text-black font-bold px-5 py-3 rounded-xl text-xs transition-colors flex-shrink-0">
+                Continue
+              </button>
             </div>
           </div>
         </fieldset>
@@ -746,7 +759,7 @@
   <!-- JavaScript Logic -->
   <script>
     const areaTitles = {
-      1: 'Area 1 of 10: Current Mood',
+      1: 'Area 1 of 10: Primary Challenge',
       2: 'Area 2 of 10: Stress & Anxiety',
       3: 'Area 3 of 10: Academic / Career Pressure',
       4: 'Area 4 of 10: Relationships',
@@ -757,6 +770,22 @@
       9: 'Area 9 of 10: Social Wellbeing',
       10: 'Area 10 of 10: General Emotional State'
     };
+
+    function selectQ1Other() {
+      document.querySelectorAll('.step-fieldset[data-step="1"] .option-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById('q1-other-opt').classList.add('selected');
+      document.getElementById('q1-other-container').classList.remove('hidden');
+      document.getElementById('q1-other-input').focus();
+    }
+
+    function submitQ1Other() {
+      const val = document.getElementById('q1-other-input').value.trim();
+      if (!val) {
+        alert('Please describe the issue or choose one of the main options.');
+        return;
+      }
+      recordAnswer('currentMood', 'Other: ' + val, 75, 'fa-circle-question', '#c39b77', 'Struggling');
+    }
 
     let currentStep = 1;
     const assessmentProfile = {
