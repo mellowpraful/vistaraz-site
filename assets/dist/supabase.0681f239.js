@@ -31,7 +31,9 @@ const VistarazAuth = {
           full_name: metadata.fullName || '',
           nickname: metadata.nickname || 'Friend',
           role: metadata.role || 'user',
-          avatar_url: metadata.avatarUrl || '🦊'
+          avatar_url: metadata.avatarUrl || '🦊',
+          qualification: metadata.qualification || null,
+          languages: metadata.languages || ['English']
         }
       }
     });
@@ -40,7 +42,11 @@ const VistarazAuth = {
   // Sign in with Email and Password
   async signIn(email, password) {
     if (!supabase) return { error: { message: 'Supabase client not initialized' } };
-    return await supabase.auth.signInWithPassword({ email, password });
+    try {
+      return await supabase.auth.signInWithPassword({ email, password });
+    } catch (error) {
+      return { error: { message: error.message || 'Unable to sign in right now' } };
+    }
   },
 
   // Sign out

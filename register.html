@@ -339,7 +339,7 @@
 
   <!-- Supabase JS & App Logic -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/dist/supabase.9aba4fbd.js"></script>
+  <script src="assets/dist/supabase.0681f239.js"></script>
   <script src="assets/dist/app.1d49be2f.js"></script>
 
   <script>
@@ -487,8 +487,8 @@
         btn.disabled = false;
         btn.innerHTML = 'Enter Client Portal <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>';
       } else {
-        // Redirect directly to dashboard
-        window.location.href = 'dashboard.html';
+        // Redirect directly to the client care panel
+        window.location.href = 'client_panel.html';
       }
     }
 
@@ -560,7 +560,7 @@
         if (userRole === 'counselor') {
           window.location.href = 'freelancer_panel.html';
         } else {
-          window.location.href = 'dashboard.html';
+          window.location.href = 'client_panel.html';
         }
       }
     }
